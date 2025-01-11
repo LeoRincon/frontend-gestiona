@@ -1,0 +1,6 @@
+.header-view{
+    text-align: center;
+    color: var(--accent-dark);
+    font-weight: 800;
+    margin-bottom: 2rem;
+}
