@@ -1,6 +1,5 @@
 .sidebar p,
 .sidebar h1,
-.sidebar ul,
 .sidebar div
 {
     margin: 0;
@@ -13,21 +12,12 @@
 .sidebar h2{
     margin: 0;
 }
-.sidebar ul{
-    list-style: none;
-}
 
 .sidebar,
 .sidebar__account,
-.sidebar__option,
 .sidebar__overwiew {
     display: flex;
     flex-direction: column;
-}
-
-.sidebar__option {
-    flex-direction: row;
-    align-items: center;
 }
 
 .sidebar {
@@ -70,16 +60,6 @@
     height: var(--option-height);
 }
 
-.sidebar__option {
-    border-radius: 3px;
-    gap: var(--padding);
-    padding: 10px 5px;
-}
-
-.sidebar__option:hover {
-    outline: var(--border) solid var(--accent-border-separator-2);
-}
-
 .sidebar__overwiew {
     height: max-content;
     justify-content: center;
@@ -87,24 +67,6 @@
 }
 .sidebar__account{
     border-top: var(--border) solid var(--accent-border-separator-1);
-}
-
-.option__icon {
-    width: var(--icon-width);
-    height: var(--icon-height);
-    background-repeat: no-repeat;
-}
-
-.option__link {
-    text-decoration: none;
-}
-
-.option__link:visited {
-    color: inherit;
-}
-
-.option__link--text{
-    color: var(--accent-text-2);
 }
 
 .sidebar--hidden :is(
