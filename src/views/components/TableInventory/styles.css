@@ -3,27 +3,23 @@
     width: 100%;
     border-radius: 1rem;
     border-collapse: collapse;
-    outline: thin solid var(--accent-dark);
-    outline-offset: 0.5rem;
 }
 
 .inventory-table th{
     padding: 1rem;
     text-align: left;
-    border-bottom: thin solid var(--accent-dark);
+    border-bottom: thin solid var(--gray-color);
 }
 .inventory-table td{
-    padding: .3rem;
-}
-
-.inventory-table td{
-    border-right: thin solid var(--accent-dark);
-    border-left: thin solid var(--accent-dark);
+    padding: 10px;
+    padding-bottom: 25px; 
+    border-bottom: thin solid var(--gray-color);
 }
 
 .inventory-table tfoot td{
     border-right: none;
     border-left: none;
+    border-bottom: none;
     border-top: thin solid var(--accent-dark);
     text-align: center;
 }
@@ -49,7 +45,7 @@
         display: none;
     }
     .inventory-table tbody tr:nth-child(even){
-        background-color:var(--gray-border-separator-2);
+        background-color:var(--gray-interactive-component-1);
     
     }
     .inventory-table tr{

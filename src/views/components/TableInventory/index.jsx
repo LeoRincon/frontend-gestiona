@@ -3,7 +3,7 @@ import DeleteIcon from "../icons/DeleteIcon"
 import ArrowBackIcon from "../icons/ArrowBackIcon"
 import ArrowForwardIcon from "../icons/ArrowForwardIcon"
 
-import './styles.css'
+import "./styles.css"
 
 export default function TableInventory(){
     const iconProps={
@@ -38,8 +38,12 @@ export default function TableInventory(){
                         <td data-label="Unidad de medida">XXXXXXXXX</td>
                         <td data-label="Precio insumo">XXXXXXXXX</td>
                         <td className="actions" data-label="Acciones">
-                            <EditIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
-                            <DeleteIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
+                            <a href="#">
+                                <EditIcon {...iconProps} />
+                            </a>
+                            <a href="#">
+                                <DeleteIcon {...iconProps} />
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -50,19 +54,27 @@ export default function TableInventory(){
                         <td data-label="Unidad de medida">XXXXXXXXX</td>
                         <td data-label="Precio insumo">XXXXXXXXX</td>
                         <td className="actions" data-label="Acciones">
-                            <EditIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
-                            <DeleteIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
+                            <a href="#">
+                                <EditIcon {...iconProps} />
+                            </a>
+                            <a href="#">
+                                <DeleteIcon {...iconProps} />
+                            </a>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot> 
                     <tr>
                         <td colSpan="7">
-                            <ArrowBackIcon width={arrowIconProps.width} height={arrowIconProps.height} fill={arrowIconProps.fill} />
+                            <a href="#">
+                                <ArrowBackIcon {...arrowIconProps} />
+                            </a>
                             <strong>
-                            1-10
+                                1-10
                             </strong>
-                            <ArrowForwardIcon width={arrowIconProps.width} height={arrowIconProps.height} fill={arrowIconProps.fill} />
+                            <a href="#">
+                                <ArrowForwardIcon {...arrowIconProps} />
+                            </a>
                         </td>
                     </tr>
                 </tfoot>
