@@ -1,0 +1,72 @@
+.admin-user {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.admin-user__header h1 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4b4b4b;
+  margin-bottom: 30px;
+}
+
+.admin-user__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.admin-user__table th,
+.admin-user__table td {
+  text-align: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-user__table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+  color: #555;
+}
+
+.admin-user__table td {
+  font-size: 0.95rem;
+}
+
+.admin-user__table tr:hover {
+  background-color: #f2f2f2;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 0 5px;
+  color: #1da889;
+}
+
+.actions .delete-button {
+  color: #e63946;
+}
+
+.add-user-button {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 20px;
+  background-color: #1da889;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.add-user-button:hover {
+  background-color: #129b7d;
+}
+
+
+
