@@ -1,3 +1,5 @@
+import { NavLink } from "react-router";
+
 import { AuthHeader } from "./components/AuthHeader";
 import { FormLogin } from "./components/FormLogin";
 
@@ -13,9 +15,9 @@ export const Login = () => {
           <FormLogin />
           <p className="cardform__text">
             ¿No tienes una cuenta?
-            <a href="./sign-up.html" className="card_form__text--link">
+            <NavLink to="/signup" className="card_form__text--link">
               Registrate
-            </a>
+            </NavLink>
           </p>
         </main>
       </div>

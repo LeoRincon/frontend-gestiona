@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import { AuthHeader } from "./components/AuthHeader";
 import FormSignup from "./components/FormSignup";
 
@@ -16,9 +17,9 @@ export default function Signup() {
           <FormSignup />
           <p className="cardform__text">
             {message}
-            <a href="#" className="card_form__text--link">
+            <NavLink to="/" className="card_form__text--link">
               {linkMessage}
-            </a>
+            </NavLink>
           </p>
         </main>
       </div>
