@@ -1,0 +1,13 @@
+.inventory-view{
+    display: flex;
+}
+
+.inventory-main-view{
+    width: 70%;
+    margin-top: 10vh;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--ubuntu)
+}

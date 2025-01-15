@@ -1,12 +1,23 @@
 import "./styles.css";
 
-export const FormLogin = () => {
+export default function FormSignup() {
+  const fullname = "Nombre Completo";
   const email = "Correo";
   const password = "Contraseña";
-  const login = "Iniciar Sesión";
-
+  const createCount = "Crear Cuenta";
   return (
     <form className="cardform__form">
+      <label className="form__label--required" htmlFor="fullname">
+        {fullname}
+      </label>
+      <input
+        className="form__input"
+        type="text"
+        id="fullname"
+        name="fullname"
+        placeholder="Ingrese su nombre completo"
+        required
+      />
       <label className="form__label--required" htmlFor="email">
         {email}
       </label>
@@ -30,8 +41,8 @@ export const FormLogin = () => {
         required
       />
       <button className="form__button" type="submit">
-        {login}
+        {createCount}
       </button>
     </form>
   );
-};
+}
