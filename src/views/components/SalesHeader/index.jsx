@@ -2,7 +2,7 @@ function SalesHeader() {
   return (
     <div>
       <header className="user-profile__header">
-        <div className="container">
+        <div>
           <div className="row">
             <div className="col-6 mx-auto">
               <h2 className="title">REGISTRO DE VENTA</h2>

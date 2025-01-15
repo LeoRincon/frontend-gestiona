@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
-import DeleteIcon from "../icons/Delete";
-import UpdateIcon from "../icons/Update";
-import InsertIcon from "../icons/Insert";
+import DeleteIcon from "../icons/DeleteIcon";
+import EditIcon from "../icons/EditIcon";
+import AddIcon from "../icons/AddIcon";
 import PopupSales from "../PopupSales";
 
 function SalesBody() {
@@ -113,7 +113,7 @@ function SalesBody() {
   );
   return (
     <section className="main-container__admin-user">
-      <div className="container mt-5">
+      <div className=" mt-5">
         <div className="search-container ">
           <i className="fas fa-search"></i>
           <input
@@ -128,7 +128,7 @@ function SalesBody() {
        
         <div className="d-flex justify-content-end InsertIcon">
             <i onClick={insertPopup}>
-            <InsertIcon />
+            <AddIcon width={35} height={35} fill={"#008164"}/>
           </i>
        </div>
 
@@ -158,10 +158,10 @@ function SalesBody() {
                   <td>{dato.observaciones}</td>
                   <td>
                     <i onClick={() => updatePopup(dato)}>
-                      <UpdateIcon />
+                      <EditIcon width={24} height={24} fill={"#008164"}/>
                     </i>
                     <i onClick={() => deletePopup(dato)}>
-                      <DeleteIcon />
+                      <DeleteIcon width={24} height={24} fill={"#008164"}/>
                     </i>
                   </td>
                 </tr>
