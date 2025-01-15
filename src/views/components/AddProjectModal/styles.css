@@ -1,0 +1,23 @@
+.project-modal{
+  align-items: center;
+  border-radius: var(--radius);
+  border: var(--border) solid var(--gray-color);
+  box-shadow: 0 0 1rem var(--gray-color);
+  color: var(--accent-text-2);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--roboto);
+  gap: 1rem;
+  justify-content: center;
+  height: 25vh;
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.project-modal__form{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
