@@ -40,8 +40,12 @@ export default function TableSeason(){
                         <td data-label="Id cultivo">XXXXXXXXX</td>
                         <td data-label="Id novedades">XXXXXXXXX</td>
                         <td className="actions" data-label="Acciones">
-                            <EditIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
-                            <DeleteIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
+                            <a href="#">
+                                <EditIcon {...iconProps} />
+                            </a>
+                            <a href="#">
+                                <DeleteIcon {...iconProps} />
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -53,19 +57,27 @@ export default function TableSeason(){
                         <td data-label="Id cultivo">XXXXXXXXX</td>
                         <td data-label="Id novedades">XXXXXXXXX</td>
                         <td className="actions" data-label="Acciones">
-                            <EditIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
-                            <DeleteIcon width={iconProps.width} height={iconProps.height} fill={iconProps.fill} />
+                            <a href="#">
+                                <EditIcon {...iconProps} />
+                            </a>
+                            <a href="#">
+                                <DeleteIcon {...iconProps} />
+                            </a>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colSpan="8">
-                            <ArrowBackIcon width={arrowIconProps.width} height={arrowIconProps.height} fill={arrowIconProps.fill} />
+                            <a href="#">
+                                <ArrowBackIcon {...arrowIconProps} />
+                            </a>
                             <strong>
                                 1-10
                             </strong>
-                            <ArrowForwardIcon width={arrowIconProps.width} height={arrowIconProps.height} fill={arrowIconProps.fill} />
+                            <a href="#">
+                                <ArrowForwardIcon {...arrowIconProps} />
+                            </a>
                         </td>
                     </tr>
                 </tfoot>
