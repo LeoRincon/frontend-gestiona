@@ -1,4 +1,4 @@
-import "./crop.css";
+import "./styles/crop.css";
 import Sidebar from "./components/Sidebar";
 import TitleMenu from "./components/TitleMenu";
 import NotesActions from "./components/NotesActions";

@@ -4,7 +4,7 @@ import TableInventory from "./components/TableInventory"
 import Sidebar from "./components/Sidebar"
 
 
-import "./inventory.css"
+import "./styles/inventory.css"
 
 export default function Inventory(){
     const iconParams = {

@@ -4,7 +4,7 @@ import AdminUsers from "./components/AdminUsers";
 import AddUserModal from "./components/AddUserModal"; 
 import EditUserModal from "./components/EditUserModal"; 
 
-import "./profile.css"
+import "./styles/profile.css"
 
 export default function Profile() {
   return (

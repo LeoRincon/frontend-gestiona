@@ -10,7 +10,7 @@ import SeasonIcon from "./components/icons/SeasonIcon";
 import OptionMenu from "./components/OptionMenu";
 import Sidebar from "./components/Sidebar";
 
-import "./home.css";
+import "./styles/home.css";
 
 export default function Home() {
   const iconParams = {

@@ -1,4 +1,4 @@
-import "./information.css";
+import "./styles/information.css";
 import Sidebar from "./components/Sidebar";
 
 const Information = () => {

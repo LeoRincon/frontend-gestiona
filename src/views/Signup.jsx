@@ -1,7 +1,7 @@
 import { AuthHeader } from "./components/AuthHeader";
 import FormSignup from "./components/FormSignup";
 
-import "./login.css";
+import "./styles/login.css";
 
 export default function Signup() {
   const title="Crea tu cuenta"

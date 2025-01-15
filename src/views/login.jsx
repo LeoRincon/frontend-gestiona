@@ -1,7 +1,7 @@
 import { AuthHeader } from "./components/AuthHeader";
 import { FormLogin } from "./components/FormLogin";
 
-import "./login.css";
+import "./styles/login.css";
 
 export const Login = () => {
   return (

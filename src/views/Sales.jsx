@@ -1,4 +1,4 @@
-import "./sales.css";
+import "./styles/sales.css";
 import Sidebar from "./components/Sidebar";
 import SalesHeader from "./components/SalesHeader";
 import SalesBody from "./components/SalesBody";  
