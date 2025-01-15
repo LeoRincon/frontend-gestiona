@@ -16,7 +16,7 @@ export default function Inventory(){
         <div className="inventory-view">
             <Sidebar />
             <main className="inventory-main-view">
-                <TitleSection title={"INVENTARIO DE INSUMOS"} />
+                <TitleSection title="INVENTARIO DE INSUMOS" />
                 <AddSearchBar />
                 <TableInventory />
             </main>
