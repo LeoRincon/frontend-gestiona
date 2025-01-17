@@ -1,0 +1,14 @@
+.project-container {
+  flex: 1;
+  padding: 2rem;
+  font-family: var(--roboto);
+  color: var(--accent-text-2);
+}
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 4rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--accent-border-separator-3);
+}
