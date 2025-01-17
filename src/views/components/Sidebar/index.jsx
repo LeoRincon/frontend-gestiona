@@ -16,8 +16,8 @@ import SidebarLink from '../SidebarLink';
 import SidebarFooter from '../SidebarFooter';
 
 function Sidebar (){
-  const iconWidth = 20
-  const iconHeigth = 20
+  const iconWidth = 24
+  const iconHeigth = 24
   const iconFill = "#008164"
   const messages = {
     crop: "Cultivo",
