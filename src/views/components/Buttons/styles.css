@@ -1,0 +1,48 @@
+.primary-button {
+  font-family: var(--roboto);
+  font-size: var(--body-text);
+  font-style: normal;
+  border-color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: var(--accent-background-1);
+  margin-top: 1rem;
+  box-sizing: border-box;
+  padding: 5px;
+  font-weight: var(--medium);
+  border: 1px solid var(--gray-border-separator-3);
+  border-radius: 5px;
+}
+
+.primary-button:hover {
+  background-color: var(--accent-dark);
+  color: var(--accent-background-2);
+}
+.secondary-button {
+  font-family: var(--roboto);
+  font-size: var(--body-text);
+  font-style: normal;
+  border-color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  color: var(--accent-background-1);
+  box-sizing: border-box;
+  padding: 5px;
+  font-weight: var(--medium);
+  border: 1px solid var(--gray-border-separator-3);
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+.secondary-button:hover {
+  background-color: var(--secondary-color-dark);
+  color: var(--accent-background-2);
+}
+
+.close-button{
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+}

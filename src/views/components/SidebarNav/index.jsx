@@ -6,7 +6,7 @@ export default function SidebarNav ({title, children, className}){
   return (
     <nav className={className}>
       <p className="sidebar__label">{title}</p>
-      <ul>
+      <ul className="sidebar__list">
           {Children.map(children, (child, index) => ( <li key={index}>{child}</li> ))}
       </ul>
     </nav>
