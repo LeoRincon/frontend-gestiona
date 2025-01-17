@@ -1,15 +1,17 @@
 import AddIcon from "../icons/AddIcon";
 import { iconFill } from "../../../utils/const";
 
-import "./styles.css"
+import "./styles.css";
 
-function AddButton({ 
+function AddButton({
   iconColor = iconFill,
-  onClick
+  onClick,
+  iconWidth = 50,
+  iconHeight = 50,
 }) {
   return (
     <button className="btnAdd" onClick={onClick}>
-      <AddIcon width={50} height={50} fill={iconColor} />
+      <AddIcon width={iconWidth} height={iconHeight} fill={iconColor} />
     </button>
   );
 }
