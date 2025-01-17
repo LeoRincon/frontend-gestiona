@@ -9,7 +9,6 @@ const Dashboard = () => {
 
                 <h1 id="title">Dashboard</h1>
                 
-                <div className="container">   
                     <nav className="horizontal-nav">
                         <div className="nav-item">
                             <h2>Proyecto</h2>
@@ -51,7 +50,6 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </nav>
-                </div>
                 <br />
                 
                 <h2 className="title_graphic">Balance</h2>
