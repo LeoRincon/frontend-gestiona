@@ -1,7 +1,9 @@
 import AddButton from "../addButton";
+import { welcomeTexts } from "../../../utils/const";
 import "./styles.css";
 
-function InitialView({ title, descriptions, buttonOnClick }) {
+function InitialView({ buttonOnClick }) {
+  const { title, descriptions } = welcomeTexts;
   return (
     <main className="container__iv">
       <h1 className="container__iv__title">{title}</h1>
@@ -14,7 +16,7 @@ function InitialView({ title, descriptions, buttonOnClick }) {
           );
         })}
       </div>
-      <AddButton onClick={buttonOnClick}/>
+      <AddButton onClick={buttonOnClick} />
     </main>
   );
 }
