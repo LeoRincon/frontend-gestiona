@@ -4,7 +4,7 @@ import BeginEndBar from "./components/BeginEndBar"
 import AddSearchBar from "./components/AddSearchBar"
 import TableSeason from "./components/TableSeason"
 
-import "./season.css"
+import "./styles/season.css"
 
 export default function Season(){
     return(

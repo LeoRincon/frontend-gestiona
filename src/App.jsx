@@ -1,14 +1,11 @@
-import { Login } from './views/login'
 
-import './App.css'
+import { AppRouter } from './routers';
+import './App.css';
 
 function App() {
-
-  return (
-    <>
-      <Login />
-    </>
-  )
+ return (
+  <AppRouter />
+ );
 }
 
-export default App
+export default App;

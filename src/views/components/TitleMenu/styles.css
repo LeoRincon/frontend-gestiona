@@ -1,0 +1,18 @@
+.title-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title-menu h1 {
+  color: var(--color-principal);
+  font-weight: 800;
+}
+
+.title-menu i {
+  font-size: 2rem;
+  margin-left: 2rem;
+  color: #000;
+  visibility: hidden;
+}
