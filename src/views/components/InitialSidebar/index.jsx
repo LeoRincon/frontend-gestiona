@@ -11,6 +11,8 @@ import {
   messages,
 } from "../../../utils/const";
 
+import "./styles.css"
+
 function InitialSidebar() {
   const { settings, logout, username, email } = messages;
 
@@ -19,7 +21,7 @@ function InitialSidebar() {
       <SidebarHeader showButton={false} />
       <SidebarNav className="sidebar__account" title={"Cuenta"}>
         <SidebarLink
-          href="#"
+          href="/settings"
           IconComponent={SettingsIcon}
           iconWidth={iconWidth}
           iconHeight={iconHeigth}
@@ -27,7 +29,7 @@ function InitialSidebar() {
           text={settings}
         />
         <SidebarLink
-          href="#"
+          href="/logout"
           IconComponent={LogoutIcon}
           iconWidth={iconWidth}
           iconHeight={iconHeigth}
