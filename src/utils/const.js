@@ -24,8 +24,8 @@ export const welcomeTexts = {
 export const addProjecModalTexts = {
   title: "Crear un nuevo proyecto",
   description: "Ingresa el nombre del nuevo proyecto",
-  inputLabel: "Proyecto nuevo",
-  placeholderInput: "Nombre del proyecto",
-  confirmButtom: "Crear",
+  inputLabel: "Nombre Proyecto",
+  placeholderInput: "Escriba el nombre del proyecto",
+  confirmButtom: "Crear Proyecto",
   cancelButtom: "Cancelar"
 }
