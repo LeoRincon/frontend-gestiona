@@ -1,16 +1,15 @@
-export default function ProductionIcon (props){
+export default function ProductionIcon ({ width, height, stroke }){
 
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
+    width={width}
+    height={height}
     fill="none"
     viewBox="0 0 16 16"
-    {...props}
   >
     <g
-      stroke={props.stroke}
+      stroke={stroke}
       strokeMiterlimit={10}
       strokeWidth={1.1}
       clipPath="url(#a)"
