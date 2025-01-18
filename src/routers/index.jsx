@@ -4,6 +4,8 @@ import Signup from '../views/Signup';
 import Profile from '../views/Profile';
 import Project from '../views/Project';
 import Home from '../views/home';
+import Dashboard   from '../views/dashboard';
+import Information from '../views/information';
 
 export const AppRouter = () => {
  return (
@@ -13,6 +15,8 @@ export const AppRouter = () => {
    <Route path='/profile' element={<Profile />} />
    <Route path='/project' element={<Project />} />
    <Route path='/home' element={<Home />} />
+   <Route path='/dashboard' element={<Dashboard />} />
+   <Route path='/information' element={<Information />} />
   </Routes>
  );
 };
