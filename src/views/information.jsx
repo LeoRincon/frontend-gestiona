@@ -241,7 +241,13 @@ const Information = () => {
    },
   ],
  });
- const [colums, setColums] = useState([{ name: 'id', selector: (row) => row.id }]);
+ const [columns, setColums] = useState({
+  expenses: [{ name: 'id', selector: (row) => row.id }],
+  sales: [{ name: 'id', selector: (row) => row.id }],
+  production: [{ name: 'id', selector: (row) => row.id }],
+  supplies: [{ name: 'id', selector: (row) => row.id }],
+  activityManagements: [{ name: 'id', selector: (row) => row.id }],
+ });
 
  useEffect(() => {
   getExpenses().then((dataDb) => {
@@ -253,8 +259,8 @@ const Information = () => {
  }, []);
 
  useEffect(() => {
-  const columns = getColumnsOfData(data.expenses);
-  setColums(columns);
+  const cols = getColumnsOfData(data);
+  setColums(cols);
  }, []);
 
  return (
@@ -311,7 +317,7 @@ const Information = () => {
     <div className='table-container'>
      <h2 className='table_caption'>Gastos</h2>
      <br />
-     <DataTable columns={colums} data={data.expenses} />
+     <DataTable columns={columns.expenses} data={data.expenses} />
     </div>
     <br />
 
