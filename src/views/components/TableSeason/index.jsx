@@ -2,9 +2,58 @@ import EditIcon from "../icons/EditIcon"
 import DeleteIcon from "../icons/DeleteIcon"
 import ArrowBackIcon from "../icons/ArrowBackIcon"
 import ArrowForwardIcon from "../icons/ArrowForwardIcon"
+import DataTable from "react-data-table-component"
 
 import "./styles.css"
 
+const columns=[
+    {
+        name:"Nombre",
+        selector:(row) =>row.nombre
+    },
+    {
+        name:"Duracion",
+        selector:(row) =>row.duracion
+    },
+    {
+        name:"Fecha Inicio",
+        selector:(row) =>row.fechaInicio
+    },
+    {
+        name:"Fecha Final",
+        selector:(row) =>row.fechaFinal
+    },
+    {
+        name:"Id Cultivo",
+        selector:(row) =>row.idCultivo
+    },
+    {
+        name:"Id Novedades",
+        selector:(row) =>row.idNovedades
+    },
+]
+
+const data=[
+    {
+        id:"1",
+        nombre:"XXXXXX",
+        duracion:"100",
+        fechaInicio:"XX/XX/XXXX",
+        fechaFinal:"XX/XX/XXXX",
+        idCultivo:"XXXXXX",
+        idNovedades:"XXXXXX"
+    },
+    {
+        id:"2",
+        nombre:"XXXXXX",
+        duracion:"200",
+        fechaInicio:"XX/XX/XXXX",
+        fechaFinal:"XX/XX/XXXX",
+        idCultivo:"XXXXXX",
+        idNovedades:"XXXXXX"
+    },
+]
+ 
 export default function TableSeason(){
     const iconProps={
         width:25,
@@ -17,70 +66,6 @@ export default function TableSeason(){
         fill:"#000000"
     };
     return(
-        <table className="season-table"> 
-                <thead>
-                    <tr>
-                        <th>Id temporada</th>
-                        <th>Nombre</th>
-                        <th>Duración</th>
-                        <th>Fecha inicio</th>
-                        <th>Fecha final</th>
-                        <th>Id cultivo</th>
-                        <th>Id novedades</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td data-label="Id temporada">XXXXXXX-1</td>
-                        <td data-label="Nombre">XXXXXXXXX</td>
-                        <td data-label="Duración">XXXXXXXXX</td>
-                        <td data-label="Fecha inicio">XXXXXXXXX</td>
-                        <td data-label="Fecha final">XXXXXXXXX</td>
-                        <td data-label="Id cultivo">XXXXXXXXX</td>
-                        <td data-label="Id novedades">XXXXXXXXX</td>
-                        <td className="actions" data-label="Acciones">
-                            <a href="#">
-                                <EditIcon {...iconProps} />
-                            </a>
-                            <a href="#">
-                                <DeleteIcon {...iconProps} />
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-label="Id temporada">XXXXXXX-2</td>
-                        <td data-label="Nombre">XXXXXXXXX</td>
-                        <td data-label="Duración">XXXXXXXXX</td>
-                        <td data-label="Fecha inicio">XXXXXXXXX</td>
-                        <td data-label="Fecha final">XXXXXXXXX</td>
-                        <td data-label="Id cultivo">XXXXXXXXX</td>
-                        <td data-label="Id novedades">XXXXXXXXX</td>
-                        <td className="actions" data-label="Acciones">
-                            <a href="#">
-                                <EditIcon {...iconProps} />
-                            </a>
-                            <a href="#">
-                                <DeleteIcon {...iconProps} />
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colSpan="8">
-                            <a href="#">
-                                <ArrowBackIcon {...arrowIconProps} />
-                            </a>
-                            <strong>
-                                1-10
-                            </strong>
-                            <a href="#">
-                                <ArrowForwardIcon {...arrowIconProps} />
-                            </a>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+        <DataTable columns={columns} data={data} onSelectedRowsChange={(row) => console.log(row)} selectableRows/>
     )
 }
