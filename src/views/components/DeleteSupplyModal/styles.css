@@ -1,0 +1,53 @@
+.popup-delete{
+  width: 480px;
+  height: 160px;
+  background-color: #FFF;
+  border-radius: 5px;
+}
+
+.popup-delete header{
+  border-bottom: thin solid #e4e4e4;
+}
+
+.popup-delete h4{
+  margin: 15px;
+  color: #3a3434;
+}
+
+.popup-delete body{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  color: #3a3434;
+}
+
+.popup-delete p{
+  margin: 15px;
+}
+
+.btn-bar{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  border-top: thin solid #e4e4e4;
+}
+
+.popup-delete button{
+  height: 30px;
+}
+
+.btn-submit{
+  background-color: var(--accent-text-1);
+  color: #FFF;
+}
+
+.btn-submit:active{
+  background-color: var(--accent-text-2);
+} 
+.btn-cancel{
+  background-color: #e4e4e4;
+  color: black;
+}
+.btn-cancel:active{
+  background-color: #b1b0b0;
+}

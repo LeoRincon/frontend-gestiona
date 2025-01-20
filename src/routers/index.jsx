@@ -6,6 +6,7 @@ import Project from '../views/Project';
 import Home from '../views/home';
 import Dashboard   from '../views/dashboard';
 import Information from '../views/information';
+import Inventory from '../views/inventory';
 
 export const AppRouter = () => {
  return (
@@ -17,6 +18,7 @@ export const AppRouter = () => {
    <Route path='/home' element={<Home />} />
    <Route path='/dashboard' element={<Dashboard />} />
    <Route path='/information' element={<Information />} />
+   <Route path='/inventory' element={<Inventory />} />
   </Routes>
  );
 };
