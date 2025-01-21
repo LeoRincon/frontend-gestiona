@@ -42,6 +42,7 @@
   font-style: normal;
   color: var(--accent-text-2);
   box-sizing: border-box;
+  resize: none;
 }
 
 .project-modal__form__input::placeholder {

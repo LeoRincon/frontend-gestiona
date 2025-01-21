@@ -2,18 +2,24 @@ import { NavLink } from "react-router";
 import "./styles.css";
 
 function ProjectCard({ project }) {
-  const projectString = project;
+  const projectNameString = project.nombre;
+  const projectDescriptionString = project.descripcion
   let projectInitials = "";
-  if (projectString.includes(" ")) {
-    const words = projectString.split(" ");
+  if (projectNameString.includes(" ")) {
+    const words = projectNameString.split(" ");
     projectInitials = words[0][0] + words[1][0];
+    projectInitials = projectInitials.toUpperCase();
   } else {
-    projectInitials = projectString[0];
+    projectInitials = projectNameString[0];
   }
+
   return (
     <NavLink className="project-card" to={"/home"}>
       <div className="project-card__initials">{projectInitials}</div>
-      <h3>{project}</h3>
+      <div>
+      <h3>{projectNameString}</h3>
+      <p>{projectDescriptionString}</p>
+      </div>
     </NavLink>
   );
 }
