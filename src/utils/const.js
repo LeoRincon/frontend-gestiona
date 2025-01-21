@@ -24,8 +24,13 @@ export const welcomeTexts = {
 export const addProjecModalTexts = {
   title: "Crear un nuevo proyecto",
   description: "Ingresa el nombre del nuevo proyecto",
+  descriptionLabel: "Descripción del proyecto",
   inputLabel: "Nombre Proyecto",
   placeholderInput: "Escriba el nombre del proyecto",
+  placeholderTextArea: "Escriba la descripción del proyecto aquí...",
   confirmButtom: "Crear Proyecto",
   cancelButtom: "Cancelar"
 }
+
+export const API_URL = "http://localhost:3000/api/v1"
+export const PROJECTS_PATH = "/projects"
