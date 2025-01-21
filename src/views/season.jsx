@@ -1,7 +1,7 @@
 import Sidebar from "./components/Sidebar"
 import TitleSection from "./components/TitleSection"
 import BeginEndBar from "./components/BeginEndBar"
-import AddSearchBar from "./components/AddSearchBar"
+import ActionsBar from "./components/AddSearchBar"
 import TableSeason from "./components/TableSeason"
 
 import "./styles/season.css"
@@ -14,7 +14,7 @@ export default function Season(){
                 <TitleSection title="TEMPORADA" />
                 <section>
                     <BeginEndBar />
-                    <AddSearchBar />
+                    <ActionsBar />
                 </section>
                 <TableSeason />
             </main>
