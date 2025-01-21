@@ -71,12 +71,7 @@ const Information = () => {
 
  useEffect(() => {
     getInformation().then((dataDb) => {
-     setData({
-      expenses: dataDb.expenses || [],
-      sales: dataDb.sales || [],
-      production: dataDb.production || [],
-      supplies: dataDb.supplies || [],
-      activityManagements: dataDb.activityManagements || [],
+     setData({dataDb
      });
     });
    }, []);
@@ -84,7 +79,7 @@ const Information = () => {
  useEffect(() => {
   const cols = getColumnsOfData(data);
   setColums(cols);
- }, [data]);
+ }, []);
 
  return (
   <div style={{ display: 'flex' }}>

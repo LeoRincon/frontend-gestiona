@@ -12,7 +12,7 @@ export async function getInformation() {
   const salesData = await responseVentas.json();
 
   const responseProduccion = await fetch(urlProduction, { method: "GET", headers: { "Content-Type": "application/json" } });
-  const productionData = await responseProduccion.json();
+  const productionData  = await responseProduccion.json();
 
   const responseInsumos = await fetch(urlSupplies, { method: "GET", headers: { "Content-Type": "application/json" } });
   const suppliesData = await responseInsumos.json();
