@@ -2,22 +2,39 @@ import InitialSidebar from "./components/InitialSidebar";
 import InitialView from "./components/InitialView";
 import AddProjectModal from "./components/AddProjectModal";
 import ProjectsList from "./components/ProjectsList";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createProject } from "../services/projectService";
 
 import "./styles/project.css";
+import { fetchProjects } from "../services/projectService";
 
 export default function Project() {
   const dialogRef = useRef(null);
-  const projects = ["Proyecto Cafetera", "Aguacatera Grande"];
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const getProjects = async () => {
+      const projects = await fetchProjects();
+      setProjects(projects);
+    };
+    getProjects();
+  }, []);
 
   const handleOpenModal = () => {
-    console.log("Si se abre la modal");
     if (dialogRef.current) dialogRef.current.showModal();
   };
 
   const handleCloseModal = () => {
-    console.log("si cierra");
     if (dialogRef.current) dialogRef.current.close();
+  };
+  const handelAddElement = async (element) => {
+    try {
+      const response = await createProject(element);
+      if (!response) throw new Error("Error al crear el proyecto");
+      setProjects((prevProjects) => [...prevProjects, response]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -28,7 +45,11 @@ export default function Project() {
       ) : (
         <ProjectsList buttonOnClick={handleOpenModal} projects={projects} />
       )}
-      <AddProjectModal ref={dialogRef} onClose={handleCloseModal} />
+      <AddProjectModal
+        ref={dialogRef}
+        onClose={handleCloseModal}
+        onAddElement={handelAddElement}
+      />
     </div>
   );
 }
