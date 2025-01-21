@@ -14,7 +14,7 @@ function ProjectsList({ projects, buttonOnClick }) {
           onClick={buttonOnClick}
         />
       </header>
-      <section>
+      <section className="project-container__list">
         {projects.map((project, index) => (
           <ProjectCard key={index} project={project} />
         ))}
