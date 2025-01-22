@@ -2,14 +2,14 @@ import "./styles.css"
 
 export default function DeleteSupplyModal({handleOpenModal}) {
   return(
-    <div className='popup-bg'>
-      <div className="popup-delete">
+    <div className='supply-popup-bg'>
+      <div className="supply-popup-delete">
         <header>
           <h4>Eliminar</h4>
         </header>
-        <body>
+        <main>
             <p>¿Está seguro que desea eliminar este elemento?</p>
-        </body>
+        </main>
         <footer className='btn-bar'>
           <button className='btn-submit'>
             Aceptar
