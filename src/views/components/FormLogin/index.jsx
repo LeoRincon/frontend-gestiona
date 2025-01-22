@@ -1,21 +1,26 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { loginUser } from "../../../services/userService";
+import { formLoginTexts } from "../../../utils/const";
 import "./styles.css";
-import { fetchUsers } from "../../../services/getUsers";
+
+const { email, password, login } = formLoginTexts;
 
 export const FormLogin = () => {
-
-  const { register, handleSubmit} = useForm();
-
+  const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log("🇨🇴🚨 => FormLogin => data:", data)
-    const resp = await fetchUsers()
-    console.log("🇨🇴🚨 => onSubmit => resp:", resp)
+    try {
+      const response = await loginUser(data);
+      reset();
+      if (response.message === "Login successful") {
+        navigate("/projects");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  const email = "Correo";
-  const password = "Contraseña";
-  const login = "Iniciar Sesión";
 
   return (
     <form className="cardform__form" onSubmit={handleSubmit(onSubmit)}>
@@ -23,7 +28,7 @@ export const FormLogin = () => {
         {email}
       </label>
       <input
-      {...register("email")}
+        {...register("email", { required: true })}
         className="form__input"
         type="email"
         id="email"
@@ -35,7 +40,7 @@ export const FormLogin = () => {
         {password}
       </label>
       <input
-      {...register("password")}
+        {...register("password", { required: true })}
         className="form__input"
         type="password"
         id="password"
