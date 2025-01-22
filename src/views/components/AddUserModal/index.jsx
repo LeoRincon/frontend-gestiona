@@ -1,10 +1,12 @@
 import "./styles.css";
+import {forwardRef} from "react";
 
 
-const AddUserModal = () => {
+
+const AddUserModal = forwardRef(({onClose}, ref) => {
   return (
-    <dialog className="modal add-user">
-      <button className="modal__close" autoFocus>
+    <dialog className="modal add-user" ref={ref}> 
+      <button onClick={onClose} className="modal__close" autoFocus>
         <i className="modal__close--icon"></i>
       </button>
       <h2 className="add-user__title">Agregar un Usuario</h2>
@@ -33,7 +35,9 @@ const AddUserModal = () => {
       </form>
     </dialog>
   );
-};
+});
+
+AddUserModal.displayName = "AddUserModal";
 
 export default AddUserModal;
 

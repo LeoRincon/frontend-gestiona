@@ -12,32 +12,6 @@
   margin-bottom: 30px;
 }
 
-.admin-user__table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.admin-user__table th,
-.admin-user__table td {
-  text-align: center;
-  padding: 10px 15px;
-  border-bottom: 1px solid #ddd;
-}
-
-.admin-user__table th {
-  background-color: #f8f8f8;
-  font-weight: bold;
-  color: #555;
-}
-
-.admin-user__table td {
-  font-size: 0.95rem;
-}
-
-.admin-user__table tr:hover {
-  background-color: #f2f2f2;
-}
 
 .actions button {
   background: none;
@@ -53,15 +27,19 @@
 }
 
 .add-user-button {
-  display: block;
-  margin: 20px auto;
-  padding: 12px 20px;
+  display: inline-block;
+  margin-left: 40%;
+  width: 10;
+  padding: 12px;
   background-color: #1da889;
   color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
+  text-align: center;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .add-user-button:hover {
