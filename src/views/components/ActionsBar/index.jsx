@@ -5,7 +5,7 @@ import DeleteIcon from "../icons/DeleteIcon";
 
 import "./styles.css"
 
-export default function ActionsBar({handleOpenModal, handleDeleteModal}){
+export default function ActionsBar({handleAddModal, handleDeleteModal}){
     const iconProps={
         width:45,
         height:45,
@@ -13,7 +13,7 @@ export default function ActionsBar({handleOpenModal, handleDeleteModal}){
     }; 
     return(
         <section className="add-search-section">
-            <div  onClick={handleOpenModal} >
+            <div  onClick={handleAddModal} >
                 <AddIcon {...iconProps} />
             </div>
             <div >
