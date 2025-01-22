@@ -34,3 +34,4 @@ export const addProjecModalTexts = {
 
 export const API_URL = "http://localhost:3000/api/v1"
 export const PROJECTS_PATH = "/projects"
+export const CROPS_PATH = "/crops"
