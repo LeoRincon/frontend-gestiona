@@ -12,7 +12,8 @@
     font-family: var(--ubuntu)
 }
 
-.season-main-view section{
+.season-main-view .section-bar-actions{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: flex-end;
 }
