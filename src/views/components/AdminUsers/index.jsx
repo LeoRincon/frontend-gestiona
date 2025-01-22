@@ -42,14 +42,14 @@ const data = [
 
 import './styles.css';
 
-const AdminUser = () => {
+const AdminUser = ({onClickAddButton }) => {
  return (
   <section className='admin-user'>
    <header className='admin-user__header'>
     <h1>Administrar usuarios</h1>
    </header>
    <DataTable columns={columns} data={data} onSelectedRowsChange={(row) => console.log(row)} selectableRows/>
-   <button type='button' className='add-user-button'>
+   <button onClick={onClickAddButton} type='button' className='add-user-button'>
     Agregar usuario
    </button>
   </section>

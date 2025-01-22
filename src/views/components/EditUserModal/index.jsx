@@ -1,9 +1,10 @@
 import "./styles.css";
+import { forwardRef } from "react";
 
-const EditUserModal = () => {
+const EditUserModal = forwardRef(({onClose}, ref) => {
   return (
-    <dialog className="modal edit-user">
-      <button className="modal__close--edit" autoFocus>
+    <dialog className="modal edit-user" ref={ref}>
+      <button onClick={onClose} className="modal__close" autoFocus>
         <i className="modal__close--icon"></i>
       </button>
       <h2 className="edit-user__title">Editar Usuario</h2>
@@ -32,7 +33,9 @@ const EditUserModal = () => {
       </form>
     </dialog>
   );
-};
+});
+
+EditUserModal.displayName = "EditUserModal";
 
 export default EditUserModal;
 

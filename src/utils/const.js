@@ -51,3 +51,4 @@ export const API_URL = "http://localhost:3000/api/v1";
 export const PROJECTS_PATH = "/projects";
 export const USERS_PATH = "/users";
 export const LOGIN_PATH = "/login";
+export const CROPS_PATH = "/crops"
