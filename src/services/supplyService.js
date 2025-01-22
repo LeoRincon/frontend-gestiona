@@ -1,6 +1,5 @@
+const url = "http://localhost:3000/api/v1/supplies"
 export async function fetchSupplies() {
-  const url = "http://localhost:3000/api/v1/supplies"
-
   const response = await fetch(url,{
     method: "GET",
     headers: {
@@ -24,12 +23,16 @@ export async function fetchSupplies() {
   return newData
 }
 
-// "id": "b6789012-8def-1234-5678-abc456789abc",
-//       "nombre": "Semillas de Maíz",
-//       "cantidad_disponible": 200,
-//       "fecha_ingreso": "2024-01-01T05:00:00.000Z",
-//       "precio": 50,
-//       "id_inventario": "a5678901-8abc-1234-5678-abc456789abc",
-//       "id_categoria": "e3456789-8abc-1234-5678-abc456789def",
-//       "id_unidad_medida": "e2345678-9def-1234-5678-abc456789012"
-//     }
+export async function createSupply(supply){
+  if (!supply || typeof supply !== "object")
+    throw new Error("The SUPPLY must be an object");
+  const response = await fetch(url,{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(supply),
+  })
+  const data = await response.json();
+  return data;
+}

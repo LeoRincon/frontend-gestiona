@@ -1,8 +1,8 @@
-.inventory-view{
+.supply-view{
     display: flex;
 }
 
-.inventory-main-view{
+.supply-main-view{
     width: 70%;
     margin-top: 10vh;
     margin-left: auto;

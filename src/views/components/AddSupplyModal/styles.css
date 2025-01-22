@@ -1,4 +1,4 @@
-.popup-bg{
+.supply-popup-bg{
   top: 0;
   left: 0;
   width: 100%;
@@ -10,22 +10,20 @@
   background-color: rgb(0, 0, 0,50%);
 }
 
-.popup-add{
+.supply-popup-add{
   width: 500px;
-  height: 435px;
+  height: 420px;
   background-color: #FFF;
   border-radius: 5px;
-  /* padding-left: 20px;
-  padding-right: 20px; */
 }
 
-.popup-add h4{
+.supply-popup-add h4{
   margin: 15px;
   color: #3a3434;
 }
 
 
-.popup-add form{
+.supply-form-add{
   height: 380px;
   display: flex; 
   flex-wrap: wrap;
@@ -35,26 +33,34 @@
   border-top: thin solid #e4e4e4;
 }
 
-.popup-add input,.popup-add label{
+.supply-form-add div:not(:last-child){
+  width: 50%;
+}
+
+.supply-form-add input,.supply-form-add label{
   margin-left: auto;
   margin-right: auto;
-  width: 43%;
+  width: 80%;
   display: block;
   border-radius: 3px;
   color: #3a3434;
 } 
-.popup-add input{
-  margin-bottom: 12px;
+
+.supply-form-add span{
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  display: block;
+  font-size: 0.8rem;
+  color: tomato;
+}
+
+.supply-popup-add input{
+  margin-bottom: 7px;
   padding: 7px;
   border: thin solid #e4e4e4;
   background-color: #FFF;
 }
-
-/* .popup-add label{
-  display: inline-block;
-  margin: 2px;
-  font-size: .9 rem;
-}  */
 
 .btn-bar{
   width: 100%;
