@@ -19,6 +19,17 @@ export default function Home() {
     fill: "#193c32",
   };
 
+  const paths = {
+    cropt: "/crop",
+    season: "/season",
+    inventory: "/inventory",
+    activity: "/activity",
+    production: "/production",
+    sale: "/sale",
+    information: "/information",
+    dashboard: "/dashboard",
+    }
+
   return (
     <div className="home-view">
       <Sidebar />
@@ -30,7 +41,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconStroke={iconParams.fill}
             title={"Cultivo"}
-            href={"#"}
+            href={paths.cropt}
           />
           <Card
             IconComponent={SeasonIcon}
@@ -38,7 +49,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconFill={iconParams.fill}
             title={"Temporada"}
-            href={"#"}
+            href={paths.season}
           />
           <Card
             IconComponent={InventoryIcon}
@@ -46,7 +57,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconFill={iconParams.fill}
             title={"Inventario de Insumos"}
-            href={"#"}
+            href={paths.inventory}
           />
           <Card
             IconComponent={ActivityIcon}
@@ -54,7 +65,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconFill={iconParams.fill}
             title={"Registro de Actividades"}
-            href={"#"}
+            href={paths.activity}
           />
           <Card
             IconComponent={ProductionIcon}
@@ -62,7 +73,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconStroke={iconParams.fill}
             title={"Registro de Producción"}
-            href={"#"}
+            href={paths.production}
           />
           <Card
             IconComponent={SaleIcon}
@@ -70,7 +81,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconFill={iconParams.fill}
             title={"Registro de Ventas"}
-            href={"#"}
+            href={paths.sale}
           />
         </OptionMenu>
         <OptionMenu title={"MÉTRICAS"}>
@@ -80,7 +91,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconFill={iconParams.fill}
             title={"Información"}
-            href={"#"}
+            href={paths.information}
           />
           <Card
             IconComponent={DashboardIcon}
@@ -88,7 +99,7 @@ export default function Home() {
             iconHeight={iconParams.height}
             iconFill={iconParams.fill}
             title={"Dashboard"}
-            href={"#"}
+            href={paths.dashboard}
           />
         </OptionMenu>
       </main>

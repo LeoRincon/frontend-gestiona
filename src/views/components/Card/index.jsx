@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import "./styles.css";
 
 export default function Card({
@@ -18,10 +19,10 @@ export default function Card({
 
   return (
     <section className="card">
-      <a className="icon-section" href={href}>
+      <NavLink className="icon-section" to={href}>
         <IconComponent {...iconProps} />
         <p className="text-section">{title}</p>
-      </a>
+      </NavLink>
     </section>
   );
 }
