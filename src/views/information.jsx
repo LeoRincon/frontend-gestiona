@@ -72,6 +72,7 @@ const Information = () => {
 
   useEffect(() => {
     getInformation().then((dataDb) => {
+      console.log("datos obtenidos de la api, dataDb: ", dataDb);
       setData(dataDb);
     });
   }, []);

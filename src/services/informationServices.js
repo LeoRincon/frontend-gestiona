@@ -3,7 +3,7 @@ export async function getInformation() {
   const urlSales = "http://localhost:3000/api/v1/sales";
   const urlProduction = "http://localhost:3000/api/v1/product";
   const urlSupplies = "http://localhost:3000/api/v1/supplies";
-  const urlActivitiesManagement = "http://localhost:3000/api/v1/activity_management";
+  const urlActivitiesManagement = "http://localhost:3000/api/v1/activities-management";
 
   const response = await fetch(url, { method: "GET", headers: { "Content-Type": "application/json" } });
   const data = await response.json();
