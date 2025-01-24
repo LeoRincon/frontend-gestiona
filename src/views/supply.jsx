@@ -18,8 +18,11 @@ export default function Supply(){
     const [data,setData] = useState([])
     const id = useRef(null)
     
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-    const fetchData = async () => {
+    async function fetchData(){
         try {
             const result = await fetchSupplies()
             setData(result);
@@ -27,10 +30,6 @@ export default function Supply(){
             console.error('Error fetching supplies data(F):', error);
         }
         };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     const handleAddModal=()=>{
         setAdd(!add)
