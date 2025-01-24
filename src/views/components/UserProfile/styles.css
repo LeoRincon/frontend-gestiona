@@ -16,14 +16,15 @@
   margin-bottom: 30px;
 }
 
-.user-profile h2 {
+.user-profile__subtitle {
   font-size: 1.5rem;
   font-weight: bold;
   color: #555;
   margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* Espacio entre el subtítulo y los labels */
   border-top: 1px solid #ddd;
   padding-top: 15px;
+  width: 100%;
 }
 
 .user-profile__form {
@@ -66,21 +67,25 @@
 }
 
 .user-profile__form button {
-  display: inline-block;
-  margin-left: 40%;
-  width: 10%;
-  padding: 12px;
-  background-color: #1da889;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  .user-profile__form button {
+    display: inline-block;
+    margin: 0 auto; 
+    width: 10% !important; 
+    padding: 5px !important; 
+    background-color: #1da889;
+    color: #fff;
+    font-size: 0.9rem !important; 
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }  
 }
+
 
 .user-profile__form button:hover {
   background-color: #129b7d;
 }
+
