@@ -2,7 +2,12 @@ import DataTable from "react-data-table-component"
 
 import "./styles.css"
 
-export default function TableSeason({data}){
+export default function TableSeason({data,handleSelectedData}){
+    function onSelected(row){
+      if(row.selectedRows[0]){
+        handleSelectedData(row.selectedRows[0].id)
+      }
+    }
     let dataColums = [];   
     let dataValues = [];
     if(typeof data !== "undefined"){
@@ -25,6 +30,6 @@ export default function TableSeason({data}){
         }));
     }
     return(
-        <DataTable columns={dataColums} data={dataValues} onSelectedRowsChange={(row) => console.log(row)} selectableRows/>
+        <DataTable columns={dataColums} data={dataValues} onSelectedRowsChange={onSelected} selectableRows/>
     )
 }

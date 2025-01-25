@@ -99,9 +99,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  background-color: #f8d7da; /* Fondo rojo claro */
-  border: 1px solid #f5c6cb; /* Borde rojo tenue */
-  color: #721c24; /* Texto rojo oscuro */
+  background-color: #f8d7da; 
+  border: 1px solid #f5c6cb; 
+  color: #721c24; 
   padding: 10px 15px;
   border-radius: 5px;
   font-size: 0.9rem;
@@ -112,11 +112,11 @@
 
 /* Icono de advertencia dentro del mensaje de error */
 .error-box::before {
-  content: "⚠️"; /* Emoji de advertencia */
+  content: "⚠️"; 
   font-size: 1.2rem;
   margin-right: 10px;
 }
-/* Animación de aparición */
+
 .error-box {
   animation: fadeIn 0.3s ease-out;
 }

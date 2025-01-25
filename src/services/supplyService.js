@@ -1,4 +1,6 @@
 const url = "http://localhost:3000/api/v1/supplies"
+
+//GET ALL SUPLLIES
 export async function fetchSupplies() {
   const response = await fetch(url,{
     method: "GET",
@@ -23,6 +25,7 @@ export async function fetchSupplies() {
   return newData
 }
 
+//POST SUPPLY
 export async function createSupply(supply){
   if (!supply || typeof supply !== "object")
     throw new Error("The SUPPLY must be an object");
@@ -35,4 +38,35 @@ export async function createSupply(supply){
   })
   const data = await response.json();
   return data;
+}
+
+//PUT SUPPLY
+export async function editSupply(id,supply) {
+  if(!id || typeof id !== "string")
+    throw new Error("The ID must be an string");
+  if(!id || typeof supply !== "object")
+    throw new Error("The SUPPLY must be an object");
+  const response = await fetch(url+"/"+id,{
+    method:"PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body:JSON.stringify(supply)
+  })
+  const data = await response.json()
+  return data
+}
+
+//DELETE SUPPLY
+export async function deleteSupply(id) {
+  if(!id || typeof id !== "string")
+    throw new Error("The ID must be an string");
+  const response = await fetch(url+"/"+id,{
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json();
+  return data
 }
