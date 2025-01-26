@@ -52,3 +52,5 @@ export const PROJECTS_PATH = "/projects";
 export const USERS_PATH = "/users";
 export const LOGIN_PATH = "/login";
 export const CROPS_PATH = "/crops"
+export const USERS_HAS_PATH = "/users-has"
+export const ROLES_PATH = "/roles"

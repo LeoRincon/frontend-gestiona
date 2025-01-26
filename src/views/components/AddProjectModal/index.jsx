@@ -6,7 +6,7 @@ import { createProject } from "../../../services/projectService";
 
 import "./styles.css";
 
-const AddProjectModal = forwardRef(({ onClose, onAddElement }, ref) => {
+const AddProjectModal = forwardRef(({ onClose, onAddElement,}, ref) => {
   const { register, handleSubmit, } = useForm();
   const {
     cancelButtom,
