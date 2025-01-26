@@ -6,37 +6,27 @@ export async function getInformation() {
     supplies: "http://localhost:3000/api/v1/supplies",
     activitiesManagement: "http://localhost:3000/api/v1/activities-management",
     units: "http://localhost:3000/api/v1/units",
+    activities: "http://localhost:3000/api/v1/activities"
   };
 
   try {
-    const [
-      expensesRes,
-      salesRes,
-      productionRes,
-      suppliesRes,
-      activitiesManagementRes,
-      unitRes,
-    ] = await Promise.all(
+    const responses = await Promise.all(
       Object.values(urls).map((url) =>
         fetch(url, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
+        }).then(response => {
+          if (!response.ok) {
+            console.error(`Error fetching data from ${url}:`, response.statusText);
+            return null; // Retorna null si la respuesta no es exitosa
+          }
+          return response.json();
+        }).catch(error => {
+          console.error(`Error fetching data from ${url}:`, error);
+          return null; // Retorna null si hay un error en la solicitud
         })
       )
     );
-
-    if (
-      ![
-        expensesRes,
-        salesRes,
-        productionRes,
-        suppliesRes,
-        activitiesManagementRes,
-        unitRes,
-      ].every((res) => res.ok)
-    ) {
-      throw new Error("Una o más respuestas de las APIs no fueron exitosas");
-    }
 
     const [
       expensesData,
@@ -45,16 +35,10 @@ export async function getInformation() {
       suppliesData,
       activitiesManagementData,
       unitData,
-    ] = await Promise.all([
-      expensesRes.json(),
-      salesRes.json(),
-      productionRes.json(),
-      suppliesRes.json(),
-      activitiesManagementRes.json(),
-      unitRes.json(),
-    ]);
+      activitiesData,
+    ] = responses;
 
-    const expenses = expensesData.map((element, index) => {
+    const expenses = expensesData?.map((element, index) => {
       const units = unitData?.units?.find(
         (unit) => unit.id === element.id_unidad_medida
       );
@@ -70,27 +54,25 @@ export async function getInformation() {
         unit: units?.nombre || "No disponible",
         idSeason: element.id_temporada,
       };
-    });
+    }) || [];
 
-    const sales =
-      salesData?.sale?.map((element, index) => {
-        const units = unitData?.units?.find(
-          (unit) => unit.id === element.id_unidad_medida
-        );
+    const sales = salesData?.sale?.map((element, index) => {
+      const units = unitData?.units?.find(
+        (unit) => unit.id === element.id_unidad_medida
+      );
 
-        return {
-          id: index + 1, // Incremental para el # en la tabla
-          soldQuantity: element.cantidad_vendida || 0, // Cantidad vendida
-          unitPrice: element.precio_unitario || 0, // Precio unitario
-          totalPrice: element.precio_total || 0, // Precio total
-          saleDate: element.fecha_venta || "", // Fecha de venta
-          observations: element.observaciones || "Sin observaciones", // Observaciones
-          unit: units?.nombre || "No disponible", // Unidad de medida
-        };
-      }) || [];
+      return {
+        id: index + 1,
+        soldQuantity: element.cantidad_vendida || 0,
+        unitPrice: element.precio_unitario || 0,
+        totalPrice: element.precio_total || 0,
+        saleDate: element.fecha_venta || "",
+        observations: element.observaciones || "Sin observaciones",
+        unit: units?.nombre || "No disponible",
+      };
+    }) || [];
 
-    const production = 
-    productionData?.data?.map((element, index) => {
+    const production = productionData?.data?.map((element, index) => {
       const units = unitData?.units?.find(
         (unit) => unit.id === element.id_unidad_medida
       );
@@ -102,20 +84,30 @@ export async function getInformation() {
         harvestDate: element.fecha_recoleccion,
         unit: units?.nombre || "No disponible",
       };
-    });
+    }) || [];
 
+    const activityManagements = activitiesManagementData?.map((element, index) => {
+      const activity = activitiesData?.activities?.find(
+        (activity) => activity.id === element.id_actividad
+      );
 
-    const activityManagements = 
-    activitiesManagementData?.data?.map((element, index) => {
+      const expenses = expensesData?.find(
+        (expense) => expense.id === element.gasto_insumo_id
+      );
+
+      const supplies = suppliesData?.data?.find(
+        (supply) => supply.id === expenses?.id_insumo
+      );
+
       return {
         id: index + 1,
-        idActivity: element.id_actividad,
-        idSeason: element.id_temporada,
-        cost: element.costo,
-        supplyExpenseId: element.gasto_insumo_id,
+        activityName: activity?.nombre || "No disponible",
+        suppliesName: supplies?.nombre || "No disponible",
+        usedQuantity: expenses?.cantidad_usada || 0,
+        suppliesCost: expenses?.precio_total || "No disponible",
+        totalCost: element.costo
       };
-    })
-    ;
+    }) || [];
 
     return {
       expenses,
