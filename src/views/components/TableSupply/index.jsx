@@ -1,7 +1,8 @@
 import DataTable from "react-data-table-component"
+import { formatingDate } from "../../../utils/formatingDate";
 
 import "./styles.css"
-export default function TableSupply({data, handleSelectedData}){
+export default function TableSupply({data, handleSelectedData, unitsData, categoriesData, dataSearch }){
     function onSelected(row){
       if(row.selectedRows[0]){
         handleSelectedData(row.selectedRows[0].id)
@@ -26,12 +27,27 @@ export default function TableSupply({data, handleSelectedData}){
             id: value[0],
             nombre: value[1],
             cantidad_disponible: value[2],
-            fecha_ingreso: value[3],
+            fecha_ingreso: formatingDate(value[3]),
             precio: value[4],
             id_inventario: value[5],
             id_categoria: value[6],
             id_unidad_medida: value[7],
           }));
+          //POR SI USAN LA BUSQUEDA
+          if(dataSearch){
+            dataValues=[
+              {
+                id: dataSearch.id,
+                nombre: dataSearch.nombre,
+                cantidad_disponible: dataSearch.cantidad_disponible,
+                fecha_ingreso: formatingDate(dataSearch.fecha_ingreso),
+                precio: dataSearch.precio,
+                id_inventario: dataSearch.id_inventario,
+                id_categoria: dataSearch.id_categoria,
+                id_unidad_medida: dataSearch.id_unidad_medida,
+              }
+             ]
+          }
         }
     }
 

@@ -17,11 +17,11 @@ export default function DeleteSupplyModal({handleOpenModal, handleDeleteFecth,id
         <main>
             <p>¿Está seguro que desea eliminar este elemento?</p>
         </main>
-        <footer className='btn-bar'>
-          <button className='btn-submit' onClick={handleDeleteFecth}>
+        <footer className='supply-popup-delete-btn-bar'>
+          <button className='supply-popup-delete-btn-submit' onClick={handleDeleteFecth}>
             Aceptar
           </button>
-          <button className='btn-cancel' onClick={handleOpenModal}>
+          <button className='supply-popup-delete-btn-cancel' onClick={handleOpenModal}>
             Cancelar
           </button>
         </footer>

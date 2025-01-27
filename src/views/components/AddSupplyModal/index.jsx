@@ -1,8 +1,24 @@
+import ErrorMessageModal from '../ErrorMessageModal'
 import { useForm } from 'react-hook-form'
 
 import './styles.css'
 
-export default function AddSupplyModal({handleOpenModal, handleAddFetch}){
+export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsData, categoriesData,inventoriesData, data}){
+
+  // if(Array.isArray(data) || Array.isArray(unitsData) || Array.isArray(categoriesData) ||Array.isArray(inventoriesData) ){
+  //   console.log(data)
+  //   console.log(data.length)
+  //   return(
+  //     <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />
+  //   )
+  // }
+  
+  if(data.length===0 || unitsData.length===0 || categoriesData.length===0 || inventoriesData.length===0){
+      return(
+        <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />
+      )
+    }
+
 
   const {register, handleSubmit, formState:{errors} } =useForm() 
   
@@ -18,8 +34,28 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch}){
                 "id_unidad_medida": data.idUnidad
               }
       handleAddFetch(newData)
+      console.log(data)
     } 
   )
+
+  const prueba =[
+    {
+      id:123,
+      nombre:"pablo",
+      cantidad:100
+    },
+    {
+      id:657,
+      nombre:"gillermo",
+      cantidad:200
+    },
+    {
+      id:890,
+      nombre:"tyron",
+      cantidad:300
+    }
+  ]
+   
 
   return(
     <div className="supply-popup-bg">
@@ -64,30 +100,45 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch}){
                 {errors.precio && <span>{errors.precio.message}</span>}
               </div>
               <div>
-                <label htmlFor="inventario">Id Inventario</label>
-                <input type="text" name="inventario" placeholder="Ingrese el inventario" {...register("idInventario",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <label htmlFor="inventario">ID Inventario</label>
+                <select name="inventorio" {...register("idInventario",{
+                  required:{value:true, message:"El inventario es obligatorio"}
+                } )} >
+                  {inventoriesData.inventories.map((inventary)=>{
+                    return(
+                      <option value={inventary.id} key={inventary.id} >{inventary.id} </option>
+                    )
+                  })}
+                </select>
                 {errors.idInventario && <span>{errors.idInventario.message}</span>}
               </div>
               <div>
-                <label htmlFor="categoria">Id Categoria</label>
-                <input type="text" name="categoria" placeholder="Ingrese la categoria" {...register("idCategoria",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <label htmlFor="categoria">Categoria</label>
+                <select name="categoria" {...register("idCategoria",{
+                  required:{value:true, message:"La categoria es obligatoria"}
+                } )} >
+                  {categoriesData.map((category)=>{
+                    return(
+                      <option value={category.id} key={category.id} >{category.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idCategoria && <span>{errors.idCategoria.message}</span>}
               </div>
               <div>
-                <label htmlFor="unidad">Id U. de medida</label>
-                <input type="text" name="unidad" placeholder="Ingrese la unidad" {...register("idUnidad",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <label htmlFor="unidad">Unidad de medida</label>
+                <select name="unidad" {...register("idUnidad",{
+                  required:{value:true, message:"La unidad es obligatoria"}
+                } )} >
+                  {unitsData.units.map((unit)=>{
+                    return(
+                      <option value={unit.id} key={unit.id} >{unit.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idUnidad && <span>{errors.idUnidad.message}</span>}
               </div>
-              <div className='btn-bar'>
+              <div className='add-supply-btn-bar'>
                 <button className='btn-submit'>
                   Enviar
                 </button>
