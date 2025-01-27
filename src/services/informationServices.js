@@ -6,7 +6,10 @@ export async function getInformation() {
     supplies: "http://localhost:3000/api/v1/supplies",
     activitiesManagement: "http://localhost:3000/api/v1/activities-management",
     units: "http://localhost:3000/api/v1/units",
-    activities: "http://localhost:3000/api/v1/activities"
+    activities: "http://localhost:3000/api/v1/activities",
+    projects: "http://localhost:3000/api/v1/projects",
+    crops: "http://localhost:3000/api/v1/crops",
+    seasons: "http://localhost:3000/api/v1/seasons",
   };
 
   try {
@@ -36,6 +39,9 @@ export async function getInformation() {
       activitiesManagementData,
       unitData,
       activitiesData,
+      projectsData, //declaracion variables para el los select
+      cropsData,
+      seasonsData,
     ] = responses;
 
     const expenses = expensesData?.map((element, index) => {
@@ -114,6 +120,9 @@ export async function getInformation() {
       sales,
       production,
       activityManagements,
+      projects: projectsData?.projects || [],//datos de los proyectos
+      crops: cropsData?.crops || [],
+      seasons: seasonsData?.seasons || [],
     };
   } catch (error) {
     console.error("Error fetching data:", error);
