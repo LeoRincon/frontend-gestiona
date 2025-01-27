@@ -13,6 +13,8 @@ const Information = () => {
     production: [],
     activityManagements: [],
     projects: [],
+    crops: [],
+    seasons: [],
   });
 
   const columns = {
@@ -39,7 +41,10 @@ const Information = () => {
     production: [
       { name: "#", selector: (row) => row.id },
       { name: "Nombre", selector: (row) => row.name },
-      { name: "Cantidad recolectada", selector: (row) => row.harvestedQuantity },
+      {
+        name: "Cantidad recolectada",
+        selector: (row) => row.harvestedQuantity,
+      },
       { name: "Unidad de medida", selector: (row) => row.unit },
       {
         name: "Fecha de recolección",
@@ -57,24 +62,35 @@ const Information = () => {
     ],
   };
 
-
-
   //nuevos estados para proyectos, cultivos y temporadas
   const [projects, setProjects] = useState([]);
   const [selectedProyect, setSelectedProject] = useState("");
+
+  const [crops, setCrops] = useState([]);
+  const [selectedCrop, setSelectedCrop] = useState("");
+
+  const [seasons, setSeasons] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState("");
 
   const handleProjectChange = (event) => {
     setSelectedProject(event.target.value);
   };
 
+  const handleCropChange = (event) => {
+    setSelectedCrop(event.target.value);
+  };
+  const handleSeasonChange = (event) => {
+    setSelectedSeason(event.target.value);
+  };
 
   useEffect(() => {
     console.log("columns", columns);
     getInformation()
       .then((dataDb) => {
         setData(dataDb);
-        setProjects(dataDb.projects);//actualizar proyectos cultivos y temporadas
-
+        setProjects(dataDb.projects); //actualizar proyectos cultivos y temporadas
+        setCrops(dataDb.crops);
+        setSeasons(dataDb.seasons);
       })
       .catch((error) => {
         console.error("Error al obtener los datos:", error);
@@ -84,7 +100,6 @@ const Information = () => {
   useEffect(() => {
     console.log("proyecto seleccionado", selectedProyect);
   }, [selectedProyect]);
-
 
   return (
     <div className="metricas">
@@ -99,17 +114,17 @@ const Information = () => {
             <h2>Proyecto</h2>
             <div className="select-container">
               <label htmlFor="project-select"></label>
-              <select 
-              name="project" 
-              id="project-select" 
-              value={selectedProyect} //valor seleccionado
-              onChange={handleProjectChange} //funcion para manejar el cambio
+              <select
+                name="project"
+                id="project-select"
+                value={selectedProyect} //valor seleccionado
+                onChange={handleProjectChange} //funcion para manejar el cambio
               >
                 <option value="">Selecciona un proyecto</option>
                 {projects.map((project) => (
                   <option key={project.id} value={project.id}>
                     {project.nombre}
-                    </option>
+                  </option>
                 ))}
               </select>
             </div>
@@ -118,12 +133,19 @@ const Information = () => {
           <div className="nav-item">
             <h2>Cultivo</h2>
             <div className="select-container">
-              <label htmlFor="cultivo-select"></label>
-              <select name="cultivo" id="cultivo-select">
-                <option value="Arroz">Arroz</option>
-                <option value="Mandarina">Mandarina</option>
-                <option value="Cacao">Cacao</option>
-                <option value="Cafe">Café</option>
+              <label htmlFor="crop-select"></label>
+              <select
+                name="crop"
+                id="crop-select"
+                value={selectedCrop}
+                onChange={handleCropChange}
+              >
+                <option value="">Selecciona un cultivo</option>
+                {crops.map((crop) => (
+                  <option key={crop.id} value={crop.id}>
+                    {crop.nombre}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -131,12 +153,19 @@ const Information = () => {
           <div className="nav-item">
             <h2>Temporada</h2>
             <div className="select-container">
-              <label htmlFor="Temporada"></label>
-              <select name="Temporada" id="Temporada">
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
+              <label htmlFor="season-select"></label>
+              <select 
+                name="season" 
+                id="season-select"
+                value={selectedSeason}
+                onChange={handleSeasonChange}
+                >
+                <option value="">selecciona una temporada</option>
+                {seasons.map((season) => (
+                  <option key={season.id} value={season.id}>
+                    {season.nombre}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
