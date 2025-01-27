@@ -114,15 +114,18 @@ export async function getInformation() {
         totalCost: element.costo
       };
     }) || [];
+    
+    // Verifica la estructura de los datos de proyectos
+    console.log("Datos de proyectos obtenidos de la API:", projectsData);
 
     return {
       expenses,
       sales,
       production,
       activityManagements,
-      projects: projectsData?.projects || [],//datos de los proyectos
+      projects: projectsData || [],//datos de los proyectos
       crops: cropsData?.crops || [],
-      seasons: seasonsData?.seasons || [],
+      seasons: seasonsData || [],
     };
   } catch (error) {
     console.error("Error fetching data:", error);
