@@ -1,0 +1,12 @@
+
+.sales__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  
+}
+.sales__header__title {
+  font-family: var(--roboto);
+  color: var(--accent-text-2);
+}
