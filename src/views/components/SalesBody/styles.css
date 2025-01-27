@@ -1,0 +1,12 @@
+.sales-body {
+  flex: 1;
+  margin: 0;
+  width: 100%;
+  padding: 1rem;
+}
+.sales-body__actions {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1rem;
+  padding-right: 1rem
+}
