@@ -3,7 +3,6 @@ import Sidebar from "./components/Sidebar";
 import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
 import { getInformation } from "../services/informationServices";
-import { getColumnsOfData } from "../utils/getColumnsOfData";
 import { formatingDate } from "../utils/formatingDate";
 
 const Information = () => {
@@ -51,53 +50,59 @@ const Information = () => {
     ],
   });
 
-  const [columns, setColums] = useState({
+  const [columns, setColumns] = useState({
     expenses: [
       { name: "#", selector: (row) => row.id },
       { name: "Nombre insumo", selector: (row) => row.suppliesName },
       { name: "Cantidad usada", selector: (row) => row.usedQuantity },
       { name: "Unidad de medida", selector: (row) => row.unit },
-      { name: "Precio total", selector: (row) => row.totalPrice }
+      { name: "Precio total", selector: (row) => row.totalPrice },
     ],
-
-    sales: [{ name: "#", selector: (row) => row.id },
-    { name: "Cantidad vendida", selector: (row) => row.soldQuantity },    
-    { name: "Unidad de medida", selector: (row) => row.unit },
-    { name: "Precio unitario", selector: (row) => row.unitPrice },
-    { name: "Precio total", selector: (row) => row.totalPrice },
-    { name: "Fecha de venta", selector: (row) => row.saleDate, cell: (row) => formatingDate(row.saleDate) },
-    { name: "Observaciones", selector: (row) => row.observations }
+    sales: [
+      { name: "#", selector: (row) => row.id },
+      { name: "Cantidad vendida", selector: (row) => row.soldQuantity },
+      { name: "Unidad de medida", selector: (row) => row.unit },
+      { name: "Precio unitario", selector: (row) => row.unitPrice },
+      { name: "Precio total", selector: (row) => row.totalPrice },
+      {
+        name: "Fecha de venta",
+        selector: (row) => row.saleDate,
+        cell: (row) => formatingDate(row.saleDate),
+      },
+      { name: "Observaciones", selector: (row) => row.observations },
     ],
-    
-    production: [{ name: "#", selector: (row) => row.id }, 
+    production: [
+      { name: "#", selector: (row) => row.id },
       { name: "Nombre", selector: (row) => row.name },
       { name: "Cantidad recolectada", selector: (row) => row.harvestedQuantity },
       { name: "Unidad de medida", selector: (row) => row.unit },
-      { name: "Fecha de recolección", selector: (row) => row.harvestDate, cell: (row) => formatingDate(row.harvestDate) }
+      {
+        name: "Fecha de recolección",
+        selector: (row) => row.harvestDate,
+        cell: (row) => formatingDate(row.harvestDate),
+      },
     ],
-    activityManagements: [{ name: "#", selector: (row) => row.id },
+    activityManagements: [
+      { name: "#", selector: (row) => row.id },
       { name: "Nombre actividad", selector: (row) => row.activityName },
-      {name: "Nombre insumo", selector: (row) => row.suppliesName },
+      { name: "Nombre insumo", selector: (row) => row.suppliesName },
       { name: "Cantidad usada", selector: (row) => row.usedQuantity },
       { name: "Costo insumo", selector: (row) => row.suppliesCost },
-      { name: "Costo total", selector: (row) => row.totalCost }
+      { name: "Costo total", selector: (row) => row.totalCost },
     ],
   });
 
   useEffect(() => {
-    console.log("columns",columns)
-    getInformation().then((dataDb) => {
-      console.log("datos obtenidos de la api, dataDb: ", dataDb);
-      setData(dataDb);
-    });
+    console.log("columns", columns);
+    getInformation()
+      .then((dataDb) => {
+        console.log("Datos obtenidos de la API, dataDb: ", dataDb);
+        setData(dataDb);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los datos:", error);
+      });
   }, []);
-
-  //useEffect(() => {
-    //console.log("Datos actuales en useEffect:", data); // Verifica la estructura de `data`
-    //const cols = getColumnsOfData(data);
-    //console.log("Columnas generadas:", cols);  // Muestra las columnas generadas
-    //setColums(cols);
-  //}, [data]);
 
   return (
     <div className="metricas">
@@ -173,7 +178,6 @@ const Information = () => {
         </div>
 
         <br />
-
 
         <div className="table-container">
           <h2 className="table_caption">Gestión de Actividades</h2>
