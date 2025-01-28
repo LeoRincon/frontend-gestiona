@@ -1,6 +1,7 @@
 export const iconWidth = 24;
 export const iconHeigth = 24;
 export const iconFill = "#008164";
+export const secondaryColor = "#a81d1f"
 export const messages = {
   crop: "Cultivo",
   season: "Temporada",
@@ -55,3 +56,7 @@ export const CROPS_PATH = "/crops";
 export const UNITS_PATH = "/units";
 export const SALES_PATH = "/sales";
 export const SEASONS_PATH = "/seasons";
+export const USERS_HAS_PATH = "/users-has"
+export const ROLES_PATH = "/roles"
+
+export const USER_SESSION = "user_data"

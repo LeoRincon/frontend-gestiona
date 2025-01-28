@@ -11,10 +11,16 @@ import {
   messages,
 } from "../../../utils/const";
 
-import "./styles.css"
+import "./styles.css";
 
-function InitialSidebar() {
-  const { settings, logout, username, email } = messages;
+function InitialSidebar({ userData }) {
+  const { settings, logout } = messages;
+  let { name, email } = userData;
+
+  if (!userData || Object.keys(userData).length === 0) {
+    name = "No disponible";
+    email = "Correo No disponible";
+  }
 
   return (
     <aside className="sidebar">
@@ -37,7 +43,7 @@ function InitialSidebar() {
           text={logout}
         />
       </SidebarNav>
-      <SidebarFooter username={username} email={email} />
+      <SidebarFooter username={name} email={email} />
     </aside>
   );
 }

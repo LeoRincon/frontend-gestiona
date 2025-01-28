@@ -4,12 +4,6 @@
   height: 100vh;
 }
 
-/* Sidebar */
-.sidebar {
-  flex-shrink: 0;
-  width: 286px;
-}
-
 /* Content area */
 .content-container {
   flex-grow: 1;
@@ -18,7 +12,7 @@
 }
 
 :root {
-  --color-principal: #1DA889;
+  --color-principal: var(--accent-color);
   --padding: 50px;
 }
 
@@ -34,4 +28,15 @@ html {
 body {
   margin: 0;
   background-color: #FFF;
+}
+
+.content-container__crop{
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container__crop__buttons{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem 1rem;
 }

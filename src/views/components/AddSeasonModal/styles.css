@@ -1,5 +1,5 @@
 .season-popup-bg{
-  top: 0;
+  top: 0; 
   left: 0;
   width: 100%;
   height: 100%;
@@ -12,7 +12,7 @@
 
 .season-popup-add{
   width: 500px;
-  height: 410px;
+  height: 390px;
   background-color: #FFF;
   border-radius: 5px;
 }
@@ -22,8 +22,7 @@
   color: #3a3434;
 }
 
-
-.season-popup-add form{
+.season-form-add{
   height: 380px;
   display: flex; 
   flex-wrap: wrap;
@@ -33,15 +32,29 @@
   border-top: thin solid #e4e4e4;
 }
 
-.season-popup-add input,.season-popup-add label{
+.season-form-add div:not(:last-child){
+  width: 50%;
+}
+
+.season-form-add input,.season-form-add label{
   margin-left: auto;
   margin-right: auto;
-  width: 43%;
+  width: 80%;
   display: block;
   border-radius: 3px;
   color: #3a3434;
 } 
-.season-popup-add input{
+
+.season-form-add span{
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  display: block;
+  font-size: 0.8rem;
+  color: tomato;
+}
+
+.season-form-add input{
   margin-bottom: 12px;
   padding: 7px;
   border: thin solid #e4e4e4;

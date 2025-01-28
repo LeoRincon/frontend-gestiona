@@ -3,21 +3,39 @@ import InitialView from "./components/InitialView";
 import AddProjectModal from "./components/AddProjectModal";
 import ProjectsList from "./components/ProjectsList";
 import { useEffect, useRef, useState } from "react";
-import { createProject } from "../services/projectService";
+import { createProject, getProjectsByUserId, updateSessionProjects } from "../services/projectService";
 
 import "./styles/project.css";
-import { fetchProjects } from "../services/projectService";
 
 export default function Project() {
   const dialogRef = useRef(null);
   const [projects, setProjects] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    const getProjects = async () => {
-      const projects = await fetchProjects();
-      setProjects(projects);
-    };
-    getProjects();
+    const dataSessionStorage = sessionStorage.getItem("user_data");
+    const dataSession = JSON.parse(dataSessionStorage);
+    if (!dataSession) {
+      console.log("session not exist");
+      return;
+    }
+
+    const { id: userId, nombre: name, email } = dataSession;
+
+    setUser({ userId, name, email });
+
+    try {
+      const getUserProjects = async () => {
+        const response = await getProjectsByUserId(userId);
+        console.log("Response", response)
+        if (!response) throw new Error("Error fetching projects");
+        await updateSessionProjects(response)
+        setProjects(response);
+      };
+      getUserProjects();
+    } catch (error) {
+      console.error("Error fetching userProjects", error);
+    }
   }, []);
 
   const handleOpenModal = () => {
@@ -29,7 +47,7 @@ export default function Project() {
   };
   const handelAddElement = async (element) => {
     try {
-      const response = await createProject(element);
+      const response = await createProject(element, user.userId);
       if (!response) throw new Error("Error al crear el proyecto");
       setProjects((prevProjects) => [...prevProjects, response]);
     } catch (error) {
@@ -39,7 +57,7 @@ export default function Project() {
 
   return (
     <div className="container-project">
-      <InitialSidebar />
+      <InitialSidebar userData={user} />
       {!projects.length ? (
         <InitialView buttonOnClick={handleOpenModal} />
       ) : (

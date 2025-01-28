@@ -10,20 +10,20 @@
   background-color: rgb(0, 0, 0,50%);
 }
 
-.supply-popup-add{
+.season-popup-edit{
   width: 500px;
-  height: 420px;
+  height: 390px;
   background-color: #FFF;
   border-radius: 5px;
 }
 
-.supply-popup-add h4{
+.season-popup-edit h4{
   margin: 15px;
   color: #3a3434;
 }
 
 
-.supply-form-add{
+.season-form-edit{
   height: 380px;
   display: flex; 
   flex-wrap: wrap;
@@ -33,11 +33,11 @@
   border-top: thin solid #e4e4e4;
 }
 
-.supply-form-add div:not(:last-child){
+.season-form-edit div:not(:last-child){
   width: 50%;
 }
 
-.supply-form-add input,.supply-form-add label,.supply-form-add select {
+.season-form-edit input,.season-form-edit label{
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -46,7 +46,7 @@
   color: #3a3434;
 } 
 
-.supply-form-add span{
+.season-form-edit span{
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -55,29 +55,31 @@
   color: tomato;
 }
 
-.supply-form-add input{
-  margin-bottom: 6px;
-  padding: 7px;
-  border: thin solid #e4e4e4;
-  background-color: #FFF; 
-}
-
-.supply-form-add select{
-  margin-bottom: 6px;
+.season-popup-edit input{
+  margin-bottom: 7px;
   padding: 7px;
   border: thin solid #e4e4e4;
   background-color: #FFF;
 }
 
-.add-supply-btn-bar{
+.btn-bar{
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   border-top: thin solid #e4e4e4;
 }
 
-.add-supply-btn-bar .btn-submit,.add-supply-btn-bar .btn-cancel{
-  width: 20%;
+.btn-1,.btn-2{
+  width: 50%;
+}
+
+.btn-2{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-submit, .btn-cancel, .btn-end{
+  width: 30%;
   height: 30px;
   margin: 7px;
   margin-bottom: 0;
@@ -86,18 +88,29 @@
   border: none;
 }
 
-.add-supply-btn-bar .btn-submit{
+.btn-end{
+  width: 100px;
+  margin-left: 12px;
+  background-color: red;
+  color: #FFF;
+}
+
+.btn-end:active{
+  background-color: rgb(75, 2, 2);
+}
+
+.btn-submit{
   background-color: var(--accent-text-1);
   color: #FFF;
 }
 
-.add-supply-btn-bar .btn-submit:active{
+.btn-submit:active{
   background-color: var(--accent-text-2);
 } 
-.add-supply-btn-bar .btn-cancel{
+.btn-cancel{
   background-color: #e4e4e4;
   color: black;
 }
-.add-supply-btn-bar .btn-cancel:active{
+.btn-cancel:active{
   background-color: #b1b0b0;
 }

@@ -1,27 +1,37 @@
 import ErrorMessageModal from '../ErrorMessageModal'
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 
 import './styles.css'
 
-export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsData, categoriesData,inventoriesData, data}){
-
-  // if(Array.isArray(data) || Array.isArray(unitsData) || Array.isArray(categoriesData) ||Array.isArray(inventoriesData) ){
-  //   console.log(data)
-  //   console.log(data.length)
-  //   return(
-  //     <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />
-  //   )
-  // }
+export default function EditSupplyModal(
+  {id, completeData, handleEditModal, handleEditFetch,unitsData,
+  categoriesData,
+  inventoriesData}){
   
-  if(data.length===0 || unitsData.length===0 || categoriesData.length===0 || inventoriesData.length===0){
-      return(
-        <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />
-      )
-    }
+  //SI NO SE SELECCIONADO UN REGISTRO RETORNO ESTE MENSAJE
+  if(!id){
+    return(
+      <ErrorMessageModal text="No ha selecionado ningun insumo" handleErrorModal={handleEditModal} />
+    )
+  }
+  const {register, handleSubmit, formState:{errors}, setValue } =useForm()
+
+  //SE TOMAN LOS DATOS DEL SUPPLY SELECIONADO
+  const dataValue = completeData.find((value)=>value.id === id)
+
+  //PONER DATOS POR DEFECTO EN LOS INPUTS
+  useEffect(()=>{
+    setValue("nombre",dataValue.nombre)
+    setValue("cantidad",dataValue.cantidad_disponible)
+    setValue("ingreso",dataValue.fecha_ingreso)
+    setValue("precio",dataValue.precio)
+    setValue("idInventario",dataValue.id_inventario)
+    setValue("idCategoria",dataValue.id_categoria)
+    setValue("idUnidad",dataValue.id_unidad_medida)
+  },[])
 
 
-  const {register, handleSubmit, formState:{errors} } =useForm() 
-  
   const onSubmit= handleSubmit(
     (data)=>{
       const newData= {
@@ -33,43 +43,23 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
                 "id_categoria": data.idCategoria,
                 "id_unidad_medida": data.idUnidad
               }
-      handleAddFetch(newData)
-      console.log(data)
+          handleEditFetch(newData)
     } 
   )
 
-  const prueba =[
-    {
-      id:123,
-      nombre:"pablo",
-      cantidad:100
-    },
-    {
-      id:657,
-      nombre:"gillermo",
-      cantidad:200
-    },
-    {
-      id:890,
-      nombre:"tyron",
-      cantidad:300
-    }
-  ]
-   
-
   return(
     <div className="supply-popup-bg">
-      <div className="supply-popup-add">
+      <div className="supply-popup-edit">
         <header>
           <h4>
-            Ingresar Insumo
+            Editar insumo
           </h4>
           </header>
           <main>
-            <form className="supply-form-add" onSubmit={onSubmit}>
+            <form className="supply-form-edit" onSubmit={onSubmit}>
               <div>
                 <label htmlFor="nombre">Nombre</label>
-                <input type="text" name="nombre" placeholder="Ingrese el nombre del insumo" {...register("nombre",{
+                <input type="text" name="nombre" placeholder={dataValue.nombre} {...register("nombre",{
                   required:{value:true,message:"El nombre es obligatorio"},
                   minLength:{value:2,message:"El nombre debe tener al menos 2 caracteres"},
                   maxLength:{value:100,message:"El nombre no puede tener más de 100 caracteres"},
@@ -78,7 +68,7 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
               </div>
               <div>
                 <label htmlFor="cantidad">Cantidad disp</label>
-                <input type="text" name="cantidad" placeholder="Ingrese la Cantidad" {...register("cantidad",{
+                <input type="text" name="cantidad" placeholder={dataValue.cantidad_disponible} {...register("cantidad",{
                   required:{value:true,message:"La cantidad es obligatoria"},
                   pattern:{value:/^[0-9]+([,][0-9]+)?$/,message:"La cantidad debe ser numerica"},
                 })} />
@@ -86,21 +76,21 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
               </div>
               <div>
                 <label htmlFor="date">F. de Ingreso</label>
-                <input type="date" name="ingreso" {...register("ingreso", {
+                <input type="date" name="ingreso"  {...register("ingreso", {
                   required:{value:true,message:"La fecha es obligatoria"},
                 })} />
                 {errors.ingreso && <span>{errors.ingreso.message}</span>}
               </div>
               <div>
                 <label htmlFor="precio">Precio</label>
-                <input type="text" name="precio" placeholder="Ingrese el precio" {...register("precio", {
+                <input type="text" name="precio" placeholder={dataValue.precio} {...register("precio", {
                   required:{value:true,message:"El precio es obligatorio"},
                   pattern:{value:/^[0-9]+([,][0-9]+)?$/,message:"El precio debe ser numerico"},
                 })} />
                 {errors.precio && <span>{errors.precio.message}</span>}
               </div>
               <div>
-                <label htmlFor="inventario">ID Inventario</label>
+                <label htmlFor="inventario">Id Inventario</label>
                 <select name="inventorio" {...register("idInventario",{
                   required:{value:true, message:"El inventario es obligatorio"}
                 } )} >
@@ -113,7 +103,7 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
                 {errors.idInventario && <span>{errors.idInventario.message}</span>}
               </div>
               <div>
-                <label htmlFor="categoria">Categoria</label>
+                <label htmlFor="categoria">Id Categoria</label>
                 <select name="categoria" {...register("idCategoria",{
                   required:{value:true, message:"La categoria es obligatoria"}
                 } )} >
@@ -126,7 +116,7 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
                 {errors.idCategoria && <span>{errors.idCategoria.message}</span>}
               </div>
               <div>
-                <label htmlFor="unidad">Unidad de medida</label>
+                <label htmlFor="unidad">Id U. de medida</label>
                 <select name="unidad" {...register("idUnidad",{
                   required:{value:true, message:"La unidad es obligatoria"}
                 } )} >
@@ -138,11 +128,11 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
                 </select>
                 {errors.idUnidad && <span>{errors.idUnidad.message}</span>}
               </div>
-              <div className='add-supply-btn-bar'>
-                <button className='btn-submit'>
+              <div className='supply-form-edit-btn-bar'>
+                <button className='supply-form-edit-btn-submit'>
                   Enviar
                 </button>
-                <button className='btn-cancel' type='button' onClick={handleOpenModal}>
+                <button className='supply-form-edit-btn-cancel' type='button' onClick={handleEditModal}>
                   Cancelar
                 </button>
               </div>
@@ -151,4 +141,4 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
       </div>
     </div>
   )
-}
+} 

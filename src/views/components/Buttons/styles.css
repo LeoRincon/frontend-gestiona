@@ -46,3 +46,17 @@
   border-color: transparent;
   cursor: pointer;
 }
+
+.delete-button,
+.edit-button{
+  all: unset;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.edit-button:hover{
+  box-shadow: 0 0 9px 2px var(--accent-interactive-componente-3);
+}
+.delete-button:hover{
+  box-shadow: 0 0 9px 2px #e9adad;
+}

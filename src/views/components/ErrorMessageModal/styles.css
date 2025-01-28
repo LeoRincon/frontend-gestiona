@@ -1,4 +1,4 @@
-.supply-popup-bg{
+.error-popup-bg{
   top: 0;
   left: 0;
   width: 100%;
@@ -10,62 +10,50 @@
   background-color: rgb(0, 0, 0,50%);
 }
 
-.supply-popup-delete{
-  width: 480px;
+.error-popup{
+  width: 400px;
   height: 160px;
   background-color: #FFF;
   border-radius: 5px;
 }
 
-.supply-popup-delete header{
+.error-popup header{
   border-bottom: thin solid #e4e4e4;
 }
 
-.supply-popup-delete h4{
+.error-popup h4{
   margin: 15px;
   color: #3a3434;
 }
 
-.supply-popup-delete main{
+.error-popup main{
   height: 60px;
   display: flex;
   align-items: center;
   color: #3a3434;
 }
 
-.supply-popup-delete p{
+.error-popup p{
   margin: 15px;
 }
 
-.supply-popup-delete-btn-bar{
+.error-popup .btn-bar{
   width: 100%;
   display: flex;
   justify-content: flex-end;
   border-top: thin solid #e4e4e4;
 }
 
-.supply-popup-delete button{
-  width: 20%;
+.error-popup .btn-ok{
   height: 30px;
-  margin: 7px;
-  margin-bottom: 0;
-  padding: 2px;
-  border-radius: 3px;
+  width: 20%;
+  margin: 10px;
+  margin-right: 20px;
   border: none;
-} 
-
-.supply-popup-delete-btn-submit{
+  border-radius: 5px;
   background-color: var(--accent-text-1);
   color: #FFF;
 }
-
-.supply-popup-delete-btn-submit:active{
+.error-popup .btn-ok:active{
   background-color: var(--accent-text-2);
-} 
-.supply-popup-delete-btn-cancel{
-  background-color: #e4e4e4;
-  color: black;
-}
-.supply-popup-delete-btn-cancel:active{
-  background-color: #b1b0b0;
 }
