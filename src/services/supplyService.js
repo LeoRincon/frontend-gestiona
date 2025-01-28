@@ -1,4 +1,7 @@
 const url = "http://localhost:3000/api/v1/supplies"
+const urlUnits = "http://localhost:3000/api/v1/units"
+const urlCategories = "http://localhost:3000/api/v1/categories"
+const urlInventories = "http://localhost:3000/api/v1/inventories"
 
 //GET ALL SUPLLIES
 export async function fetchSupplies() {
@@ -68,5 +71,41 @@ export async function deleteSupply(id) {
     }
   })
   const data = await response.json();
+  return data
+}
+
+//GET ALL UNITS
+export async function fetchUnits() {
+  const response = await fetch(urlUnits,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+  return data
+}
+
+//GET ALL CATEGORIES
+export async function fetchCategories() {
+  const response = await fetch(urlCategories,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+  return data
+}
+
+//GET ALL INVENTORIES
+export async function fetchInventories() {
+  const response = await fetch(urlInventories,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
   return data
 }

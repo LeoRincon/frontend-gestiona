@@ -37,7 +37,7 @@
   width: 50%;
 }
 
-.supply-form-add input,.supply-form-add label{
+.supply-form-add input,.supply-form-add label,.supply-form-add select {
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -55,21 +55,28 @@
   color: tomato;
 }
 
-.supply-popup-add input{
-  margin-bottom: 7px;
+.supply-form-add input{
+  margin-bottom: 6px;
+  padding: 7px;
+  border: thin solid #e4e4e4;
+  background-color: #FFF; 
+}
+
+.supply-form-add select{
+  margin-bottom: 6px;
   padding: 7px;
   border: thin solid #e4e4e4;
   background-color: #FFF;
 }
 
-.btn-bar{
+.add-supply-btn-bar{
   width: 100%;
   display: flex;
   justify-content: flex-end;
   border-top: thin solid #e4e4e4;
 }
 
-.btn-submit, .btn-cancel{
+.add-supply-btn-bar .btn-submit,.add-supply-btn-bar .btn-cancel{
   width: 20%;
   height: 30px;
   margin: 7px;
@@ -79,18 +86,18 @@
   border: none;
 }
 
-.btn-submit{
+.add-supply-btn-bar .btn-submit{
   background-color: var(--accent-text-1);
   color: #FFF;
 }
 
-.btn-submit:active{
+.add-supply-btn-bar .btn-submit:active{
   background-color: var(--accent-text-2);
 } 
-.btn-cancel{
+.add-supply-btn-bar .btn-cancel{
   background-color: #e4e4e4;
   color: black;
 }
-.btn-cancel:active{
+.add-supply-btn-bar .btn-cancel:active{
   background-color: #b1b0b0;
 }

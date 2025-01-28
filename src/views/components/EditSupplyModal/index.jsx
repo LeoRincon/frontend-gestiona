@@ -4,7 +4,10 @@ import { useEffect } from 'react'
 
 import './styles.css'
 
-export default function EditSupplyModal({id, completeData, handleEditModal, handleEditFetch}){
+export default function EditSupplyModal(
+  {id, completeData, handleEditModal, handleEditFetch,unitsData,
+  categoriesData,
+  inventoriesData}){
   
   //SI NO SE SELECCIONADO UN REGISTRO RETORNO ESTE MENSAJE
   if(!id){
@@ -88,33 +91,48 @@ export default function EditSupplyModal({id, completeData, handleEditModal, hand
               </div>
               <div>
                 <label htmlFor="inventario">Id Inventario</label>
-                <input type="text" name="inventario" placeholder={dataValue.id_inventario} {...register("idInventario",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <select name="inventorio" {...register("idInventario",{
+                  required:{value:true, message:"El inventario es obligatorio"}
+                } )} >
+                  {inventoriesData.inventories.map((inventary)=>{
+                    return(
+                      <option value={inventary.id} key={inventary.id} >{inventary.id} </option>
+                    )
+                  })}
+                </select>
                 {errors.idInventario && <span>{errors.idInventario.message}</span>}
               </div>
               <div>
                 <label htmlFor="categoria">Id Categoria</label>
-                <input type="text" name="categoria" placeholder={dataValue.id_categoria} {...register("idCategoria",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <select name="categoria" {...register("idCategoria",{
+                  required:{value:true, message:"La categoria es obligatoria"}
+                } )} >
+                  {categoriesData.map((category)=>{
+                    return(
+                      <option value={category.id} key={category.id} >{category.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idCategoria && <span>{errors.idCategoria.message}</span>}
               </div>
               <div>
                 <label htmlFor="unidad">Id U. de medida</label>
-                <input type="text" name="unidad" placeholder={dataValue.id_unidad_medida} {...register("idUnidad",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <select name="unidad" {...register("idUnidad",{
+                  required:{value:true, message:"La unidad es obligatoria"}
+                } )} >
+                  {unitsData.units.map((unit)=>{
+                    return(
+                      <option value={unit.id} key={unit.id} >{unit.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idUnidad && <span>{errors.idUnidad.message}</span>}
               </div>
-              <div className='btn-bar'>
-                <button className='btn-submit'>
+              <div className='supply-form-edit-btn-bar'>
+                <button className='supply-form-edit-btn-submit'>
                   Enviar
                 </button>
-                <button className='btn-cancel' type='button' onClick={handleEditModal}>
+                <button className='supply-form-edit-btn-cancel' type='button' onClick={handleEditModal}>
                   Cancelar
                 </button>
               </div>
