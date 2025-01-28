@@ -4,6 +4,7 @@ import {
   USERS_HAS_PATH,
   USERS_PATH,
   ROLES_PATH,
+  CROPS_PATH,
 } from "../utils/const";
 import { isUUIDv4 } from "../utils/validations";
 
@@ -122,4 +123,49 @@ export async function getProjectsByUserId(userId) {
   );
 
   return userProjects;
+}
+
+export async function updateSessionProjects(projects) {
+
+  if (!projects) throw new Error ("Projects is required")
+  if (!(projects instanceof Array)) throw new Error ("The object must be an array of projects.")
+
+  const dataSession = sessionStorage.getItem("user_data")
+
+  if (!dataSession) throw new Error ("The User session is invalid")
+  
+  const dataUser = JSON.parse(dataSession)
+  
+    const url = API_URL + CROPS_PATH
+
+  const projectsData = await Promise.all(
+    projects.map(async (element) => {
+      const {id, nombre} = element
+      const cropUrl = `${url}/project/${id}`
+      const res = await fetch(cropUrl, {method: "GET", headers: {"Content-Type": "application/json"}})
+      const cropData = await res.json()
+      const crops = cropData.crops.map(crop => {
+        return {
+          id: crop.id,
+          nombre: crop.nombre,
+          seasons: {
+            id: "",
+            nombre: ""
+          }
+        }
+      })
+
+      return {
+        id,
+        nombre,
+        crops
+      }
+    })
+  );
+
+    const newUserData = {
+    ...dataUser,
+    projectsByUser: projectsData,
+  };
+  sessionStorage.setItem("user_data", JSON.stringify(newUserData));
 }
