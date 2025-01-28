@@ -21,12 +21,12 @@ export async function getInformation() {
         }).then(response => {
           if (!response.ok) {
             console.error(`Error fetching data from ${url}:`, response.statusText);
-            return null; // Retorna null si la respuesta no es exitosa
+            return null;
           }
           return response.json();
         }).catch(error => {
           console.error(`Error fetching data from ${url}:`, error);
-          return null; // Retorna null si hay un error en la solicitud
+          return null;
         })
       )
     );
@@ -39,18 +39,14 @@ export async function getInformation() {
       activitiesManagementData,
       unitData,
       activitiesData,
-      projectsData, //declaracion variables para el los select
+      projectsData,
       cropsData,
       seasonsData,
     ] = responses;
 
     const expenses = expensesData?.map((element, index) => {
-      const units = unitData?.units?.find(
-        (unit) => unit.id === element.id_unidad_medida
-      );
-      const supplies = suppliesData?.data?.find(
-        (supply) => supply.id === element.id_insumo
-      );
+      const units = unitData?.units?.find((unit) => unit.id === element.id_unidad_medida);
+      const supplies = suppliesData?.data?.find((supply) => supply.id === element.id_insumo);
 
       return {
         id: index + 1,
@@ -63,9 +59,7 @@ export async function getInformation() {
     }) || [];
 
     const sales = salesData?.sale?.map((element, index) => {
-      const units = unitData?.units?.find(
-        (unit) => unit.id === element.id_unidad_medida
-      );
+      const units = unitData?.units?.find((unit) => unit.id === element.id_unidad_medida);
 
       return {
         id: index + 1,
@@ -75,13 +69,12 @@ export async function getInformation() {
         saleDate: element.fecha_venta || "",
         observations: element.observaciones || "Sin observaciones",
         unit: units?.nombre || "No disponible",
+        idSeason: element.id_temporada,
       };
     }) || [];
 
     const production = productionData?.data?.map((element, index) => {
-      const units = unitData?.units?.find(
-        (unit) => unit.id === element.id_unidad_medida
-      );
+      const units = unitData?.units?.find((unit) => unit.id === element.id_unidad_medida);
 
       return {
         id: index + 1,
@@ -89,21 +82,14 @@ export async function getInformation() {
         harvestedQuantity: element.cantidad_recolectada,
         harvestDate: element.fecha_recoleccion,
         unit: units?.nombre || "No disponible",
+        idSeason: element.id_temporada,
       };
     }) || [];
 
     const activityManagements = activitiesManagementData?.map((element, index) => {
-      const activity = activitiesData?.activities?.find(
-        (activity) => activity.id === element.id_actividad
-      );
-
-      const expenses = expensesData?.find(
-        (expense) => expense.id === element.gasto_insumo_id
-      );
-
-      const supplies = suppliesData?.data?.find(
-        (supply) => supply.id === expenses?.id_insumo
-      );
+      const activity = activitiesData?.activities?.find((activity) => activity.id === element.id_actividad);
+      const expenses = expensesData?.find((expense) => expense.id === element.gasto_insumo_id);
+      const supplies = suppliesData?.data?.find((supply) => supply.id === expenses?.id_insumo);
 
       return {
         id: index + 1,
@@ -111,19 +97,17 @@ export async function getInformation() {
         suppliesName: supplies?.nombre || "No disponible",
         usedQuantity: expenses?.cantidad_usada || 0,
         suppliesCost: expenses?.precio_total || "No disponible",
-        totalCost: element.costo
+        totalCost: element.costo,
+        idSeason: element.id_temporada,
       };
     }) || [];
-    
-    // Verifica la estructura de los datos de proyectos
-    console.log("Datos de proyectos obtenidos de la API:", projectsData);
 
     return {
       expenses,
       sales,
       production,
       activityManagements,
-      projects: projectsData || [],//datos de los proyectos
+      projects: projectsData || [],
       crops: cropsData?.crops || [],
       seasons: seasonsData || [],
     };

@@ -4,7 +4,6 @@ import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
 import { getInformation } from "../services/informationServices";
 import { formatingDate } from "../utils/formatingDate";
-//import { set } from "react-hook-form";
 
 const Information = () => {
   const [data, setData] = useState({
@@ -15,6 +14,14 @@ const Information = () => {
     projects: [],
     crops: [],
     seasons: [],
+  });
+
+  const [showTables, setShowTables] = useState(false);
+  const [filteredData, setFilteredData] = useState({
+    expenses: [],
+    sales: [],
+    production: [],
+    activityManagements: [],
   });
 
   const columns = {
@@ -41,10 +48,7 @@ const Information = () => {
     production: [
       { name: "#", selector: (row) => row.id },
       { name: "Nombre", selector: (row) => row.name },
-      {
-        name: "Cantidad recolectada",
-        selector: (row) => row.harvestedQuantity,
-      },
+      { name: "Cantidad recolectada", selector: (row) => row.harvestedQuantity },
       { name: "Unidad de medida", selector: (row) => row.unit },
       {
         name: "Fecha de recolección",
@@ -62,33 +66,54 @@ const Information = () => {
     ],
   };
 
-  //nuevos estados para proyectos, cultivos y temporadas
   const [projects, setProjects] = useState([]);
   const [selectedProyect, setSelectedProject] = useState("");
-
   const [crops, setCrops] = useState([]);
+  const [filteredCrops, setFilteredCrops] = useState([]);
   const [selectedCrop, setSelectedCrop] = useState("");
-
   const [seasons, setSeasons] = useState([]);
+  const [filteredSeasons, setFilteredSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState("");
 
   const handleProjectChange = (event) => {
     setSelectedProject(event.target.value);
+    setSelectedCrop("");
+    setSelectedSeason("");
+    setShowTables(false);
   };
 
   const handleCropChange = (event) => {
     setSelectedCrop(event.target.value);
+    setSelectedSeason("");
+    setShowTables(false);
   };
+
   const handleSeasonChange = (event) => {
-    setSelectedSeason(event.target.value);
+    const seasonId = event.target.value;
+    setSelectedSeason(seasonId);
+    setShowTables(true);
+    filterData(seasonId);
+  };
+
+  const filterData = (seasonId) => {
+    const filteredExpenses = data.expenses.filter((expense) => expense.idSeason === seasonId);
+    const filteredSales = data.sales.filter((sale) => sale.idSeason === seasonId);
+    const filteredProduction = data.production.filter((production) => production.idSeason === seasonId);
+    const filteredActivityManagements = data.activityManagements.filter((activity) => activity.idSeason === seasonId);
+
+    setFilteredData({
+      expenses: filteredExpenses,
+      sales: filteredSales,
+      production: filteredProduction,
+      activityManagements: filteredActivityManagements,
+    });
   };
 
   useEffect(() => {
-    console.log("columns", columns);
     getInformation()
       .then((dataDb) => {
         setData(dataDb);
-        setProjects(dataDb.projects); //actualizar proyectos cultivos y temporadas
+        setProjects(dataDb.projects);
         setCrops(dataDb.crops);
         setSeasons(dataDb.seasons);
       })
@@ -98,8 +123,22 @@ const Information = () => {
   }, []);
 
   useEffect(() => {
-    console.log("proyecto seleccionado", selectedProyect);
-  }, [selectedProyect]);
+    if (selectedProyect) {
+      const filtered = crops.filter((crop) => crop.proyecto_id === selectedProyect);
+      setFilteredCrops(filtered);
+    } else {
+      setFilteredCrops([]);
+    }
+  }, [selectedProyect, crops]);
+
+  useEffect(() => {
+    if (selectedCrop) {
+      const filtered = seasons.filter((season) => season.id_cultivo === selectedCrop);
+      setFilteredSeasons(filtered);
+    } else {
+      setFilteredSeasons([]);
+    }
+  }, [selectedCrop, seasons]);
 
   return (
     <div className="metricas">
@@ -113,12 +152,11 @@ const Information = () => {
           <div className="nav-item">
             <h2>Proyecto</h2>
             <div className="select-container">
-              <label htmlFor="project-select"></label>
               <select
                 name="project"
                 id="project-select"
-                value={selectedProyect} //valor seleccionado
-                onChange={handleProjectChange} //funcion para manejar el cambio
+                value={selectedProyect}
+                onChange={handleProjectChange}
               >
                 <option value="">Selecciona un proyecto</option>
                 {projects.map((project) => (
@@ -133,15 +171,15 @@ const Information = () => {
           <div className="nav-item">
             <h2>Cultivo</h2>
             <div className="select-container">
-              <label htmlFor="crop-select"></label>
               <select
                 name="crop"
                 id="crop-select"
                 value={selectedCrop}
                 onChange={handleCropChange}
+                disabled={!selectedProyect}
               >
                 <option value="">Selecciona un cultivo</option>
-                {crops.map((crop) => (
+                {filteredCrops.map((crop) => (
                   <option key={crop.id} value={crop.id}>
                     {crop.nombre}
                   </option>
@@ -153,15 +191,15 @@ const Information = () => {
           <div className="nav-item">
             <h2>Temporada</h2>
             <div className="select-container">
-              <label htmlFor="season-select"></label>
-              <select 
-                name="season" 
+              <select
+                name="season"
                 id="season-select"
                 value={selectedSeason}
                 onChange={handleSeasonChange}
-                >
-                <option value="">selecciona una temporada</option>
-                {seasons.map((season) => (
+                disabled={!selectedCrop}
+              >
+                <option value="">Selecciona una temporada</option>
+                {filteredSeasons.map((season) => (
                   <option key={season.id} value={season.id}>
                     {season.nombre}
                   </option>
@@ -172,37 +210,40 @@ const Information = () => {
         </nav>
 
         <br />
+        {showTables && (
+          <>
+            <div className="table-container">
+              <h2 className="table_caption">Gastos</h2>
+              <br />
+              <DataTable columns={columns.expenses} data={filteredData.expenses} />
+            </div>
 
-        <div className="table-container">
-          <h2 className="table_caption">Gastos</h2>
-          <br />
-          <DataTable columns={columns.expenses} data={data.expenses} />
-        </div>
+            <br />
 
-        <br />
+            <div className="table-container">
+              <h2 className="table_caption">Ventas</h2>
+              <br />
+              <DataTable columns={columns.sales} data={filteredData.sales} />
+            </div>
 
-        <div className="table-container">
-          <h2 className="table_caption">Ventas</h2>
-          <br />
-          <DataTable columns={columns.sales} data={data.sales} />
-        </div>
+            <br />
 
-        <br />
+            <div className="table-container">
+              <h2 className="table_caption">Producción</h2>
+              <DataTable columns={columns.production} data={filteredData.production} />
+            </div>
 
-        <div className="table-container">
-          <h2 className="table_caption">Producción</h2>
-          <DataTable columns={columns.production} data={data.production} />
-        </div>
+            <br />
 
-        <br />
-
-        <div className="table-container">
-          <h2 className="table_caption">Gestión de Actividades</h2>
-          <DataTable
-            columns={columns.activityManagements}
-            data={data.activityManagements}
-          />
-        </div>
+            <div className="table-container">
+              <h2 className="table_caption">Gestión de Actividades</h2>
+              <DataTable
+                columns={columns.activityManagements}
+                data={filteredData.activityManagements}
+              />
+            </div>
+          </>
+        )}
       </main>
     </div>
   );
