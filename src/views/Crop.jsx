@@ -4,15 +4,18 @@ import TitleMenu from "./components/TitleMenu";
 import CultivoTable from "./components/CultivoTable";
 import BackButton from "./components/BackButton";
 import { useEffect, useRef, useState } from "react";
-import { createCrop, fetchCrops } from "../services/cropService";
+import { createCrop, fetchCrops, updateCrop } from "../services/cropService";
 import AddButton from "./components/addButton";
 import AddCropModal from "./components/AddCropModal/intex";
 import { fetchUnits } from "../services/unitService";
 import { addCropToProject } from "../utils/updateSessionStorage";
+import { formatingIsoDate } from "../utils/formatingDate";
 
 export default function Crop() {
   const [crops, setCrops] = useState([]);
   const [units, setUnits] = useState([]);
+  const [modalAction, setModalAction] = useState("add");
+  const [formValues, setFormValues] = useState({});
 
   const cropModalRef = useRef(null);
 
@@ -37,28 +40,52 @@ export default function Crop() {
     getCrops();
   }, []);
 
-  const handleOpenModal = () => {
-    cropModalRef.current.showModal();
+  const handleOpenModal = (ref) => {
+    ref.current.showModal();
   };
-  const handleCloseModal = () => {
-    cropModalRef.current.close();
+  const handleCloseModal = (ref) => {
+    ref.current.close();
   };
   const handleSubmitModal = async (data) => {
-    const { unidad, ...newCrop } = data;
+    const { unidad, descripcion, ...newCrop } = data;
 
     const unit = units.find((unit) => unit.unidad === unidad);
     newCrop["id_unidad_medida"] = unit.id;
 
     try {
-      const response = await createCrop(newCrop);
-      console.log("Create Crop", response);
-      response.id = crops.length + 1;
-      setCrops((prevCrops) => [...prevCrops, response]);
-      //Actualizar el session storage
-      addCropToProject(response);
+      let response;
+      if (modalAction === "add") {
+        response = await createCrop(newCrop); 
+        response.id = crops.length + 1;
+        setCrops((prevCrops) => [...prevCrops, response]);
+        addCropToProject(response);
+      } else if (modalAction === "edit") {
+        const updatedCrop = await updateCrop({
+          oldData: formValues,
+          newData: newCrop,
+        });
+        const oldName = formValues.nombre;
+
+        let newCrops = crops;
+        newCrops = newCrops.map((crop) =>
+          crop.nombre === oldName ? { id: crop.id, ...updatedCrop } : crop
+        );
+
+        setCrops(newCrops);
+      }
     } catch (error) {
       console.error("Error Creating Crop", error);
     }
+  };
+
+  const handleEditRow = (data) => {
+    const { fecha_inicio, ...newData } = data;
+    const initialDate = formatingIsoDate(fecha_inicio);
+    newData["fecha_inicio"] = initialDate;
+
+    setModalAction("edit");
+    setFormValues(newData);
+    handleOpenModal(cropModalRef);
   };
 
   return (
@@ -70,18 +97,28 @@ export default function Crop() {
           <div className="content-container__crop__buttons">
             <BackButton />
             <AddButton
-              onClick={handleOpenModal}
+              onClick={() => {
+                setFormValues({});
+                setModalAction("add");
+                handleOpenModal(cropModalRef);
+              }}
               iconWidth={buttonSize}
               iconHeight={buttonSize}
             />
           </div>
-          <CultivoTable dataTable={crops} setDataTable={setCrops} />
+          <CultivoTable
+            dataTable={crops}
+            setDataTable={setCrops}
+            onEditRow={handleEditRow}
+          />
           <AddCropModal
             ref={cropModalRef}
             onSubmit={handleSubmitModal}
-            onClose={handleCloseModal}
-            title={"Añadir Cultivo"}
+            onClose={() => handleCloseModal(cropModalRef)}
+            title={modalAction === "add" ? "Añadir Cultivo" : "Editar Cultivo"}
             units={units}
+            defaultFormValues={formValues}
+            modalState={modalAction}
           />
         </main>
       </div>

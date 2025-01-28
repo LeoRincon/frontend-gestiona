@@ -6,13 +6,11 @@ import { DeleteButton, EditButton } from "../Buttons";
 import { deleteCropByName } from "../../../services/cropService";
 import { deleteCropToProject } from "../../../utils/updateSessionStorage";
 
-const CultivoTable = ({ dataTable, setDataTable }) => {
+const CultivoTable = ({ dataTable, setDataTable, onEditRow }) => {
   const handleEdit = (row) => {
-    console.log("Editando", row);
+    onEditRow(row);
   };
   const handleDelete = (row) => {
-    console.log("Delete", row);
-
     const deleteCrop = async () => {
       try {
         const response = await deleteCropByName(row.nombre);
@@ -26,7 +24,7 @@ const CultivoTable = ({ dataTable, setDataTable }) => {
         setDataTable(newCrops);
 
         //Actualizar el session storage
-        deleteCropToProject(row.nombre)
+        deleteCropToProject(row.nombre);
 
         console.log("Eliminado Con exito");
       } catch (error) {
