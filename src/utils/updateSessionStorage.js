@@ -49,5 +49,4 @@ export function deleteCropToProject(cropName) {
   );
 
   sessionStorage.setItem(USER_SESSION, JSON.stringify(userData))
-  console.log("Removido con éxito", userData)
 }
