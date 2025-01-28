@@ -64,9 +64,10 @@ export async function createCrop(data) {
   if (!response.ok) throw new Error("Error creating Crop at service");
 
   const { crop } = await response.json();
-  const { nombre, tipo_siembra, fecha_inicio, area_terreno, unit } = crop;
+  const { id, nombre, tipo_siembra, fecha_inicio, area_terreno, unit } = crop;
 
   return {
+    idCrop: id,
     nombre,
     tipo_siembra,
     fecha_inicio,
