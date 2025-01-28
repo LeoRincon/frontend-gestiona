@@ -14,6 +14,34 @@ export async function fetchSeasons() {
   return data
 }
 
+//GET ALL BY ID CROP
+export async function fetchCropSeasons(id) {
+  const response = await fetch(urlCrops+"/"+id+"/seasons",{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+  // return data
+
+  const newData = data.reduce((acumulador, season, index) => {
+    const { nombre, duracion, fecha_inicio, fecha_fin} = season;
+
+    const newSeason = {
+      id: index + 1,
+      nombre,
+      duracion,
+      fecha_inicio,
+      fecha_fin,
+    };
+    acumulador.push(newSeason);
+    return acumulador;
+  }, []);
+
+  return newData
+}
+
 //POST SEASON
 export async function createSeason(season) {
   if (!season || typeof season !== "object")
@@ -61,17 +89,37 @@ export async function deleteSeason(id){
 }
 
 //GET ALL Crops
+// export async function fetchCrops() {
+  //   const response = await fetch(urlCrops,{
+    //     method: "GET",
+    //     headers: {
+      //       "Content-Type": "application/json"
+      //     }
+      //   })
+      //   const data = await response.json()
+      //   return data
+      // }
+      
 export async function fetchCrops() {
-  const response = await fetch(urlCrops,{
+const sessionUser = sessionStorage.getItem("user_data");
+
+  if (!sessionUser) {
+    console.log("Invalid project ID"); // volver al user a la vista de projects
+  }
+
+  const { projectId } = JSON.parse(sessionUser);
+  const urlC = `${urlCrops}/project/${projectId}`;
+
+  const response = await fetch(urlC, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  const data = await response.json()
-  return data
-}
+      "Content-Type": "application/json",
+    },
+  });
 
+  const { crops } = await response.json();
+  return crops
+}
 //GET ALL News
 export async function fetchNews() {
   const response = await fetch(urlNews,{

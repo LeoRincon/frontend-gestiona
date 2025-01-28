@@ -61,7 +61,7 @@ export default function AddSeasonModal({handleOpenModal,handleAddFetch,cropsData
                 <select name="idCultivo" {...register("idCultivo",{
                   required:{value:true, message:"Elcultivo obligatorio"}
                 } )} >
-                  {cropsData.crops.map((crop)=>{
+                  {cropsData.map((crop)=>{
                     return(
                       <option value={crop.id} key={crop.id} >{crop.nombre} </option>
                     )

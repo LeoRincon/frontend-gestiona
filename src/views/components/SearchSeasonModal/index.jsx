@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form"
 
 import "./styles.css"
 
-export default function SearchSeasonModal({dataName,handleSearchModal,handleSearch}) {
+export default function SearchSeasonModal({dataCrop,handleSearchModal,handleSearch}) {
 
-  if(typeof completeData === "undefined"){
+  if(typeof dataCrop === "undefined"){
         return(
           <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleSearchModal} />
         )
@@ -15,8 +15,10 @@ export default function SearchSeasonModal({dataName,handleSearchModal,handleSear
 
   const onSubmit= handleSubmit(
     (idData)=>{
-      const registro = dataName.find(element=>element.id===idData.nombre)
-      handleSearch(registro)
+      // const registro = dataName.find(element=>element.id===idData.nombre)
+      const crop = idData.idCrop.split(",")[0]
+      const nombre = idData.idCrop.split(",")[1]
+      handleSearch(crop,nombre)
     } 
   )
 
@@ -24,18 +26,18 @@ export default function SearchSeasonModal({dataName,handleSearchModal,handleSear
     <div className='search-popup-bg'>
       <div className="search-season-popup">
         <header>
-          <h4>Buscar</h4>
+          <h4>Selecionar cultivo</h4>
         </header>
         <main>
           <form className="search-season-form" onSubmit={onSubmit}>
             <div>
-              <label htmlFor="nombre">Nombre Temporada:</label>
-              <select name="nombre" {...register("nombre",{
+              <label htmlFor="idCrop">Nombre Cultivo:</label>
+              <select name="idCrop" {...register("idCrop",{
                     required:{value:true, message:"Este data es obligatoria"}
                   } )} >
-                    {dataName.map((data)=>{
+                    {dataCrop.map((data)=>{
                       return(
-                        <option value={data.id} key={data.id} >{data.nombre} </option>
+                        <option value={[data.id,data.nombre]} key={data.id} >{data.nombre} </option>
                       )
                     })}
                   </select>
