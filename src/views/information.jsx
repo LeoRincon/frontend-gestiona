@@ -7,50 +7,24 @@ import { formatingDate } from "../utils/formatingDate";
 
 const Information = () => {
   const [data, setData] = useState({
-    expenses: [
-      {
-        id: "c7890123-8abc-1234-5678-abc456789abc",
-        id_temporada: "d2345678-8def-1234-5678-abc456789abc",
-        id_insumo: "b6789012-8def-1234-5678-abc456789abc",
-        cantidad_usada: 20,
-        precio_total: 1000,
-        id_unidad_medida: "e2345678-9def-1234-5678-abc456789012",
-      },
-    ],
-    sales: [
-      {
-        id: "b2345678-8def-1234-5678-abc456789abc",
-        cantidad_vendida: 400,
-        precio_total: 2000,
-        fecha_venta: "2024-06-01T05:00:00.000Z",
-        id_temporada: "d2345678-8def-1234-5678-abc456789abc",
-        observaciones: "Venta exitosa",
-        id_unidad_medida: "e2345678-9def-1234-5678-abc456789012",
-        precio_unitario: 100,
-      },
-    ],
-    production: [
-      {
-        id: "a1234567-8abc-1234-5678-abc456789def",
-        nombre: "productName",
-        cantidad_recolectada: 500,
-        fecha_recoleccion: "2024-05-01T05:00:00.000Z",
-        id_temporada: "d2345678-8def-1234-5678-abc456789abc",
-        id_unidad_medida: "e2345678-9def-1234-5678-abc456789012",
-      },
-    ],
-    activityManagements: [
-      {
-        id: "d8901234-8def-1234-5678-abc456789abc",
-        id_actividad: "f4567890-8def-1234-5678-abc456789abc",
-        id_temporada: "d2345678-8def-1234-5678-abcf456789abc",
-        costo: 200,
-        gasto_insumo_id: "c7890123 - 8abc - 1234 - 5678 - abc456789abc",
-      },
-    ],
+    expenses: [],
+    sales: [],
+    production: [],
+    activityManagements: [],
+    projects: [],
+    crops: [],
+    seasons: [],
   });
 
-  const [columns, setColumns] = useState({
+  const [showTables, setShowTables] = useState(false);
+  const [filteredData, setFilteredData] = useState({
+    expenses: [],
+    sales: [],
+    production: [],
+    activityManagements: [],
+  });
+
+  const columns = {
     expenses: [
       { name: "#", selector: (row) => row.id },
       { name: "Nombre insumo", selector: (row) => row.suppliesName },
@@ -90,19 +64,81 @@ const Information = () => {
       { name: "Costo insumo", selector: (row) => row.suppliesCost },
       { name: "Costo total", selector: (row) => row.totalCost },
     ],
-  });
+  };
+
+  const [projects, setProjects] = useState([]);
+  const [selectedProyect, setSelectedProject] = useState("");
+  const [crops, setCrops] = useState([]);
+  const [filteredCrops, setFilteredCrops] = useState([]);
+  const [selectedCrop, setSelectedCrop] = useState("");
+  const [seasons, setSeasons] = useState([]);
+  const [filteredSeasons, setFilteredSeasons] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState("");
+
+  const handleProjectChange = (event) => {
+    setSelectedProject(event.target.value);
+    setSelectedCrop("");
+    setSelectedSeason("");
+    setShowTables(false);
+  };
+
+  const handleCropChange = (event) => {
+    setSelectedCrop(event.target.value);
+    setSelectedSeason("");
+    setShowTables(false);
+  };
+
+  const handleSeasonChange = (event) => {
+    const seasonId = event.target.value;
+    setSelectedSeason(seasonId);
+    setShowTables(true);
+    filterData(seasonId);
+  };
+
+  const filterData = (seasonId) => {
+    const filteredExpenses = data.expenses.filter((expense) => expense.idSeason === seasonId);
+    const filteredSales = data.sales.filter((sale) => sale.idSeason === seasonId);
+    const filteredProduction = data.production.filter((production) => production.idSeason === seasonId);
+    const filteredActivityManagements = data.activityManagements.filter((activity) => activity.idSeason === seasonId);
+
+    setFilteredData({
+      expenses: filteredExpenses,
+      sales: filteredSales,
+      production: filteredProduction,
+      activityManagements: filteredActivityManagements,
+    });
+  };
 
   useEffect(() => {
-    console.log("columns", columns);
     getInformation()
       .then((dataDb) => {
-        console.log("Datos obtenidos de la API, dataDb: ", dataDb);
         setData(dataDb);
+        setProjects(dataDb.projects);
+        setCrops(dataDb.crops);
+        setSeasons(dataDb.seasons);
       })
       .catch((error) => {
         console.error("Error al obtener los datos:", error);
       });
   }, []);
+
+  useEffect(() => {
+    if (selectedProyect) {
+      const filtered = crops.filter((crop) => crop.proyecto_id === selectedProyect);
+      setFilteredCrops(filtered);
+    } else {
+      setFilteredCrops([]);
+    }
+  }, [selectedProyect, crops]);
+
+  useEffect(() => {
+    if (selectedCrop) {
+      const filtered = seasons.filter((season) => season.id_cultivo === selectedCrop);
+      setFilteredSeasons(filtered);
+    } else {
+      setFilteredSeasons([]);
+    }
+  }, [selectedCrop, seasons]);
 
   return (
     <div className="metricas">
@@ -116,13 +152,18 @@ const Information = () => {
           <div className="nav-item">
             <h2>Proyecto</h2>
             <div className="select-container">
-              <label htmlFor="proyect-select"></label>
-              <select name="proyect" id="proyect-select">
-                <option value="andina">Región Andina</option>
-                <option value="caribe">Región Caribe</option>
-                <option value="pacifica">Región Pacífica</option>
-                <option value="amazonia">Región Amazonia</option>
-                <option value="orinoquia">Región Orinoquia</option>
+              <select
+                name="project"
+                id="project-select"
+                value={selectedProyect}
+                onChange={handleProjectChange}
+              >
+                <option value="">Selecciona un proyecto</option>
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}>
+                    {project.nombre}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -130,12 +171,19 @@ const Information = () => {
           <div className="nav-item">
             <h2>Cultivo</h2>
             <div className="select-container">
-              <label htmlFor="cultivo-select"></label>
-              <select name="cultivo" id="cultivo-select">
-                <option value="Arroz">Arroz</option>
-                <option value="Mandarina">Mandarina</option>
-                <option value="Cacao">Cacao</option>
-                <option value="Cafe">Café</option>
+              <select
+                name="crop"
+                id="crop-select"
+                value={selectedCrop}
+                onChange={handleCropChange}
+                disabled={!selectedProyect}
+              >
+                <option value="">Selecciona un cultivo</option>
+                {filteredCrops.map((crop) => (
+                  <option key={crop.id} value={crop.id}>
+                    {crop.nombre}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -143,49 +191,59 @@ const Information = () => {
           <div className="nav-item">
             <h2>Temporada</h2>
             <div className="select-container">
-              <label htmlFor="Temporada"></label>
-              <select name="Temporada" id="Temporada">
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
+              <select
+                name="season"
+                id="season-select"
+                value={selectedSeason}
+                onChange={handleSeasonChange}
+                disabled={!selectedCrop}
+              >
+                <option value="">Selecciona una temporada</option>
+                {filteredSeasons.map((season) => (
+                  <option key={season.id} value={season.id}>
+                    {season.nombre}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
         </nav>
 
         <br />
+        {showTables && (
+          <>
+            <div className="table-container">
+              <h2 className="table_caption">Gastos</h2>
+              <br />
+              <DataTable columns={columns.expenses} data={filteredData.expenses} />
+            </div>
 
-        <div className="table-container">
-          <h2 className="table_caption">Gastos</h2>
-          <br />
-          <DataTable columns={columns.expenses} data={data.expenses} />
-        </div>
+            <br />
 
-        <br />
+            <div className="table-container">
+              <h2 className="table_caption">Ventas</h2>
+              <br />
+              <DataTable columns={columns.sales} data={filteredData.sales} />
+            </div>
 
-        <div className="table-container">
-          <h2 className="table_caption">Ventas</h2>
-          <br />
-          <DataTable columns={columns.sales} data={data.sales} />
-        </div>
+            <br />
 
-        <br />
+            <div className="table-container">
+              <h2 className="table_caption">Producción</h2>
+              <DataTable columns={columns.production} data={filteredData.production} />
+            </div>
 
-        <div className="table-container">
-          <h2 className="table_caption">Producción</h2>
-          <DataTable columns={columns.production} data={data.production} />
-        </div>
+            <br />
 
-        <br />
-
-        <div className="table-container">
-          <h2 className="table_caption">Gestión de Actividades</h2>
-          <DataTable
-            columns={columns.activityManagements}
-            data={data.activityManagements}
-          />
-        </div>
+            <div className="table-container">
+              <h2 className="table_caption">Gestión de Actividades</h2>
+              <DataTable
+                columns={columns.activityManagements}
+                data={filteredData.activityManagements}
+              />
+            </div>
+          </>
+        )}
       </main>
     </div>
   );
