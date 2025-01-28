@@ -1,36 +1,89 @@
-import DataTable from 'react-data-table-component';
+import DataTable from "react-data-table-component";
 
-const columns = [
- {
-  name: 'ID cultivo',
-  selector: (row) => row.id,
- },
- {
-  name: 'Nombre',
-  selector: (row) => row.nombre,
- },
- {
-  name: 'Tipo de siembra',
-  selector: (row) => row.tipo_siembra,
- },
- {
-  name: 'Fecha de inicio	',
-  selector: (row) => row.fecha_inicio,
- },
- {
-  name: 'Área del terreno	',
-  selector: (row) => row.area_terreno,
- },
-];
+import "./styles.css";
+import { formatingDate } from "../../../utils/formatingDate";
+import { DeleteButton, EditButton } from "../Buttons";
+import { deleteCropByName } from "../../../services/cropService";
 
+const CultivoTable = ({ dataTable, setDataTable }) => {
+  const handleEdit = (row) => {
+    console.log("Editando", row);
+  };
+  const handleDelete = (row) => {
+    console.log("Delete", row);
 
-import './styles.css';
+    const deleteCrop = async () => {
+      try {
+        const response = await deleteCropByName(row.nombre);
 
-const CultivoTable = ({dataTable}) => {
+        console.log("Response table", response);
+
+        if (!response.success) throw new Error("Error Deleting");
+
+        const newCrops = dataTable.filter(
+          (element) => element.nombre !== row.nombre
+        );
+
+        setDataTable(newCrops);
+
+        console.log("Eliminado Con exito");
+      } catch (error) {
+        console.error("Error Deleting crop", error);
+      }
+    };
+
+    deleteCrop();
+  };
+
+  const columns = [
+    {
+      name: "#",
+      selector: (row) => row.id,
+    },
+    {
+      name: "Nombre",
+      selector: (row) => row.nombre,
+    },
+    {
+      name: "Tipo de siembra",
+      selector: (row) => row.tipo_siembra,
+    },
+    {
+      name: "Fecha de inicio	",
+      selector: (row) => row.fecha_inicio,
+      cell: (row) => formatingDate(row.fecha_inicio),
+    },
+    {
+      name: "Área del terreno	",
+      selector: (row) => `${row.area_terreno} ${row.unidad}`,
+      cell: (row) => (
+        <div title={`${row.area_terreno} ${row.descripcion}`}>
+          {row.area_terreno} {row.unidad}
+        </div>
+      ),
+    },
+    {
+      name: "Acciones",
+      cell: (row) => (
+        <div>
+          <EditButton title="Editar Cultivo" onClick={() => handleEdit(row)} />
+          <DeleteButton
+            title="Eliminar Cultivo"
+            onClick={() => handleDelete(row)}
+          />
+        </div>
+      ),
+    },
+  ];
+
   return (
-    <DataTable columns={columns} data={dataTable} onSelectedRowsChange={(row) => console.log(row)} selectableRows/>
-  )
-}
-
+    <DataTable
+      columns={columns}
+      data={dataTable}
+      onSelectedRowsChange={(row) => console.log(row)}
+      pagination
+    />
+  );
+};
 
 export default CultivoTable;
