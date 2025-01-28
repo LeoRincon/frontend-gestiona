@@ -1,4 +1,5 @@
-import { API_URL, CROPS_PATH } from "../utils/const";
+import { API_URL, CROPS_PATH, USER_SESSION } from "../utils/const";
+import getUserData from "../utils/getUserData";
 
 export async function fetchCrops() {
   const sessionUser = sessionStorage.getItem("user_data");
@@ -115,5 +116,70 @@ export async function deleteCropByName(nameCrop) {
 
   return {
     success: true,
+  };
+}
+
+export async function updateCrop({ oldData, newData }) {
+  if (!oldData) throw new Error("Old data object is required");
+  if (typeof oldData !== "object")
+    throw new Error("Old data must be an object");
+
+  if (!newData) throw new Error("New data object is required");
+  if (typeof newData !== "object")
+    throw new Error("New data must be an object");
+
+  let userData;
+  try {
+    userData = getUserData();
+  } catch (error) {
+    console.error("User sesion is invalid", error);
+    return;
+  }
+
+  const { projectId } = userData;
+  const project = userData.projectsByUser.find((proj) => proj.id === projectId);
+  let crops = project.crops;
+
+  const modifiedCrop = crops.find((crop) => crop.nombre === oldData.nombre);
+
+  const cropUrl = `${API_URL}${CROPS_PATH}/${modifiedCrop.id}`;
+
+  const { id: _, ...data } = newData;
+  data["proyecto_id"] = projectId;
+  data.area_terreno = Number(data.area_terreno);
+
+  const updateResponse = await fetch(cropUrl, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!updateResponse.ok) throw new Error("Error updating crop");
+
+  const { crop: newCrop } = await updateResponse.json();
+
+  const { id, nombre, tipo_siembra, fecha_inicio, area_terreno, unit } =
+    newCrop;
+
+  modifiedCrop.nombre = nombre;
+
+  crops = crops.map((crop) =>
+    crop.id === modifiedCrop.id ? modifiedCrop : crop
+  );
+  project.crops = crops;
+  userData.projectsByUser = userData.projectsByUser.map((proj) =>
+    proj.id === project.id ? project : proj
+  );
+
+  sessionStorage.setItem(USER_SESSION, JSON.stringify(userData));
+
+  return {
+    idCrop: id,
+    nombre,
+    tipo_siembra,
+    fecha_inicio,
+    area_terreno,
+    unidad: unit.unidad,
+    descripcion: unit.nombre,
   };
 }
