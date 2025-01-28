@@ -9,6 +9,7 @@ import Information from '../views/information';
 import Supply from '../views/supply';
 import Crop from '../views/Crop';
 import Season from '../views/season';
+import Sales from '../views/Sales';
 import { ValidateUserRoute } from './ValidateUserRoute';
 
 export const AppRouter = () => {
@@ -27,6 +28,7 @@ export const AppRouter = () => {
     <Route path='/supply' element={<Supply />} />
     <Route path='/Crop' element={<Crop />} />
     <Route path='/season' element={<Season />} />
+    <Route path='/sales' element={<Sales />} />
    </Route>
 
    <Route path='/*' element={<Login />} />
