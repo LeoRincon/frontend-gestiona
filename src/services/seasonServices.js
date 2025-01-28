@@ -1,4 +1,6 @@
 const url = "http://localhost:3000/api/v1/seasons"
+const urlCrops = "http://localhost:3000/api/v1/crops"
+const urlNews = "http://localhost:3000/api/v1/news"
 
 //GET ALL SEASON
 export async function fetchSeasons() {
@@ -58,3 +60,26 @@ export async function deleteSeason(id){
   return data
 }
 
+//GET ALL Crops
+export async function fetchCrops() {
+  const response = await fetch(urlCrops,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+  return data
+}
+
+//GET ALL News
+export async function fetchNews() {
+  const response = await fetch(urlNews,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+  return data
+}

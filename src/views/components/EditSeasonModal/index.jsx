@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import './styles.css'
 
-export default function EditSeasonModal({handleEditModal,handleEditFetch,id,completeData}){
+export default function EditSeasonModal({handleEditModal,handleEditFetch,id,completeData,cropsData,newsData}){
   // SI NO SE SELECCIONADO UN REGISTRO RETORNO ESTE MENSAJE
     if(!id){
       return(
@@ -20,7 +20,7 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
   //PONER LOS DATOS POR DEFECTO EN LOS INPUTS
   useEffect(()=>{
       setValue("nombre",dataValue.nombre)
-      setValue("inicio",dataValue.fecha_inicio)
+      setValue("inicio",dataValue.fecha_inicio.split("T")[0])
       setValue("idCultivo",dataValue.id_cultivo)
       setValue("idNovedades",dataValue.novedades_id)
     },[])
@@ -36,6 +36,9 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
                 "id_cultivo": data.idCultivo,
                 "novedades_id": data.idNovedades
               }
+      if(!data.idNovedades){
+        delete newData.novedades_id
+      }
       handleEditFetch(newData)
     } 
   )
@@ -58,6 +61,9 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
                 "id_cultivo": data.idCultivo,
                 "novedades_id": data.idNovedades
               }
+      if(!data.idNovedades){
+        delete newData.novedades_id
+      }
       handleEditFetch(newData)
     } 
   )
@@ -90,19 +96,36 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
               </div>
               <div>
                 <label htmlFor="idCultivo">ID Cultivo</label>
-                <input type="text" name="idCultivo" placeholder="Ingrese el id del cultivo" {...register("idCultivo",{
+                {/* <input type="text" name="idCultivo" placeholder="Ingrese el id del cultivo" {...register("idCultivo",{
                   required:{value:true,message:"El campo es obligatorio"},
                   pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                })} /> */}
+                <select name="idCultivo" {...register("idCultivo",{
+                  required:{value:true, message:"Elcultivo obligatorio"}
+                } )} >
+                  {cropsData.crops.map((crop)=>{
+                    return(
+                      <option value={crop.id} key={crop.id} >{crop.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idCultivo && <span>{errors.idCultivo.message}</span>}
               </div>
 
               <div>
                 <label htmlFor="idNovedades">ID Novedades</label>
-                <input type="text" name="idNovedades" placeholder="Ingrese el id de novedades" {...register("idNovedades",{
+                {/* <input type="text" name="idNovedades" placeholder="Ingrese el id de novedades" {...register("idNovedades",{
                   required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"} 
+                })} /> */}
+                <select name="idNovedades" {...register("idNovedades")} >
+                  <option value={null}></option>
+                  {newsData.map((news)=>{
+                    return(
+                      <option value={news.id} key={news.id} >{news.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idNovedades && <span>{errors.idNovedades.message}</span>}
               </div>
               <div className='btn-bar'>

@@ -5,14 +5,6 @@ import './styles.css'
 
 export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsData, categoriesData,inventoriesData, data}){
 
-  // if(Array.isArray(data) || Array.isArray(unitsData) || Array.isArray(categoriesData) ||Array.isArray(inventoriesData) ){
-  //   console.log(data)
-  //   console.log(data.length)
-  //   return(
-  //     <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />
-  //   )
-  // }
-  
   if(data.length===0 || unitsData.length===0 || categoriesData.length===0 || inventoriesData.length===0){
       return(
         <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />

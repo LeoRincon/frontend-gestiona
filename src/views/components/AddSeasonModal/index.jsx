@@ -1,8 +1,15 @@
+import ErrorMessageModal from '../ErrorMessageModal'
 import { useForm } from 'react-hook-form'
 
 import './styles.css'
 
-export default function AddSeasonModal({handleOpenModal,handleAddFetch}){
+export default function AddSeasonModal({handleOpenModal,handleAddFetch,cropsData,newsData,completeData}){
+
+  if(typeof completeData === "undefined" || typeof cropsData==="undefined" || typeof newsData==="undefined"){
+        return(
+          <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />
+        )
+      }
 
   const {register, handleSubmit, formState:{errors}} =useForm() 
 
@@ -16,6 +23,9 @@ export default function AddSeasonModal({handleOpenModal,handleAddFetch}){
                 "id_cultivo": data.idCultivo,
                 "novedades_id": data.idNovedades
               }
+      if(!data.idNovedades){
+        delete newData.novedades_id
+      }
       handleAddFetch(newData)
     } 
   )
@@ -41,26 +51,35 @@ export default function AddSeasonModal({handleOpenModal,handleAddFetch}){
               </div>
               <div>
                 <label htmlFor="inicio">Fecha Inicio</label>
-                <input type="date" name="inicio"  {...register("inicio", {
+                <input type="date" name="inicio" {...register("inicio", {
                   required:{value:true,message:"La fecha es obligatoria"},
                 })} />
                 {errors.inicio && <span>{errors.inicio.message}</span>}
               </div>
               <div>
-                <label htmlFor="idCultivo">ID Cultivo</label>
-                <input type="text" name="idCultivo" placeholder="Ingrese el id del cultivo" {...register("idCultivo",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <label htmlFor="idCultivo">Cultivo</label>
+                <select name="idCultivo" {...register("idCultivo",{
+                  required:{value:true, message:"Elcultivo obligatorio"}
+                } )} >
+                  {cropsData.crops.map((crop)=>{
+                    return(
+                      <option value={crop.id} key={crop.id} >{crop.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idCultivo && <span>{errors.idCultivo.message}</span>}
               </div>
 
               <div>
                 <label htmlFor="idNovedades">ID Novedades</label>
-                <input type="text" name="idNovedades" placeholder="Ingrese el id de novedades" {...register("idNovedades",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} />
+                <select name="idNovedades" {...register("idNovedades")} >
+                  <option value={null}></option>
+                  {newsData.map((news)=>{
+                    return(
+                      <option value={news.id} key={news.id} >{news.nombre} </option>
+                    )
+                  })}
+                </select>
                 {errors.idNovedades && <span>{errors.idNovedades.message}</span>}
               </div>
               <div className='btn-bar'>

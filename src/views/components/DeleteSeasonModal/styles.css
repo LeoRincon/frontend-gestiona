@@ -41,29 +41,35 @@
   margin: 15px;
 }
 
-.season-popup-delete .btn-bar{
+.season-delete-btn-bar{
   width: 100%;
   display: flex;
   justify-content: flex-end;
   border-top: thin solid #e4e4e4;
 }
 
-.season-popup-delete button{
+.season-delete-btn-bar button{
+  width: 20%;
   height: 30px;
-}
+  margin: 7px;
+  margin-bottom: 0;
+  padding: 2px;
+  border-radius: 3px;
+  border: none;
+} 
 
-.season-popup-delete .btn-submit{
+.season-delete-btn-submit{
   background-color: var(--accent-text-1);
   color: #FFF;
 }
 
-.season-popup-delete .btn-submit:active{
+.season-delete-btn-submit:active{
   background-color: var(--accent-text-2);
 } 
-.season-popup-delete .btn-cancel{
+.season-delete-btn-cancel{
   background-color: #e4e4e4;
   color: black;
 }
-.season-popup-delete .btn-cancel:active{
+.season-delete-btn-cancel:active{
   background-color: #b1b0b0;
 }
