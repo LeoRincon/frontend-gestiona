@@ -126,44 +126,49 @@ export async function getProjectsByUserId(userId) {
 }
 
 export async function updateSessionProjects(projects) {
+  if (!projects) throw new Error("Projects is required");
+  if (!(projects instanceof Array))
+    throw new Error("The object must be an array of projects.");
 
-  if (!projects) throw new Error ("Projects is required")
-  if (!(projects instanceof Array)) throw new Error ("The object must be an array of projects.")
+  const dataSession = sessionStorage.getItem("user_data");
 
-  const dataSession = sessionStorage.getItem("user_data")
+  if (!dataSession) throw new Error("The User session is invalid");
 
-  if (!dataSession) throw new Error ("The User session is invalid")
-  
-  const dataUser = JSON.parse(dataSession)
-  
-    const url = API_URL + CROPS_PATH
+  const dataUser = JSON.parse(dataSession);
+
+  const url = API_URL + CROPS_PATH;
 
   const projectsData = await Promise.all(
     projects.map(async (element) => {
-      const {id, nombre} = element
-      const cropUrl = `${url}/project/${id}`
-      const res = await fetch(cropUrl, {method: "GET", headers: {"Content-Type": "application/json"}})
-      const cropData = await res.json()
-      const crops = cropData.crops.map(crop => {
+      const { id, nombre } = element;
+      const cropUrl = `${url}/project/${id}`;
+      const res = await fetch(cropUrl, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const cropData = await res.json();
+      const crops = cropData.crops.map((crop) => {
         return {
           id: crop.id,
           nombre: crop.nombre,
-          seasons: {
-            id: "",
-            nombre: ""
-          }
-        }
-      })
+          seasons: [
+            {
+              id: "",
+              nombre: "",
+            },
+          ],
+        };
+      });
 
       return {
         id,
         nombre,
-        crops
-      }
+        crops,
+      };
     })
   );
 
-    const newUserData = {
+  const newUserData = {
     ...dataUser,
     projectsByUser: projectsData,
   };

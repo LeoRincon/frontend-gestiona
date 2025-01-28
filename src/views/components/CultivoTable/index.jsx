@@ -4,6 +4,7 @@ import "./styles.css";
 import { formatingDate } from "../../../utils/formatingDate";
 import { DeleteButton, EditButton } from "../Buttons";
 import { deleteCropByName } from "../../../services/cropService";
+import { deleteCropToProject } from "../../../utils/updateSessionStorage";
 
 const CultivoTable = ({ dataTable, setDataTable }) => {
   const handleEdit = (row) => {
@@ -16,8 +17,6 @@ const CultivoTable = ({ dataTable, setDataTable }) => {
       try {
         const response = await deleteCropByName(row.nombre);
 
-        console.log("Response table", response);
-
         if (!response.success) throw new Error("Error Deleting");
 
         const newCrops = dataTable.filter(
@@ -25,6 +24,9 @@ const CultivoTable = ({ dataTable, setDataTable }) => {
         );
 
         setDataTable(newCrops);
+
+        //Actualizar el session storage
+        deleteCropToProject(row.nombre)
 
         console.log("Eliminado Con exito");
       } catch (error) {
@@ -76,14 +78,7 @@ const CultivoTable = ({ dataTable, setDataTable }) => {
     },
   ];
 
-  return (
-    <DataTable
-      columns={columns}
-      data={dataTable}
-      onSelectedRowsChange={(row) => console.log(row)}
-      pagination
-    />
-  );
+  return <DataTable columns={columns} data={dataTable} pagination />;
 };
 
 export default CultivoTable;
