@@ -5,12 +5,13 @@ import DeleteIcon from "../icons/DeleteIcon";
 import CloseIcon from  "../icons/CloseIcon"
 
 import "./styles.css"
+import { iconFill } from "../../../utils/const";
 
 export default function ActionsBar({handleAddModal, handleEditModal, handleDeleteModal, handleSearchModal,dataSearch,setDataSearch}){
-    const iconProps={
-        width:45,
-        height:45,
-        fill:"#000000" 
+    const iconProps={ 
+        width:30, 
+        height:30,
+        fill:iconFill 
     }; 
     const deleteSearch=()=>setDataSearch(null)
     return(
@@ -25,12 +26,12 @@ export default function ActionsBar({handleAddModal, handleEditModal, handleDelet
             <div onClick={handleSearchModal} >
                 <SearchIcon {...iconProps} />
             </div>
-            <div onClick={handleEditModal}>
+            {/* <div onClick={handleEditModal}>
                 <EditIcon {...iconProps} />
             </div>
             <div onClick={handleDeleteModal} >
                 <DeleteIcon {...iconProps} />
-            </div>
+            </div> */}
         </section>
     )
 }
