@@ -60,3 +60,17 @@ export const USERS_HAS_PATH = "/users-has"
 export const ROLES_PATH = "/roles"
 
 export const USER_SESSION = "user_data"
+
+export const routes = {
+  login: '/login',
+  signup: '/signup',
+  profile: '/profile' ,
+  project: '/projects',
+  home: '/home',
+  season:'/season' ,
+  crop: "/crop",
+  supply: '/supply',
+  information: '/information',
+  dashboard: '/dashboard',
+  sale: "/sales"
+}
