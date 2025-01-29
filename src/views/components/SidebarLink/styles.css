@@ -23,3 +23,9 @@
 .option__link--text{
   color: var(--accent-text-2);
 }
+
+@media (max-height: 580px){
+  .sidebar__option{
+    padding: 5px;
+  }
+}

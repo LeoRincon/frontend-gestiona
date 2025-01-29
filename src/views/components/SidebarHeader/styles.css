@@ -11,17 +11,17 @@
   justify-content: space-between;
   padding: var(--padding);
 }
-.sidebar__header a{
+.sidebar__header a {
   display: flex;
   text-decoration: none;
   color: inherit;
 }
 .sidebar__header,
-.sidebar__header a{
+.sidebar__header a {
   gap: var(--gap);
 }
 
-.header__slogan{
+.header__slogan {
   text-align: center;
 }
 
@@ -42,4 +42,10 @@
 .header__icon:hover {
   background-color: var(--accent-interactive-componente-3);
   border-radius: 50%;
+}
+
+@media (max-height: 580px) {
+  .sidebar__header {
+    padding: 5px var(--padding) !important;
+  }
 }
