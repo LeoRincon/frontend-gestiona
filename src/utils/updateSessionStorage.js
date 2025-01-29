@@ -75,9 +75,6 @@ export function addSeasonToProject(season){
     id: season.id,
     nombre: season.nombre,
   };
-  if(seasons[0].id === ""){
-    seasons.shift()
-  }
 
   seasons.push(newSeason)
   crop.seasons = seasons
@@ -95,18 +92,25 @@ export function deleteSeasonToProject(idSeason,idCrop) {
   if (!idCrop) throw new Error("Crop id is required");
   if (typeof idCrop !== "string") throw new Error("Crop must be a string");
 
-  const userData = getUserData();
-  const { projectId } = userData;
-  const project = userData.projectsByUser.find((proj) => proj.id === projectId);
+  try {
+    
+    const userData = getUserData();
+    const { projectId } = userData;
+    const project = userData.projectsByUser.find((proj) => proj.id === projectId);
 
-  const posisicion = project.crops.findIndex(crop => crop.id === idCrop);
+    const posisicion = project.crops.findIndex(crop => crop.id === idCrop);
 
-  const newSeasons = project.crops[posisicion].seasons.filter((season) => season.id !== idSeason);
-  project.crops[posisicion].seasons = newSeasons;
+    const newSeasons = project.crops[posisicion].seasons.filter((season) => season.id !== idSeason);
+    project.crops[posisicion].seasons = newSeasons;
 
-  userData.projectsByUser = userData.projectsByUser.map((proj) =>
-    proj.id === projectId ? project : proj
-  );
+    userData.projectsByUser = userData.projectsByUser.map((proj) =>
+      proj.id === projectId ? project : proj
+    );
 
-  sessionStorage.setItem(USER_SESSION, JSON.stringify(userData))
+    sessionStorage.setItem(USER_SESSION, JSON.stringify(userData))
+
+  } catch (error) {
+    console.log("Ocurrio un error eliminando del sessionStorage: "+error)
+  }
+  
 }

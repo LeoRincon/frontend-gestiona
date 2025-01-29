@@ -40,8 +40,9 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
       if(!data.idNovedades){
         delete newData.novedades_id
       }
+      const oldCrop = idCrop.current
       idCrop.current = data.idCultivo
-      handleEditFetch(newData)
+      handleEditFetch(newData,oldCrop)
     } 
   )
 
@@ -66,8 +67,9 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
       if(!data.idNovedades){
         delete newData.novedades_id
       }
+      const oldCrop = idCrop.current
       idCrop.current = data.idCultivo
-      handleEditFetch(newData)
+      handleEditFetch(newData,oldCrop)
     } 
   )
 

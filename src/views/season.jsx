@@ -89,11 +89,13 @@ export default function Season(){
         handleAddModal()
     }
 
-    const handleEditFetch =async(season)=>{
-        const result = await editSeason(id.current,season)
+    const handleEditFetch =async(season,old)=>{
+        const response = await editSeason(id.current,season)
         const name = cropsData.find((crop)=>crop.id === idCrop.current)
         cropName.current = name.nombre
         fetchData(idCrop.current)
+        deleteSeasonToProject(id.current,old)
+        addSeasonToProject(response)
         handleEditModal()
     }
     
