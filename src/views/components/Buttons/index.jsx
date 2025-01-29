@@ -1,8 +1,14 @@
 import CloseIcon from "../icons/CloseIcon";
-import { iconFill, secondaryColor } from "../../../utils/const";
+import {
+  iconFill,
+  iconHeigth,
+  iconWidth,
+  secondaryColor,
+} from "../../../utils/const";
 import "./styles.css";
 import EditIcon from "../icons/EditIcon";
 import DeleteIcon from "../icons/DeleteIcon";
+import LogoutIcon from "../icons/LogoutIcon";
 
 export function PrimaryButton({ onClick, type, children }) {
   return (
@@ -36,14 +42,17 @@ export function EditButton({
   iconColor = iconFill,
   iconWidth = 24,
   iconHeight = 24,
-  title = "Botón"
+  title = "Botón",
 }) {
-
   return (
-    <button title={title} className={`edit-button ${className}`} onClick={onClick}>
+    <button
+      title={title}
+      className={`edit-button ${className}`}
+      onClick={onClick}
+    >
       <EditIcon width={iconWidth} height={iconHeight} fill={iconColor} />
     </button>
-  )
+  );
 }
 
 export function DeleteButton({
@@ -52,12 +61,30 @@ export function DeleteButton({
   iconColor = secondaryColor,
   iconWidth = 24,
   iconHeight = 24,
-  title = "Botón"
-}){
-
-  return(
-    <button title={title} className={`delete-button ${className}`} onClick={onClick}>
+  title = "Botón",
+}) {
+  return (
+    <button
+      title={title}
+      className={`delete-button ${className}`}
+      onClick={onClick}
+    >
       <DeleteIcon width={iconWidth} height={iconHeight} fill={iconColor} />
     </button>
-  )
+  );
+}
+
+export function LogoutButton({
+  title = "Cerrar Sesión",
+  iconWidth = 30,
+  iconHeight = 30,
+  iconColor = iconFill,
+  onClick
+}) {
+  return (
+    <button className="logout-button" onClick={onClick}>
+      <LogoutIcon width={iconWidth} height={iconHeight} fill={iconColor} />
+      <span className="logout-button__text">{title}</span>
+    </button>
+  );
 }
