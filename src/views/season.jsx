@@ -7,6 +7,7 @@ import AddSeasonModal from "./components/AddSeasonModal"
 import EditSeasonModal from "./components/EditSeasonModal"
 import DeleteSeasonModal from "./components/DeleteSeasonModal/DeleteSeasonModal"
 import SearchSeasonModal from "./components/SearchSeasonModal"
+import { addSeasonToProject } from "../utils/updateSessionStorage"
 import { 
     fetchSeasons, createSeason, editSeason, deleteSeason,fetchCrops, fetchNews, fetchCropSeasons 
 } from "../services/seasonServices"
@@ -81,6 +82,7 @@ export default function Season(){
     const handleAddFetch=async(season)=>{
         const response = await createSeason(season)
         // fetchData()
+        addSeasonToProject(response)
         handleAddModal()
     }
 
