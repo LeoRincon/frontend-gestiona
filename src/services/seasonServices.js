@@ -1,3 +1,4 @@
+import { API_URL } from "../utils/const"
 const url = "http://localhost:3000/api/v1/seasons"
 const urlCrops = "http://localhost:3000/api/v1/crops"
 const urlNews = "http://localhost:3000/api/v1/news"
@@ -5,7 +6,7 @@ const urlNews = "http://localhost:3000/api/v1/news"
 //GET ALL SEASON
 export async function fetchSeasons() {
   const response = await fetch(url,{
-    method: "GET",
+    method: "GET", 
     headers: {
       "Content-Type": "application/json"
     }
@@ -26,7 +27,7 @@ export async function fetchCropSeasons(id) {
   // return data
 
   const newData = data.reduce((acumulador, season, index) => {
-    const { nombre, duracion, fecha_inicio, fecha_fin} = season;
+    const { nombre, duracion, fecha_inicio, fecha_fin,id,id_cultivo} = season;
 
     const newSeason = {
       id: index + 1,
@@ -34,6 +35,8 @@ export async function fetchCropSeasons(id) {
       duracion,
       fecha_inicio,
       fecha_fin,
+      id_season:id,
+      id_cultivo,
     };
     acumulador.push(newSeason);
     return acumulador;

@@ -88,3 +88,25 @@ export function addSeasonToProject(season){
 
   sessionStorage.setItem(USER_SESSION, JSON.stringify(userData));
 }
+
+export function deleteSeasonToProject(idSeason,idCrop) {
+  if (!idSeason) throw new Error("Season id is required");
+  if (typeof idSeason !== "string") throw new Error("Season must be a string");
+  if (!idCrop) throw new Error("Crop id is required");
+  if (typeof idCrop !== "string") throw new Error("Crop must be a string");
+
+  const userData = getUserData();
+  const { projectId } = userData;
+  const project = userData.projectsByUser.find((proj) => proj.id === projectId);
+
+  const posisicion = project.crops.findIndex(crop => crop.id === idCrop);
+
+  const newSeasons = project.crops[posisicion].seasons.filter((season) => season.id !== idSeason);
+  project.crops[posisicion].seasons = newSeasons;
+
+  userData.projectsByUser = userData.projectsByUser.map((proj) =>
+    proj.id === projectId ? project : proj
+  );
+
+  sessionStorage.setItem(USER_SESSION, JSON.stringify(userData))
+}

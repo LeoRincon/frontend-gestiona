@@ -7,9 +7,9 @@ import AddSeasonModal from "./components/AddSeasonModal"
 import EditSeasonModal from "./components/EditSeasonModal"
 import DeleteSeasonModal from "./components/DeleteSeasonModal/DeleteSeasonModal"
 import SearchSeasonModal from "./components/SearchSeasonModal"
-import { addSeasonToProject } from "../utils/updateSessionStorage"
+import { addSeasonToProject, deleteSeasonToProject } from "../utils/updateSessionStorage"
 import { 
-    fetchSeasons, createSeason, editSeason, deleteSeason,fetchCrops, fetchNews, fetchCropSeasons 
+    createSeason, editSeason, deleteSeason,fetchCrops, fetchNews, fetchCropSeasons 
 } from "../services/seasonServices"
 import { useState, useEffect, useRef } from "react"
 
@@ -25,6 +25,7 @@ export default function Season(){
     const [cropsData,setCropsData]=useState()
     const [newsData,setNewsData]=useState()
     const id = useRef(null)
+    const idCrop = useRef(null)
     const cropName = useRef("XXXXXX")
 
     useEffect(()=>{
@@ -81,26 +82,32 @@ export default function Season(){
 
     const handleAddFetch=async(season)=>{
         const response = await createSeason(season)
-        // fetchData()
+        const name = cropsData.find((crop)=>crop.id === idCrop.current)
+        cropName.current = name.nombre
+        fetchData(idCrop.current)
         addSeasonToProject(response)
         handleAddModal()
     }
 
     const handleEditFetch =async(season)=>{
         const result = await editSeason(id.current,season)
-        fetchData()
+        const name = cropsData.find((crop)=>crop.id === idCrop.current)
+        cropName.current = name.nombre
+        fetchData(idCrop.current)
         handleEditModal()
     }
     
     const handleDeleteFecth= async()=>{
         await deleteSeason(id.current)
-        fetchData()
+        const name = cropsData.find((crop)=>crop.id === idCrop.current)
+        cropName.current = name.nombre
+        fetchData(idCrop.current)
+        deleteSeasonToProject(id.current,idCrop.current)
         handleDeletesModal()
         id.current=null
     }
 
     const handleSearch=(id,nombre)=>{
-        // setDataSearch(registerSearch)
         fetchData(id)
         cropName.current = nombre
         handleSearchModal()
@@ -126,11 +133,14 @@ export default function Season(){
                 <TableSeason
                  datos={data}
                  handleSelectedData={handleSelectedData}
-                 dataSearch={dataSearch} /> 
+                 handleDeleteModal={handleDeletesModal}
+                 handleEditModal={handleEditModal}
+                 idCrop={idCrop}  /> 
 
                 {add && <AddSeasonModal
                  handleOpenModal={handleAddModal}
-                 handleAddFetch={handleAddFetch} 
+                 handleAddFetch={handleAddFetch}
+                 idCrop={idCrop} 
                  cropsData={cropsData}
                  newsData={newsData} 
                  completeData={data} />}
@@ -138,7 +148,9 @@ export default function Season(){
                 {edit && <EditSeasonModal
                  handleEditModal={handleEditModal}
                  handleEditFetch={handleEditFetch}
-                 id={id.current} completeData={data}
+                 id={id.current}
+                 idCrop={idCrop} 
+                 completeData={data}
                  cropsData={cropsData} 
                  newsData={newsData} /> }
 

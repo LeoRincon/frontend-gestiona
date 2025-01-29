@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import './styles.css'
 
-export default function EditSeasonModal({handleEditModal,handleEditFetch,id,completeData,cropsData,newsData}){
+export default function EditSeasonModal({handleEditModal,handleEditFetch,id,completeData,cropsData,newsData,idCrop}){
   // SI NO SE SELECCIONADO UN REGISTRO RETORNO ESTE MENSAJE
     if(!id){
       return(
@@ -15,7 +15,8 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
   const {register, handleSubmit, formState:{errors},setValue} =useForm() 
 
   //SE TOMAN LOS DATOS DEL SEASON SELECIONADO
-  const dataValue = completeData.find((value)=>value.id === id)
+  // console.log()
+  const dataValue = completeData.find((value)=>value.id_season === id)
 
   //PONER LOS DATOS POR DEFECTO EN LOS INPUTS
   useEffect(()=>{
@@ -39,6 +40,7 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
       if(!data.idNovedades){
         delete newData.novedades_id
       }
+      idCrop.current = data.idCultivo
       handleEditFetch(newData)
     } 
   )
@@ -64,6 +66,7 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
       if(!data.idNovedades){
         delete newData.novedades_id
       }
+      idCrop.current = data.idCultivo
       handleEditFetch(newData)
     } 
   )
@@ -96,14 +99,10 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
               </div>
               <div>
                 <label htmlFor="idCultivo">ID Cultivo</label>
-                {/* <input type="text" name="idCultivo" placeholder="Ingrese el id del cultivo" {...register("idCultivo",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"}
-                })} /> */}
                 <select name="idCultivo" {...register("idCultivo",{
                   required:{value:true, message:"Elcultivo obligatorio"}
                 } )} >
-                  {cropsData.crops.map((crop)=>{
+                  {cropsData.map((crop)=>{
                     return(
                       <option value={crop.id} key={crop.id} >{crop.nombre} </option>
                     )
@@ -114,10 +113,6 @@ export default function EditSeasonModal({handleEditModal,handleEditFetch,id,comp
 
               <div>
                 <label htmlFor="idNovedades">ID Novedades</label>
-                {/* <input type="text" name="idNovedades" placeholder="Ingrese el id de novedades" {...register("idNovedades",{
-                  required:{value:true,message:"El campo es obligatorio"},
-                  pattern:{value:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,message:"El campo debe ser un 'uuid'"} 
-                })} /> */}
                 <select name="idNovedades" {...register("idNovedades")} >
                   <option value={null}></option>
                   {newsData.map((news)=>{
