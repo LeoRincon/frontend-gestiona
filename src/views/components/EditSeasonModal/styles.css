@@ -37,7 +37,7 @@
   width: 50%;
 }
 
-.season-form-edit input,.season-form-edit label{
+.season-form-edit input,.season-form-edit label, .season-form-edit select {
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -55,7 +55,14 @@
   color: tomato;
 }
 
-.season-popup-edit input{
+.season-form-edit input{
+  margin-bottom: 7px;
+  padding: 7px;
+  border: thin solid #e4e4e4;
+  background-color: #FFF;
+}
+
+.season-form-edit select{
   margin-bottom: 7px;
   padding: 7px;
   border: thin solid #e4e4e4;

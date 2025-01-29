@@ -5,6 +5,7 @@ import {
   USERS_PATH,
   ROLES_PATH,
   CROPS_PATH,
+  SEASONS_PATH,
 } from "../utils/const";
 import { isUUIDv4 } from "../utils/validations";
 
@@ -125,6 +126,30 @@ export async function getProjectsByUserId(userId) {
   return userProjects;
 }
 
+//FUNCION PARA TRAER SEASONS POR CROP ID
+async function getSeasonsByCrop(id) {
+  const response = await fetch(API_URL+CROPS_PATH+"/"+id+SEASONS_PATH,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+
+  const newData = data.reduce((acumulador, season) => {
+    const {id, nombre} = season;
+
+    const newSeason = {
+      id,
+      nombre
+    };
+    acumulador.push(newSeason);
+    return acumulador;
+  }, []);
+
+  return newData
+}
+
 export async function updateSessionProjects(projects) {
   if (!projects) throw new Error("Projects is required");
   if (!(projects instanceof Array))
@@ -147,18 +172,14 @@ export async function updateSessionProjects(projects) {
         headers: { "Content-Type": "application/json" },
       });
       const cropData = await res.json();
-      const crops = cropData.crops.map((crop) => {
+      const crops = await Promise.all(
+      cropData.crops.map(async(crop) => {
         return {
           id: crop.id,
           nombre: crop.nombre,
-          seasons: [
-            {
-              id: "",
-              nombre: "",
-            },
-          ],
+          seasons: await getSeasonsByCrop(crop.id),
         };
-      });
+      }));
 
       return {
         id,

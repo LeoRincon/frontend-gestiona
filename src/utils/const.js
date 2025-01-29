@@ -56,6 +56,7 @@ export const CROPS_PATH = "/crops"
 export const USERS_HAS_PATH = "/users-has"
 export const ROLES_PATH = "/roles"
 export const UNITS_PATH = "/units"
+export const SEASONS_PATH = "/seasons"
 
 export const USER_SESSION = "user_data"
 
