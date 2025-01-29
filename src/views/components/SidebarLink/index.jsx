@@ -1,3 +1,5 @@
+import { NavLink } from "react-router";
+
 import './styles.css'
 
 export default function SidebarLink ({
@@ -17,10 +19,10 @@ export default function SidebarLink ({
   }
 
   return (
-    <a href={href} className="sidebar__option option__link">
+    <NavLink to={href} className="sidebar__option option__link">
       <IconComponent {...iconProps} />
       <span className="option__link--text">{text}</span>
-    </a>
+    </NavLink>
   )
 
 }
