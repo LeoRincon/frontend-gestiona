@@ -88,18 +88,7 @@ export async function deleteSeason(id){
   return data
 }
 
-//GET ALL Crops
-// export async function fetchCrops() {
-  //   const response = await fetch(urlCrops,{
-    //     method: "GET",
-    //     headers: {
-      //       "Content-Type": "application/json"
-      //     }
-      //   })
-      //   const data = await response.json()
-      //   return data
-      // }
-      
+//GET ALL Crops By Project
 export async function fetchCrops() {
 const sessionUser = sessionStorage.getItem("user_data");
 
