@@ -50,3 +50,41 @@ export function deleteCropToProject(cropName) {
 
   sessionStorage.setItem(USER_SESSION, JSON.stringify(userData))
 }
+
+export function addSeasonToProject(season){
+  if (!season) throw new Error("Season object is required");
+  if (typeof season !== "object") throw new Error("Season must be an Object");
+
+  const userData = getUserData();
+  const { projectId } = userData;
+  const project = userData.projectsByUser.find(
+    (project) => project.id === projectId
+  );
+
+  if (!project) throw new Error("Project not found");
+
+  const idCrop = season.id_cultivo
+
+  const crop = project.crops.find(
+    (crop) => crop.id === idCrop
+  );
+
+  const {seasons} = crop
+
+  const newSeason = {
+    id: season.id,
+    nombre: season.nombre,
+  };
+  if(seasons[0].id === ""){
+    seasons.shift()
+  }
+
+  seasons.push(newSeason)
+  crop.seasons = seasons
+
+  userData.projectsByUser = userData.projectsByUser.map((proj) =>
+    proj.id === projectId ? project : proj
+  );
+
+  sessionStorage.setItem(USER_SESSION, JSON.stringify(userData));
+}

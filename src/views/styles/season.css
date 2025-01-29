@@ -14,6 +14,7 @@
 
 .season-main-view .section-bar-actions{
     display: flex;
-    /* justify-content: space-between; */
-    justify-content: flex-end;
+    padding-bottom: 16px;
+    justify-content: space-between;
+    /* justify-content: flex-end; */
 }

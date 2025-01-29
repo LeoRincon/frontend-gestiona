@@ -13,11 +13,11 @@ export default function DeleteSeasonModal({handleOpenModal, handleDeleteFecth, i
         <section>
             <p>¿Está seguro que desea eliminar este elemento?</p>
         </section>
-        <footer className='btn-bar'>
-          <button className='btn-submit' onClick={handleDeleteFecth}>
+        <footer className='season-delete-btn-bar'>
+          <button className='season-delete-btn-submit' onClick={handleDeleteFecth}>
             Aceptar
           </button>
-          <button className='btn-cancel' onClick={handleOpenModal}>
+          <button className='season-delete-btn-cancel' onClick={handleOpenModal}>
             Cancelar
           </button>
         </footer>

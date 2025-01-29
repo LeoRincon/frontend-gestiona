@@ -1,4 +1,6 @@
 const url = "http://localhost:3000/api/v1/seasons"
+const urlCrops = "http://localhost:3000/api/v1/crops"
+const urlNews = "http://localhost:3000/api/v1/news"
 
 //GET ALL SEASON
 export async function fetchSeasons() {
@@ -10,6 +12,34 @@ export async function fetchSeasons() {
   })
   const data = await response.json()
   return data
+}
+
+//GET ALL BY ID CROP
+export async function fetchCropSeasons(id) {
+  const response = await fetch(urlCrops+"/"+id+"/seasons",{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+  // return data
+
+  const newData = data.reduce((acumulador, season, index) => {
+    const { nombre, duracion, fecha_inicio, fecha_fin} = season;
+
+    const newSeason = {
+      id: index + 1,
+      nombre,
+      duracion,
+      fecha_inicio,
+      fecha_fin,
+    };
+    acumulador.push(newSeason);
+    return acumulador;
+  }, []);
+
+  return newData
 }
 
 //POST SEASON
@@ -58,3 +88,46 @@ export async function deleteSeason(id){
   return data
 }
 
+//GET ALL Crops
+// export async function fetchCrops() {
+  //   const response = await fetch(urlCrops,{
+    //     method: "GET",
+    //     headers: {
+      //       "Content-Type": "application/json"
+      //     }
+      //   })
+      //   const data = await response.json()
+      //   return data
+      // }
+      
+export async function fetchCrops() {
+const sessionUser = sessionStorage.getItem("user_data");
+
+  if (!sessionUser) {
+    console.log("Invalid project ID"); // volver al user a la vista de projects
+  }
+
+  const { projectId } = JSON.parse(sessionUser);
+  const urlC = `${urlCrops}/project/${projectId}`;
+
+  const response = await fetch(urlC, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const { crops } = await response.json();
+  return crops
+}
+//GET ALL News
+export async function fetchNews() {
+  const response = await fetch(urlNews,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const data = await response.json()
+  return data
+}

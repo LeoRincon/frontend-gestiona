@@ -24,7 +24,7 @@ export default function EditSupplyModal(
   useEffect(()=>{
     setValue("nombre",dataValue.nombre)
     setValue("cantidad",dataValue.cantidad_disponible)
-    setValue("ingreso",dataValue.fecha_ingreso)
+    setValue("ingreso",dataValue.fecha_ingreso.split("T")[0])
     setValue("precio",dataValue.precio)
     setValue("idInventario",dataValue.id_inventario)
     setValue("idCategoria",dataValue.id_categoria)
