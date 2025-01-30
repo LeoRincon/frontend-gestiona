@@ -13,6 +13,7 @@
 .supply-popup-edit{
   width: 500px;
   height: 420px;
+  padding: 0;
   background-color: #FFF;
   border-radius: 5px;
 }
@@ -25,6 +26,7 @@
 
 .supply-form-edit{
   height: 380px;
+  /* width: 500px; */
   display: flex; 
   flex-wrap: wrap;
   justify-content: flex-start;
