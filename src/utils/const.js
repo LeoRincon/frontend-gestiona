@@ -46,17 +46,18 @@ export const formSignupTexts = {
 export const formLoginTexts = {
   email: "Correo",
   password: "Contraseña",
-  login: "Iniciar Sesión"
-}
+  login: "Iniciar Sesión",
+};
 export const API_URL = "http://localhost:3000/api/v1";
 export const PROJECTS_PATH = "/projects";
 export const USERS_PATH = "/users";
 export const LOGIN_PATH = "/login";
-export const CROPS_PATH = "/crops"
+export const CROPS_PATH = "/crops";
+export const UNITS_PATH = "/units";
+export const SALES_PATH = "/sales";
+export const SEASONS_PATH = "/seasons";
 export const USERS_HAS_PATH = "/users-has"
 export const ROLES_PATH = "/roles"
-export const UNITS_PATH = "/units"
-export const SEASONS_PATH = "/seasons"
 
 export const USER_SESSION = "user_data"
 

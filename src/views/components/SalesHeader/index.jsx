@@ -1,21 +1,10 @@
+import "./styles.css";
 function SalesHeader() {
   return (
-    <div>
-      <header className="user-profile__header">
-        <div>
-          <div className="row">
-            <div className="col-6 mx-auto">
-              <h2 className="title">REGISTRO DE VENTA</h2>
-            </div>
-          </div>
-        </div>
-      </header>
-     
-      <div className="notes-actions mt-6">
-        <div className="notes ">VENTA</div>
-      </div>
-    </div>
-   
+    <header className="sales__header">  
+      <h1 className="sales__header__title">REGISTRO DE VENTA</h1>
+
+    </header>
   );
 }
 
