@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import './styles.css'
 
-export default function AddSeasonModal({handleOpenModal,handleAddFetch,cropsData,newsData,completeData}){
+export default function AddSeasonModal({handleOpenModal,handleAddFetch,idCrop,cropsData,newsData,completeData}){
 
   if(typeof completeData === "undefined" || typeof cropsData==="undefined" || typeof newsData==="undefined"){
         return(
@@ -26,6 +26,7 @@ export default function AddSeasonModal({handleOpenModal,handleAddFetch,cropsData
       if(!data.idNovedades){
         delete newData.novedades_id
       }
+      idCrop.current = data.idCultivo
       handleAddFetch(newData)
     } 
   )
