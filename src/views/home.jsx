@@ -25,7 +25,7 @@ export default function Home() {
     inventory: "/inventory",
     activity: "/activity",
     production: "/production",
-    sale: "/sale",
+    sale: "/sales",
     information: "/information",
     dashboard: "/dashboard",
     }
