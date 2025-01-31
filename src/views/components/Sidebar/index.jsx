@@ -36,7 +36,7 @@ const messages = {
   username: "John Doe",
   email: "john.doe@example.com",
 };
-const { profile, season, crop, supply, information, dashboard, sale } = routes;
+const { profile, season, crop, supply, information, dashboard, sale, activities } = routes;
 const iconWidth = 24;
 const iconHeigth = 24;
 const iconFill = "#008164";
@@ -91,7 +91,7 @@ function Sidebar() {
           text={messages.inventory}
         />
         <SidebarLink
-          href="#"
+          href={activities}
           IconComponent={ActivityIcon}
           iconWidth={iconWidth}
           iconHeight={iconHeigth}
@@ -142,14 +142,6 @@ function Sidebar() {
           iconFill={iconFill}
           text={messages.settings}
         />
-        {/* <SidebarLink 
-        href="#"
-        IconComponent={LogoutIcon} 
-        iconWidth={iconWidth} 
-        iconHeight={iconHeigth} 
-        iconFill={iconFill} 
-        text={messages.logout}
-      /> */}
         <LogoutButton
           iconWidth={iconWidth}
           iconHeight={iconHeigth}
