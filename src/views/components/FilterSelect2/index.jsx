@@ -32,15 +32,12 @@ function FilterSelect2({
             Selecciona una opción
           </option>
           {
-          list ? 
+          list && 
           list.map((item, index) => (
             <option key={index} value={item.id}>
               {index+1}
             </option>
           ))
-          :
-          <option value="" disabled>
-          </option>
           }
         </select>
       </div>

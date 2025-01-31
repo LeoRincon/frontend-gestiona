@@ -163,6 +163,7 @@ export async function fetchInventories() {
 
 //GET ALL INVENTORIES BY PROJECT ID
 export async function fetchInventoriesByProjectoID() {
+  let voidData= false
   const sessionUser = sessionStorage.getItem("user_data");
 
   if (!sessionUser) {
@@ -178,5 +179,54 @@ export async function fetchInventoriesByProjectoID() {
     }
   })
   const {inventories} = await response.json()
+  // try {
+  //   if(!Array.isArray(inventories) ) throw Error("Error fetching inventories by Projects")
+  //   if(inventories.length === 0){
+  //     const response2 = await fetch(URL_INVENTORIES,{
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify(
+  //         {
+  //           "id_proyecto":projectId
+  //         }
+  //       ),
+  //     })
+  //     voidData = await response2.json();
+  //     voidData = [voidData.inventory] 
+  //   }
+  // } catch (error) {
+  //   console.log("ERROR: ",error)
+  // }
+  // if(voidData) return voidData
   return inventories
+}
+
+export async function postInventory(){
+  const sessionUser = sessionStorage.getItem("user_data");
+
+  if (!sessionUser) {
+    console.log("Invalid project ID"); // volver al user a la vista de projects
+  }
+
+  const { projectId } = JSON.parse(sessionUser);
+  
+  try {
+      const response2 = await fetch(URL_INVENTORIES,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(
+          {
+            "id_proyecto":projectId
+          }
+        ),
+      })
+      const {inventory} = await response2.json();
+      return [inventory] 
+  } catch (error) {
+    console.log("ERROR: ",error)
+  }
 }

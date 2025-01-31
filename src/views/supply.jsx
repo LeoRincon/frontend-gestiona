@@ -10,7 +10,7 @@ import BackButton from "./components/BackButton"
 import AddButton from "./components/addButton"
 import SuppliesBody from "./components/SuppliesBody"
 import {
-    createSupply,editSupply, deleteSupply, fetchUnits, fetchCategories, fetchSuppliesByInventoryID, fetchInventoriesByProjectoID 
+    createSupply,editSupply, deleteSupply, fetchUnits, fetchCategories, fetchSuppliesByInventoryID, fetchInventoriesByProjectoID,postInventory 
 } from "../services/supplyService"
 import { useState,useEffect,useRef } from "react"
 
@@ -26,17 +26,26 @@ export default function Supply(){
     const [dataSearch,setDataSearch] = useState(null)
     const [unitsData,setUnitsData] = useState([])
     const [categoriesData,setCategoriesData] = useState([])
-    const [inventoryProjectData,setInventoryProjectData] = useState([])
+    const [inventoryProjectData,setInventoryProjectData] = useState(false)
     const id = useRef(null)
     const idInventory = useRef(null)
+    const hasPosted = useRef(false)
     
     const buttonSize = 30;
 
-    useEffect(() => {
+    useEffect( () => {
         fetchDataInventoriesByProject()
         fetchDataUnits();
         fetchDataCategories();
     }, []);
+
+    useEffect(()=>{
+        if(inventoryProjectData.length===0 && !hasPosted.current ){
+            console.log("ENTRO")
+            hasPosted.current = true;
+            addInventory()
+        }
+    }, [inventoryProjectData])
 
     async function fetchDataByInventory(id){
         try {
@@ -52,9 +61,19 @@ export default function Supply(){
         try {
             const result = await fetchInventoriesByProjectoID()
             setInventoryProjectData(result)
+            return result
         } catch (error) {
             console.error('Error fetching supplies data(F):', error);
         }
+        };
+
+    async function addInventory(){
+            try {
+                const result = await postInventory()
+                fetchDataInventoriesByProject()
+            } catch (error) {
+                console.error('Error fetching supplies data(F):', error);
+            }
         };
 
     async function fetchDataUnits(){
