@@ -3,13 +3,10 @@ import DataTable from "react-data-table-component";
 import AddButton from "../addButton";
 import { formatingDate } from "../../../utils/formatingDate";
 import { DeleteButton, EditButton } from "../Buttons";
-
-import { getSalesData } from "../../../services/saleService";
-
-import "./styles.css";
 import ContainerItems from "../ContainerItems";
 import FilterSelect from "../FilterSelect";
-import { getSeasonsByCropId } from "../../../utils/getSeasonsByCropId";
+
+import "./styles.css";
 
 function SalesBody({
   onClickAddButton,
@@ -19,7 +16,7 @@ function SalesBody({
   seasons,
   dataTable,
   onDeleteRow,
-  onEditRow
+  onEditRow,
 }) {
   const [cropsList, setCropsList] = useState([]);
   const [show, setShow] = useState(false);
@@ -67,10 +64,7 @@ function SalesBody({
       name: "Acciones",
       cell: (row) => (
         <div>
-          <EditButton
-            title="Editar Cultivo"
-            onClick={() => onEditRow(row)}
-          />
+          <EditButton title="Editar Cultivo" onClick={() => onEditRow(row)} />
           <DeleteButton
             title="Eliminar Cultivo"
             onClick={() => onDeleteRow(row)}

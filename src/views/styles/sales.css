@@ -1,25 +1,3 @@
-/* AJUSTES GENERALES */
-:root {
-  --color-principal: #1da889;
-  --color-fondo: var(--accent-background-1);
-}
-
-html {
-  font-family: ubuntu, sans-serif;
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-body {
-  margin: 0;
-  background-color: var( --accent-background-1);
-}
-
 /* ESTILOS TITULO Y MENU */
 .title-menu {
   display: flex;
@@ -185,11 +163,12 @@ tfoot td {
   overflow: hidden;
 }
 
-.page-container {
-  padding: var(--padding-container) 15PX;
-  overflow-y: auto;
+.sales-container {
   flex: 1;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow: hidden;
 }
 
 
