@@ -6,8 +6,7 @@ import './styles.css'
 
 export default function EditSupplyModal(
   {id, completeData, handleEditModal, handleEditFetch,unitsData,
-  categoriesData,
-  inventoriesData}){
+  categoriesData,idInventory}){
   
   //SI NO SE SELECCIONADO UN REGISTRO RETORNO ESTE MENSAJE
   if(!id){
@@ -18,7 +17,7 @@ export default function EditSupplyModal(
   const {register, handleSubmit, formState:{errors}, setValue } =useForm()
 
   //SE TOMAN LOS DATOS DEL SUPPLY SELECIONADO
-  const dataValue = completeData.find((value)=>value.id === id)
+  const dataValue = completeData.find((value)=>value.id_supply === id)
 
   //PONER DATOS POR DEFECTO EN LOS INPUTS
   useEffect(()=>{
@@ -26,7 +25,6 @@ export default function EditSupplyModal(
     setValue("cantidad",dataValue.cantidad_disponible)
     setValue("ingreso",dataValue.fecha_ingreso.split("T")[0])
     setValue("precio",dataValue.precio)
-    setValue("idInventario",dataValue.id_inventario)
     setValue("idCategoria",dataValue.id_categoria)
     setValue("idUnidad",dataValue.id_unidad_medida)
   },[])
@@ -39,7 +37,7 @@ export default function EditSupplyModal(
                 "cantidad_disponible": parseFloat(data.cantidad),
                 "fecha_ingreso": data.ingreso+"T05:00:00.000Z",
                 "precio": parseFloat(data.precio),
-                "id_inventario": data.idInventario,
+                "id_inventario": idInventory.current,
                 "id_categoria": data.idCategoria,
                 "id_unidad_medida": data.idUnidad
               }
@@ -90,20 +88,7 @@ export default function EditSupplyModal(
                 {errors.precio && <span>{errors.precio.message}</span>}
               </div>
               <div>
-                <label htmlFor="inventario">Id Inventario</label>
-                <select name="inventorio" {...register("idInventario",{
-                  required:{value:true, message:"El inventario es obligatorio"}
-                } )} >
-                  {inventoriesData.inventories.map((inventary)=>{
-                    return(
-                      <option value={inventary.id} key={inventary.id} >{inventary.id} </option>
-                    )
-                  })}
-                </select>
-                {errors.idInventario && <span>{errors.idInventario.message}</span>}
-              </div>
-              <div>
-                <label htmlFor="categoria">Id Categoria</label>
+                <label htmlFor="categoria">Categoria</label>
                 <select name="categoria" {...register("idCategoria",{
                   required:{value:true, message:"La categoria es obligatoria"}
                 } )} >
@@ -116,7 +101,7 @@ export default function EditSupplyModal(
                 {errors.idCategoria && <span>{errors.idCategoria.message}</span>}
               </div>
               <div>
-                <label htmlFor="unidad">Id U. de medida</label>
+                <label htmlFor="unidad">Unidad de medida</label>
                 <select name="unidad" {...register("idUnidad",{
                   required:{value:true, message:"La unidad es obligatoria"}
                 } )} >

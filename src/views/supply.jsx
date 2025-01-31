@@ -6,8 +6,11 @@ import AddSupplyModal from "./components/AddSupplyModal"
 import EditSupplyModal from "./components/EditSupplyModal"
 import DeleteSupplyModal from "./components/DeleteSupplyModal"
 import SearchSupplyModal from "./components/SearchSupplyModal"
+import BackButton from "./components/BackButton"
+import AddButton from "./components/addButton"
+import SuppliesBody from "./components/SuppliesBody"
 import {
-    fetchSupplies, createSupply,editSupply, deleteSupply, fetchUnits, fetchCategories, fetchInventories 
+    createSupply,editSupply, deleteSupply, fetchUnits, fetchCategories, fetchSuppliesByInventoryID, fetchInventoriesByProjectoID,postInventory 
 } from "../services/supplyService"
 import { useState,useEffect,useRef } from "react"
 
@@ -23,23 +26,54 @@ export default function Supply(){
     const [dataSearch,setDataSearch] = useState(null)
     const [unitsData,setUnitsData] = useState([])
     const [categoriesData,setCategoriesData] = useState([])
-    const [inventoriesData,setInventoriesData] = useState([])
+    const [inventoryProjectData,setInventoryProjectData] = useState(false)
     const id = useRef(null)
+    const idInventory = useRef(null)
+    const hasPosted = useRef(false)
     
-    useEffect(() => {
-        fetchData();
+    const buttonSize = 30;
+
+    useEffect( () => {
+        fetchDataInventoriesByProject()
         fetchDataUnits();
         fetchDataCategories();
-        fetchDataInventories();
     }, []);
 
-    async function fetchData(){
+    useEffect(()=>{
+        if(inventoryProjectData.length===0 && !hasPosted.current ){
+            console.log("ENTRO")
+            hasPosted.current = true;
+            addInventory()
+        }
+    }, [inventoryProjectData])
+
+    async function fetchDataByInventory(id){
         try {
-            const result = await fetchSupplies()
+            const result = await fetchSuppliesByInventoryID(id)
+            idInventory.current = id
             setData(result);
         } catch (error) {
             console.error('Error fetching supplies data(F):', error);
         }
+        };
+
+    async function fetchDataInventoriesByProject(){
+        try {
+            const result = await fetchInventoriesByProjectoID()
+            setInventoryProjectData(result)
+            return result
+        } catch (error) {
+            console.error('Error fetching supplies data(F):', error);
+        }
+        };
+
+    async function addInventory(){
+            try {
+                const result = await postInventory()
+                fetchDataInventoriesByProject()
+            } catch (error) {
+                console.error('Error fetching supplies data(F):', error);
+            }
         };
 
     async function fetchDataUnits(){
@@ -55,15 +89,6 @@ export default function Supply(){
         try {
             const result = await fetchCategories()
             setCategoriesData(result);
-        } catch (error) {
-            console.error('Error fetching categories data(F):', error);
-        }
-        };
-
-    async function fetchDataInventories(){
-        try {
-            const result = await fetchInventories()
-            setInventoriesData(result);
         } catch (error) {
             console.error('Error fetching categories data(F):', error);
         }
@@ -92,20 +117,20 @@ export default function Supply(){
     const handleAddFetch =async(supply)=>{
         const result= await createSupply(supply)
         console.log(result)
-        fetchData()
+        fetchDataByInventory(idInventory.current)
         handleAddModal()
     }
 
     const handleEditFetch =async(supply)=>{
         const result = await editSupply(id.current,supply)
-        fetchData()
+        fetchDataByInventory(idInventory.current)
         handleEditModal()
         console.log(result)
     }
 
     const handleDeleteFecth= async()=>{
         await deleteSupply(id.current)
-        fetchData()
+        fetchDataByInventory(idInventory.current)
         handleDeletesModal()
         id.current=null
     }
@@ -115,34 +140,40 @@ export default function Supply(){
         handleSearchModal()
     }
 
+
+    const handleDelete = (row)=>{ 
+        handleSelectedData(row.id_supply)
+        handleDeletesModal()
+      }
+      const handleEdit= (row)=>{
+        handleSelectedData(row.id_supply)
+        handleEditModal()
+      }
+
+
+
     return (
         <div className="supply-view">
             <Sidebar />
             <main className="supply-main-view">
                 <TitleSection title="INVENTARIO DE INSUMOS" />
 
-                <ActionsBar 
-                 handleAddModal={handleAddModal} 
-                 handleEditModal={handleEditModal}  
-                 handleDeleteModal={handleDeletesModal} 
-                 handleSearchModal={handleSearchModal} 
-                 dataSearch={dataSearch}
-                 setDataSearch={setDataSearch} />
-
-                <TableSupply 
-                 data={data} 
-                 handleSelectedData={handleSelectedData} 
-                 unitsData={unitsData} 
-                 categoriesData={categoriesData} 
-                 dataSearch={dataSearch} />
+                <SuppliesBody
+                 handleAddModal={handleAddModal}
+                 handleSelectedInventory={fetchDataByInventory}
+                 handleEdit={handleEdit}
+                 handleDelete={handleDelete}
+                 inventories={inventoryProjectData}
+                 dataTable={data}
+                 />
 
                 {add && <AddSupplyModal 
                  handleOpenModal={handleAddModal} 
                  handleAddFetch={handleAddFetch} 
                  unitsData={unitsData} 
                  categoriesData={categoriesData}
-                 inventoriesData={inventoriesData}
-                 data={data}  />}
+                 data={data}
+                 idInventory={idInventory}  />}
 
                 {edit && <EditSupplyModal 
                  handleEditModal={handleEditModal} 
@@ -151,7 +182,7 @@ export default function Supply(){
                  handleEditFetch={handleEditFetch}
                  unitsData={unitsData} 
                  categoriesData={categoriesData}
-                 inventoriesData={inventoriesData} />}
+                 idInventory={idInventory} />}
 
                 {deletes && <DeleteSupplyModal 
                  handleOpenModal={handleDeletesModal} 
