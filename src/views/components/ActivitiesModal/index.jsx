@@ -128,6 +128,7 @@ const ActivitiesModal = forwardRef(
               id="activities-description"
               name="description"
               value={description}
+              placeholder="Descripción de la actividad"
               {...register("description")}
               readOnly
             />
@@ -143,6 +144,7 @@ const ActivitiesModal = forwardRef(
               type="number"
               id="activities-cost"
               name="cost"
+              placeholder="0"
               {...register("cost")}
               required
             />
