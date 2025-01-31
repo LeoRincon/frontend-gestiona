@@ -62,6 +62,7 @@ const ActivitiesModal = forwardRef(
     const handleCancel = () => {
       onCancel();
       setDescription("");
+      setSelectValue("")
       reset();
     };
 
