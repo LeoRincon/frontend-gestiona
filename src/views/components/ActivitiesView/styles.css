@@ -4,6 +4,7 @@
   flex-direction: column;
   padding: 1rem;
   overflow: hidden;
+  font-family: var(--roboto);
 }
 
 .activities__header{

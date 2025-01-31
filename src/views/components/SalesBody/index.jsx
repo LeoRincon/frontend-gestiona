@@ -88,7 +88,7 @@ function SalesBody({
   };
 
   return (
-    <main className="sales-body">
+    <section className="sales-body">
       <div className="sales-body__actions">
         <ContainerItems>
           <FilterSelect
@@ -111,7 +111,7 @@ function SalesBody({
         )}
       </div>
       {show && <DataTable columns={columns} data={dataTable} pagination />}
-    </main>
+    </section>
   );
 }
 
