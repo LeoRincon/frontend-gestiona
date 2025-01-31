@@ -22,7 +22,7 @@ export default function Home() {
   const paths = {
     cropt: "/crop",
     season: "/season",
-    inventory: "/inventory",
+    inventory: "/supply",
     activity: "/activities",
     production: "/production",
     sale: "/sales",

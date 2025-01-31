@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form'
 
 import './styles.css'
 
-export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsData, categoriesData,inventoriesData, data}){
+export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsData, categoriesData,idInventory}){
 
-  if(data.length===0 || unitsData.length===0 || categoriesData.length===0 || inventoriesData.length===0){
+  if(unitsData.length===0 || categoriesData.length===0){
       return(
-        <ErrorMessageModal text="No se han cargado los datos" handleErrorModal={handleOpenModal} />
+        <ErrorMessageModal text="No se han cargado los datos de unidad o categoria" handleErrorModal={handleOpenModal} />
       )
     }
 
@@ -21,7 +21,7 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
                 "cantidad_disponible": parseFloat(data.cantidad),
                 "fecha_ingreso": data.ingreso+"T05:00:00.000Z",
                 "precio": parseFloat(data.precio),
-                "id_inventario": data.idInventario,
+                "id_inventario": idInventory.current,
                 "id_categoria": data.idCategoria,
                 "id_unidad_medida": data.idUnidad
               }
@@ -90,19 +90,6 @@ export default function AddSupplyModal({handleOpenModal, handleAddFetch, unitsDa
                   pattern:{value:/^[0-9]+([,][0-9]+)?$/,message:"El precio debe ser numerico"},
                 })} />
                 {errors.precio && <span>{errors.precio.message}</span>}
-              </div>
-              <div>
-                <label htmlFor="inventario">ID Inventario</label>
-                <select name="inventorio" {...register("idInventario",{
-                  required:{value:true, message:"El inventario es obligatorio"}
-                } )} >
-                  {inventoriesData.inventories.map((inventary)=>{
-                    return(
-                      <option value={inventary.id} key={inventary.id} >{inventary.id} </option>
-                    )
-                  })}
-                </select>
-                {errors.idInventario && <span>{errors.idInventario.message}</span>}
               </div>
               <div>
                 <label htmlFor="categoria">Categoria</label>
