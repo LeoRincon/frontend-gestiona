@@ -58,6 +58,8 @@ export const SALES_PATH = "/sales";
 export const SEASONS_PATH = "/seasons";
 export const USERS_HAS_PATH = "/users-has"
 export const ROLES_PATH = "/roles"
+export const ACTIVITIES_PATH = "/activities"
+export const ACTIVITIES_MANAGEMENT_PATH = "/activities-management"
 
 export const USER_SESSION = "user_data"
 
@@ -72,5 +74,6 @@ export const routes = {
   supply: '/supply',
   information: '/information',
   dashboard: '/dashboard',
-  sale: "/sales"
+  sale: "/sales",
+  activities: "/activities"
 }
