@@ -125,8 +125,8 @@ tfoot td {
   font-size: 2rem;
   text-decoration: none;
   color: #000;
-  position: relative;
-  right: 10%;
+  /* position: relative;
+  right: 10%; */
 }
 
 /* estilo botones*/
