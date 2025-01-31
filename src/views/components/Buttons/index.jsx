@@ -12,7 +12,7 @@ import LogoutIcon from "../icons/LogoutIcon";
 
 export function PrimaryButton({ onClick, type, children }) {
   return (
-    <button className="primary-button" onClick={onClick} type={type}>
+    <button className="primary-button__component" onClick={onClick} type={type}>
       {children}
     </button>
   );

@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import "./styles.css";
 import ArrowBackIcon from "../icons/ArrowBackIcon";
 
-const BackButton = () => {
+const BackButton = ({className}) => {
   const iconProps = {
     width: 30, // Tus valores originales
     height: 30, // Tus valores originales
@@ -10,7 +10,7 @@ const BackButton = () => {
   };
 
   return (
-    <NavLink to="/home" className="back">
+    <NavLink to="/home" className={`back ${className}`}>
       <ArrowBackIcon {...iconProps} />
     </NavLink>
   );

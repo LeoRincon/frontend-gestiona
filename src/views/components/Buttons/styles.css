@@ -1,4 +1,4 @@
-.primary-button {
+.primary-button__component {
   font-family: var(--roboto);
   font-size: var(--body-text);
   font-style: normal;
@@ -15,7 +15,7 @@
   border-radius: 5px;
 }
 
-.primary-button:hover {
+.primary-button__component:hover {
   background-color: var(--accent-dark);
   color: var(--accent-background-2);
 }
