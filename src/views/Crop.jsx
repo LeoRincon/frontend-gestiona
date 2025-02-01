@@ -1,6 +1,6 @@
 import "./styles/crop.css";
 import Sidebar from "./components/Sidebar";
-import TitleMenu from "./components/TitleMenu";
+import CropHeader from "./components/CropHeader";
 import CultivoTable from "./components/CultivoTable";
 import BackButton from "./components/BackButton";
 import { useEffect, useRef, useState } from "react";
@@ -55,7 +55,7 @@ export default function Crop() {
     try {
       let response;
       if (modalAction === "add") {
-        response = await createCrop(newCrop); 
+        response = await createCrop(newCrop);
         response.id = crops.length + 1;
         setCrops((prevCrops) => [...prevCrops, response]);
         addCropToProject(response);
@@ -89,13 +89,12 @@ export default function Crop() {
   };
 
   return (
-    <div className="app-container">
+    <div className="crop__home-view">
       <Sidebar />
-      <div className="content-container">
-        <TitleMenu />
-        <main className="content-container__crop">
-          <div className="content-container__crop__buttons">
-            <BackButton />
+      <main className="crop-container">
+        <CropHeader />
+        <section className="crop__content">
+          <div className="crop__content__actions">
             <AddButton
               onClick={() => {
                 setFormValues({});
@@ -120,8 +119,8 @@ export default function Crop() {
             defaultFormValues={formValues}
             modalState={modalAction}
           />
-        </main>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

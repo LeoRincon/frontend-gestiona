@@ -1,12 +1,10 @@
-import BackButton from "../BackButton";
 
 import "./styles.css"
 
 export default function BeginEndBar({crop}){
     return(
         <div className="season-actions">
-            <BackButton />
-            <h2 className="season-number-text">Cultivo:  {crop} </h2> 
+            <h2 className="season-number-text">Cultivo: <span className="season-number-text-value">{crop}</span></h2> 
         </div>
     )
 }

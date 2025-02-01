@@ -17,3 +17,10 @@
   flex: 1;
   height: 100vh;
 }
+
+.home__change-button {
+  position: absolute;
+  right: var(--padding-container);
+  top: var(--padding-container);
+  margin-top: 0;
+}

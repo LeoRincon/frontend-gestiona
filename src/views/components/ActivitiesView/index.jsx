@@ -19,6 +19,7 @@ import {
 import "./styles.css";
 
 const buttonSize = 30;
+const title = "REGISTRO DE ACTIVIDADES"
 
 function ActivitiesView() {
   const [activities, setActivities] = useState([]);
@@ -237,7 +238,7 @@ function ActivitiesView() {
     <main className="activities__container">
       <header className="activities__header">
         <BackButton className={"activities__backButton"} />
-        <h1>Actividades</h1>
+        <h1>{title}</h1>
       </header>
       <section className="activities__actions">
         <ContainerItems>
