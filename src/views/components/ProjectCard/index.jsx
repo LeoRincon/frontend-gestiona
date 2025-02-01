@@ -59,7 +59,7 @@ function ProjectCard({ project, setActionProject }) {
  };
 
  return (
-  <>
+  <div className='project-card__container'>
    <NavLink className='project-card' to={'/home'} onClick={setProjectToSession}>
     <div className='project-card__initials'>{projectInitials}</div>
     <div>
@@ -68,7 +68,7 @@ function ProjectCard({ project, setActionProject }) {
     </div>
    </NavLink>
    <DeleteButton onClick={() => handlerDeleteProject(project.id)} />
-  </>
+  </div>
  );
 }
 
