@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { NavLink } from 'react-router';
 import './styles.css';
+import { DeleteButton } from '../Buttons/index';
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, setActionProject }) {
  const projectNameString = project.nombre;
  const projectDescriptionString = project.descripcion;
  let projectInitials = '';
@@ -14,6 +15,38 @@ function ProjectCard({ project }) {
   projectInitials = projectNameString[0];
  }
 
+ const handlerDeleteProject = async (id) => {
+  try {
+   const userHasRow = await fetch(
+    `http://localhost:3000/api/v1/projects/${id}/users-has`,
+    {
+     method: 'GET',
+     headers: {
+      'Content-Type': 'application/json',
+     },
+    }
+   );
+
+   const userHas = await userHasRow.json();
+
+   await fetch(`http://localhost:3000/api/v1/users-has/${userHas.data[0].id}`, {
+    method: 'DELETE',
+    headers: {
+     'Content-Type': 'application/json',
+    },
+   });
+
+   await fetch(`http://localhost:3000/api/v1/projects/${id}`, {
+    method: 'DELETE',
+    headers: {
+     'Content-Type': 'application/json',
+    },
+   });
+   setActionProject((prev) => !prev);
+  } catch (error) {
+   console.log(error);
+  }
+ };
  const setProjectToSession = () => {
   const userData = sessionStorage.getItem('user_data');
   const user = JSON.parse(userData);
@@ -26,13 +59,16 @@ function ProjectCard({ project }) {
  };
 
  return (
-  <NavLink className='project-card' to={'/home'} onClick={setProjectToSession}>
-   <div className='project-card__initials'>{projectInitials}</div>
-   <div>
-    <h3>{projectNameString}</h3>
-    <p>{projectDescriptionString}</p>
-   </div>
-  </NavLink>
+  <>
+   <NavLink className='project-card' to={'/home'} onClick={setProjectToSession}>
+    <div className='project-card__initials'>{projectInitials}</div>
+    <div>
+     <h3>{projectNameString}</h3>
+     <p>{projectDescriptionString}</p>
+    </div>
+   </NavLink>
+   <DeleteButton onClick={() => handlerDeleteProject(project.id)} />
+  </>
  );
 }
 

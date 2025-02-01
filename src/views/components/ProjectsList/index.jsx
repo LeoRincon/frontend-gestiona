@@ -3,7 +3,7 @@ import AddButton from '../addButton';
 import ProjectCard from '../ProjectCard';
 import './styles.css';
 
-function ProjectsList({ projects, buttonOnClick }) {
+function ProjectsList({ projects, buttonOnClick, setActionProject }) {
  const iconSize = 30;
  return (
   <main className='project-container'>
@@ -17,7 +17,11 @@ function ProjectsList({ projects, buttonOnClick }) {
    </header>
    <section className='project-container__list'>
     {projects.map((project, index) => (
-     <ProjectCard key={index} project={project} />
+     <ProjectCard
+      key={index}
+      project={project}
+      setActionProject={setActionProject}
+     />
     ))}
    </section>
   </main>
