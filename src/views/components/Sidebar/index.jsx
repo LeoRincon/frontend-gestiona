@@ -92,14 +92,6 @@ function Sidebar() {
      text={messages.season}
     />
     <SidebarLink
-     href={supply}
-     IconComponent={InventoryIcon}
-     iconWidth={iconWidth}
-     iconHeight={iconHeigth}
-     iconFill={iconFill}
-     text={messages.inventory}
-    />
-    <SidebarLink
      href={activities}
      IconComponent={ActivityIcon}
      iconWidth={iconWidth}
@@ -107,6 +99,15 @@ function Sidebar() {
      iconFill={iconFill}
      text={messages.activities}
     />
+    <SidebarLink
+     href={supply}
+     IconComponent={InventoryIcon}
+     iconWidth={iconWidth}
+     iconHeight={iconHeigth}
+     iconFill={iconFill}
+     text={messages.inventory}
+    />
+
     {/* <SidebarLink
           href="#"
           IconComponent={ProductionIcon}
