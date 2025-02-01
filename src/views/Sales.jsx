@@ -109,7 +109,7 @@ export default function Sales() {
   return (
     <div className="home-view">
       <Sidebar />
-      <main className="page-container">
+      <main className="sales-container">
         <SalesHeader />
         <SalesBody
           onClickAddButton={() => {

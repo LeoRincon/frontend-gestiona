@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+import { PrimaryButton } from "./components/Buttons";
 import Card from "./components/Card";
 import ActivityIcon from "./components/icons/ActivityIcon";
 import CropIcon from "./components/icons/CropIcon";
@@ -12,28 +14,39 @@ import Sidebar from "./components/Sidebar";
 
 import "./styles/home.css";
 
-export default function Home() {
-  const iconParams = {
-    width: 50,
-    height: 50,
-    fill: "#193c32",
-  };
+const iconParams = {
+  width: 50,
+  height: 50,
+  fill: "#193c32",
+};
 
-  const paths = {
-    cropt: "/crop",
-    season: "/season",
-    inventory: "/supply",
-    activity: "/activities",
-    production: "/production",
-    sale: "/sales",
-    information: "/information",
-    dashboard: "/dashboard",
-    }
+const paths = {
+  cropt: "/crop",
+  season: "/season",
+  inventory: "/supply",
+  activity: "/activities",
+  production: "/production",
+  sale: "/sales",
+  information: "/information",
+  dashboard: "/dashboard",
+};
+
+export default function Home() {
+  const homeNavigate = useNavigate()
+  const handleOnClick = () => {
+    homeNavigate("/projects")
+  };
 
   return (
     <div className="home-view">
       <Sidebar />
       <main className="page-container">
+        <PrimaryButton
+          className={"home__change-button"}
+          onClick={handleOnClick}
+        >
+          Cambiar Proyecto
+        </PrimaryButton>
         <OptionMenu title={"GESTIÓN CULTIVOS"}>
           <Card
             IconComponent={CropIcon}
