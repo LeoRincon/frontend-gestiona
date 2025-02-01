@@ -10,9 +10,9 @@ import EditIcon from "../icons/EditIcon";
 import DeleteIcon from "../icons/DeleteIcon";
 import LogoutIcon from "../icons/LogoutIcon";
 
-export function PrimaryButton({ onClick, type, children }) {
+export function PrimaryButton({ onClick, type, children, className }) {
   return (
-    <button className="primary-button__component" onClick={onClick} type={type}>
+    <button className={`primary-button__component ${className}`} onClick={onClick} type={type}>
       {children}
     </button>
   );
