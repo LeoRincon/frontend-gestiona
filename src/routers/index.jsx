@@ -11,6 +11,7 @@ import Crop from '../views/Crop';
 import Season from '../views/season';
 import Sales from '../views/Sales';
 import { ValidateUserRoute } from './ValidateUserRoute';
+import Activities from '../views/Activities';
 
 export const AppRouter = () => {
  return (
@@ -29,6 +30,7 @@ export const AppRouter = () => {
     <Route path='/Crop' element={<Crop />} />
     <Route path='/season' element={<Season />} />
     <Route path='/sales' element={<Sales />} />
+    <Route path='/activities' element={<Activities />} />
    </Route>
 
    <Route path='/*' element={<Login />} />

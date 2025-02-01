@@ -23,7 +23,7 @@ export default function Home() {
     cropt: "/crop",
     season: "/season",
     inventory: "/supply",
-    activity: "/activity",
+    activity: "/activities",
     production: "/production",
     sale: "/sales",
     information: "/information",
