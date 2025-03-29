@@ -6,7 +6,6 @@ import CropIcon from './components/icons/CropIcon';
 import DashboardIcon from './components/icons/DashboardIcon';
 import InformationIcon from './components/icons/InformationIcon';
 import InventoryIcon from './components/icons/inventoryIcon';
-// import ProductionIcon from './components/icons/ProductionIcon';
 import SaleIcon from './components/icons/SaleIcon';
 import SeasonIcon from './components/icons/SeasonIcon';
 import OptionMenu from './components/OptionMenu';
