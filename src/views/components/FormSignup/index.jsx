@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { formSignupTexts } from "../../../utils/const";
@@ -10,6 +11,8 @@ const { fullname, email, password, createCount } = formSignupTexts;
 export default function FormSignup() {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(""); // Estado para manejar errores
+
   const onSubmit = async (data) => {
     try {
       const result = await createUser(data);
@@ -19,7 +22,7 @@ export default function FormSignup() {
       reset();
       navigate("/");
     } catch (error) {
-      console.error("Error: error creating user", error);
+      setErrorMessage(error.message || "Error al crear la cuenta");
     }
   };
 
@@ -64,6 +67,9 @@ export default function FormSignup() {
       <button className="form__button" type="submit">
         {createCount}
       </button>
+      
+      {/* Mensaje de error */}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </form>
   );
 }
