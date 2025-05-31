@@ -19,6 +19,27 @@
   background-color: var(--accent-dark);
   color: var(--accent-background-2);
 }
+
+.auxiliary-button{
+  font-family: var(--roboto);
+  font-size: var(--body-text);
+  font-style: normal;
+  border-color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  color: var(--accent-text-2);
+  box-sizing: border-box;
+  padding: 5px;
+  font-weight: var(--medium);
+  border: 1px solid var(--gray-border-separator-3);
+  border-radius: 5px;
+}
+
+.auxiliary-button:hover {
+  background-color: #eee;
+}
+
 .secondary-button {
   font-family: var(--roboto);
   font-size: var(--body-text);

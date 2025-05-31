@@ -18,6 +18,14 @@ export function PrimaryButton({ onClick, type, children, className }) {
   );
 }
 
+export function AuxiliaryButton({ onClick, type="button", children, className}){
+  return(
+    <button className={`auxiliary-button ${className}`} onClick={onClick} type={type}>
+      {children}
+    </button>
+  )
+}
+
 export function SecondaryButton({ onClick, type, children }) {
   return (
     <button className="secondary-button" type={type} onClick={onClick}>
@@ -88,3 +96,5 @@ export function LogoutButton({
     </button>
   );
 }
+
+
