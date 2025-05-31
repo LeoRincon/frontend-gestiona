@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from "react";
-import { CloseButton, PrimaryButton, SecondaryButton } from "../Buttons";
+import { AuxiliaryButton, CloseButton, PrimaryButton, SecondaryButton } from "../Buttons";
 import "./styles.css";
 import { useForm } from "react-hook-form";
 import { formatingIsoDate } from "../../../utils/formatingDate";
@@ -91,29 +91,31 @@ const ActivitiesModal = forwardRef(
               required
               {...register("date")}
             />
-            <label
-              className="activities-modal__form__label"
-              htmlFor="activities-activity"
-            >
-              Actividad
-            </label>
-            <select
-              className="activities-modal__form__input"
-              id="activities-activity"
-              name="name"
-              defaultValue={""}
-              value={selectValue}
-              onChange={handleOnchange}
-              required
-            >
-              <option value={""}>Seleccione una actividad</option>
-              {activitiesList.map((activity, index) => (
-                <option key={index} value={activity}>
-                  {activity}
-                </option>
-              ))}
-            </select>
-            {/* TODO: gestionar como añadir actividades (Boton, modal con crud de actividades) */}
+            <div className="activities-modal__form__activity">
+              <label
+                className="activities-modal__form__label activity-label"
+                htmlFor="activities-activity"
+              >
+                Actividad
+              </label>
+              <select
+                className="activities-modal__form__input"
+                id="activities-activity"
+                name="name"
+                defaultValue={""}
+                value={selectValue}
+                onChange={handleOnchange}
+                required
+              >
+                <option value={""}>Seleccione una actividad</option>
+                {activitiesList.map((activity, index) => (
+                  <option key={index} value={activity}>
+                    {activity}
+                  </option>
+                ))}
+              </select>
+              <AuxiliaryButton>Modificar </AuxiliaryButton>
+            </div>
             {/* TODO: gestionar los insumos gastados */}
             <label
               className="activities-modal__form__label"
