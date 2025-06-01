@@ -1,0 +1,18 @@
+.modal-component {
+  border-radius: var(--radius);
+  border: var(--border) solid var(--gray-color);
+  box-shadow: 0 0 1rem var(--gray-color);
+  color: var(--accent-text-2);
+  font-family: var(--roboto);
+  height: fit-content;
+  width: fit-content;
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 300px;
+  min-height: 70%;
+}
+.modal-component::backdrop{
+  backdrop-filter: blur(1.5px);
+}
