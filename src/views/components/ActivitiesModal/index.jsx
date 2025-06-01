@@ -3,6 +3,7 @@ import { AuxiliaryButton, CloseButton, PrimaryButton, SecondaryButton } from "..
 import "./styles.css";
 import { useForm } from "react-hook-form";
 import { formatingIsoDate } from "../../../utils/formatingDate";
+import ActivitiesListModal from "../ActivitiesListModal"
 
 const ActivitiesModal = forwardRef(
   (
@@ -22,6 +23,7 @@ const ActivitiesModal = forwardRef(
     const { register, handleSubmit, reset } = useForm({
       defaultValues: modalState === "add" ? {} : defaulFormValues,
     });
+    const [openModal, setOpenModal] = useState(false)
 
     useEffect(() => {
       if (modalState === "add") {
@@ -114,7 +116,7 @@ const ActivitiesModal = forwardRef(
                   </option>
                 ))}
               </select>
-              <AuxiliaryButton>Modificar </AuxiliaryButton>
+              <AuxiliaryButton onClick={()=>setOpenModal(!openModal)}>Modificar </AuxiliaryButton>
             </div>
             {/* TODO: gestionar los insumos gastados */}
             <label
@@ -160,6 +162,7 @@ const ActivitiesModal = forwardRef(
             </div>
           </form>
         </section>
+        <ActivitiesListModal isOpen={openModal} onClose={()=>setOpenModal(!openModal)}/>
       </dialog>
     );
   }
