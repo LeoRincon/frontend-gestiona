@@ -17,6 +17,7 @@
 }
 .activities-list-modal__form-field textarea{
   flex: 1;
+  font-family: Roboto;
 }
 .activities-list-modal__form-field:nth-child(1){
   grid-row: span 2 / span 2;
@@ -102,3 +103,17 @@
 .activities-list-modal__form-buttons button {
   margin: 0;
 } 
+
+.hidden-element {
+  display: none;
+}
+
+.success-message {
+  background-color: var(--accent-background-2);
+  color: var(--accent-text-1);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  border: var(--accent-text-1) 1px solid;
+  border-radius: 8px;
+  padding: 0.5rem;
+}

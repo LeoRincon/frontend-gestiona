@@ -3,13 +3,21 @@ import Modal from "../Modal";
 import { useEffect, useState } from "react";
 import { AuxiliaryButton, PrimaryButton, SecondaryButton } from "../Buttons";
 import DataTable from "react-data-table-component";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { getCategories } from "../../../services/categoryService";
 import { createActivity } from "../../../services/activitiesService";
 
 const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState([]);
+  const [hiddenElement, setHiddenElement] = useState(true);
+  const [created, setCreated] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const columns = [
     { name: "Nombre", selector: (row) => row.name, wrap: true },
@@ -26,17 +34,6 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
     if (activities && activities.length > 0) setData(activities);
   }, [activities]);
   const [categories, setCategories] = useState([]);
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-
-  useEffect(() => {
-    setOpenModal(isOpen);
-  }, [isOpen]);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -62,10 +59,20 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
 
       const newActivity = await createActivity(payload);
 
+      setData((prevData) => [...prevData, newActivity]);
+
+      if (newActivity) setCreated(true);
+
       reset();
+      setHiddenElement(true);
     } catch (error) {
       console.error("Error al agregar la actividad:", error);
     }
+  };
+
+  const handleOpenForm = () => {
+    if (hiddenElement) setHiddenElement(!hiddenElement);
+    if (created) setCreated(false);
   };
 
   return (
@@ -88,13 +95,19 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
           />
         </div>
         <div className="activities-list-modal__buttons">
-          <PrimaryButton className={"btn-new-activity"}>
+          <PrimaryButton
+            className={"btn-new-activity"}
+            type={"button"}
+            onClick={handleOpenForm}
+          >
             Nueva Actividad
           </PrimaryButton>
           <AuxiliaryButton onClick={handleClose}>Cerrar</AuxiliaryButton>
         </div>
         <form
-          className="activities-list-modal__form"
+          className={`activities-list-modal__form ${
+            hiddenElement ? "hidden-element" : ""
+          }`}
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="activities-list-modal__form-field">
@@ -102,6 +115,8 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
             <input
               className="activities-list-modal__input"
               type="text"
+              placeholder="Nombre de la actividad"
+              name="name"
               {...register("name", { required: "El nombre es obligatorio" })}
             />
             {errors.name && (
@@ -114,6 +129,8 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
             <label className="activities-list-modal__label">Descripción</label>
             <textarea
               className="activities-list-modal__input"
+              placeholder="Descripción de la actividad"
+              name="description"
               rows={3}
               {...register("description", {
                 required: "La descripción es obligatoria",
@@ -152,11 +169,20 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
 
           <div className="activities-list-modal__form-buttons">
             <PrimaryButton type="submit">Agregar actividad</PrimaryButton>
-            <SecondaryButton type="button" onClick={handleClose}>
+            <SecondaryButton
+              type="button"
+              onClick={() => {
+                reset();
+                setHiddenElement(true);
+              }}
+            >
               Cancelar
             </SecondaryButton>
           </div>
         </form>
+        <div className={`success-message ${created ? "" : "hidden-element"}`}>
+          <p>&#x2611; Actividad creada con éxito</p>
+        </div>
       </main>
     </Modal>
   );
