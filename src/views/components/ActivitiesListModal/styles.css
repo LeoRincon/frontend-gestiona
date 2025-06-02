@@ -1,5 +1,19 @@
 .activities-list-modal{}
 
+.activities-list-modal__buttons {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: 35px;
+    gap: 10px;
+}
+
 .activities-list-modal__container{}
 
-.activities-list-modal__title{}
+.activities-list-modal__title{
+  text-align: center;
+}
+
+.btn-new-activity{
+  margin: 0;
+}
