@@ -162,7 +162,7 @@ const ActivitiesModal = forwardRef(
             </div>
           </form>
         </section>
-        <ActivitiesListModal isOpen={openModal} onClose={()=>setOpenModal(!openModal)}/>
+        <ActivitiesListModal isOpen={openModal} onClose={()=>setOpenModal(!openModal)} activities={activities}/>
       </dialog>
     );
   }
