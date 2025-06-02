@@ -4,6 +4,8 @@ import {
   ACTIVITIES_MANAGEMENT_PATH,
 } from "../utils/const";
 
+import { getCatgoryById } from "./categoryService";
+
 const activityUrl = API_URL + ACTIVITIES_PATH;
 const urlActivitiesManagement = API_URL + ACTIVITIES_MANAGEMENT_PATH;
 
@@ -212,16 +214,17 @@ export async function createActivity(data) {
       nombre: name,
       descripcion: description,
       id_categoria: idCategory,
-      category,
     } = activityData.activity;
+
+    const category = await getCatgoryById(idCategory)
 
     const newActivity = {
       idActivity,
       name,
       description,
       idCategory,
-      category: category?.nombre || null,
-      categoryDescription: category?.descripcion || null,
+      category: category?.name || null,
+      categoryDescription: category?.description || null,
     };
    
     return newActivity;
