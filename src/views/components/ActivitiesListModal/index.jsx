@@ -4,36 +4,31 @@ import { useEffect, useState } from "react";
 import { AuxiliaryButton, PrimaryButton } from "../Buttons";
 import DataTable from "react-data-table-component";
 
-const ActivitiesListModal = ({ isOpen = false, onClose }) => {
+const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [data, setData] = useState([]);
 
   const columns = [
-  { name: 'Nombre', selector: (row) => row.name },
-  { name: 'Descripción', selector: (row) => row.description },
-  { name: 'Categoria', selector: (row) => row.category },
-];
+    { name: "Nombre", selector: (row) => row.name },
+    { name: "Descripción", selector: (row) => row.description },
+    { name: "Categoria", selector: (row) => row.category },
+  ];
 
-const data = [
-  { name: 'unooo', description: 'aaaaaaaaaa', category: 'Admin' },
-  { name: 'dosssss', description: 'bbbbbbbbbbb', category: 'Admin' },
-  { name: 'tressss', description: 'ccccccccccc', category: 'Admin' },
-  { name: 'cuatrooo', description: 'ffffffff', category: 'Admin' },
-  { name: 'cincooo', description: 'rrrrrrrrrr', category: 'Admin' }
-];
+  useEffect(() => {
+    if (isOpen) setOpenModal(true);
+    else setOpenModal(false);
+  }, [isOpen]);
 
-  useEffect(()=>{
-    if (isOpen)
-      setOpenModal(true);
-    else
-      setOpenModal(false);
-  },[isOpen])
+  useEffect(() => {
+    if (activities && activities.length > 0) setData(activities);
+  }, [activities]);
 
   const handleClose = () => {
     setOpenModal(false);
     if (onClose) {
       onClose();
     }
-  }
+  };
 
   return (
     <Modal
@@ -46,13 +41,12 @@ const data = [
         <h2 className="activities-list-modal__title">Actividades</h2>
       </header>
       <main>
-        
         <DataTable columns={columns} data={data} />
 
-
-        
         <div className="activities-list-modal__buttons">
-          <PrimaryButton className={"btn-new-activity"}>Nueva Actividad</PrimaryButton>
+          <PrimaryButton className={"btn-new-activity"}>
+            Nueva Actividad
+          </PrimaryButton>
           <AuxiliaryButton onClick={handleClose}>Cerrar</AuxiliaryButton>
         </div>
         {/* TODO: Crear el formulario para añadir actividades */}
