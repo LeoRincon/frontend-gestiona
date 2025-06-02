@@ -1,4 +1,7 @@
-.activities-list-modal {}
+.activities-list-modal{
+  min-height: none;
+  height: fit-content;
+}
 
 .activities-list-modal__buttons {
     display: flex;
@@ -8,7 +11,37 @@
     gap: 10px;
 }
 
-.activities-list-modal__container{}
+.activities-list-modal__form-field{
+  display: flex;
+  flex-direction: column;
+}
+.activities-list-modal__form-field textarea{
+  flex: 1;
+}
+.activities-list-modal__form-field:nth-child(1){
+  grid-row: span 2 / span 2;
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+.activities-list-modal__form-field:nth-child(2){
+  grid-row: span 4 / span 4;
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+
+.activities-list-modal__form-field:nth-child(3){
+  grid-row: span 2 / span 2;
+  grid-column-start: 1;
+  grid-row-start: 3;
+
+}
+
+
+.activities-list-modal__table-container{
+  max-height: 50vh;
+  min-width: 500px;
+  overflow: auto;
+}
 
 .activities-list-modal__title{
   text-align: center;
@@ -20,7 +53,6 @@
 .activities-list-modal__container {
   padding: 1.5rem;
   width: 100%;
-  max-width: 400px;
 }
 
 .activities-list-modal__title {
@@ -30,9 +62,14 @@
 }
 
 .activities-list-modal__form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, auto);
+  gap: 0.5rem;
+  border: #ccc 1px solid;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
 }
 
 .activities-list-modal__label {
@@ -45,12 +82,12 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
+  resize: none;
 }
 
 .activities-list-modal__error {
   color: red;
   font-size: 0.85rem;
-  margin-top: -0.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -58,5 +95,10 @@
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  margin-top: 1rem;
+  grid-column: span 2 / span 2;
+  grid-row-start: 5;
 }
+
+.activities-list-modal__form-buttons button {
+  margin: 0;
+} 
