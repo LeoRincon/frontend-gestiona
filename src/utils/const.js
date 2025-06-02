@@ -60,6 +60,7 @@ export const USERS_HAS_PATH = "/users-has"
 export const ROLES_PATH = "/roles"
 export const ACTIVITIES_PATH = "/activities"
 export const ACTIVITIES_MANAGEMENT_PATH = "/activities-management"
+export const CATEGORIES_PATH = "/categories";
 
 export const USER_SESSION = "user_data"
 

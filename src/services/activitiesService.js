@@ -191,3 +191,44 @@ export async function updateActivityManagement(idActivity, data) {
     console.error("Failed to update the activity", error);
   }
 }
+
+export async function createActivity(data) {
+  if (!data) throw new Error("Activity data is required");
+  if (typeof data !== "object")
+    throw new Error("Activity data must be an object");
+
+  try {
+    const response = await fetch(activityUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) throw new Error("Error creating activity");
+
+    const activityData = await response.json();
+    const {
+      id: idActivity,
+      nombre: name,
+      descripcion: description,
+      id_categoria: idCategory,
+      category,
+    } = activityData.activity;
+
+    const newActivity = {
+      idActivity,
+      name,
+      description,
+      idCategory,
+      category: category?.nombre || null,
+      categoryDescription: category?.descripcion || null,
+    };
+   
+    return newActivity;
+  } catch (error) {
+    console.error("Failed to create the activity", error.message);
+  }
+}
+
+
+
