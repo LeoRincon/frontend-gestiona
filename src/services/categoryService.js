@@ -29,3 +29,31 @@ export async function getCategories() {
     return [];
   }
 }
+
+export async function getCatgoryById(id){
+  if (!id) {
+    console.error("No category ID provided");
+    return null;
+  }
+  try {
+    const categoryRes = await fetch(`${categoryUrl}/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!categoryRes.ok) throw new Error("Error fetching category");
+
+    const categoryData = await categoryRes.json();
+
+    const { id: categoryId, nombre: name, descripcion: description } = categoryData;
+
+    return {
+      categoryId,
+      name,
+      description,
+    };
+  } catch (error) {
+    console.error("There was an error retrieving the category.", error);
+    return null;
+  }
+}
