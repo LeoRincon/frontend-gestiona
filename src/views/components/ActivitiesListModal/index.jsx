@@ -2,9 +2,24 @@ import "./styles.css";
 import Modal from "../Modal";
 import { useEffect, useState } from "react";
 import { AuxiliaryButton, PrimaryButton } from "../Buttons";
+import DataTable from "react-data-table-component";
 
 const ActivitiesListModal = ({ isOpen = false, onClose }) => {
   const [openModal, setOpenModal] = useState(false);
+
+  const columns = [
+  { name: 'Nombre', selector: (row) => row.name },
+  { name: 'Descripción', selector: (row) => row.description },
+  { name: 'Categoria', selector: (row) => row.category },
+];
+
+const data = [
+  { name: 'unooo', description: 'aaaaaaaaaa', category: 'Admin' },
+  { name: 'dosssss', description: 'bbbbbbbbbbb', category: 'Admin' },
+  { name: 'tressss', description: 'ccccccccccc', category: 'Admin' },
+  { name: 'cuatrooo', description: 'ffffffff', category: 'Admin' },
+  { name: 'cincooo', description: 'rrrrrrrrrr', category: 'Admin' }
+];
 
   useEffect(()=>{
     if (isOpen)
@@ -31,7 +46,8 @@ const ActivitiesListModal = ({ isOpen = false, onClose }) => {
         <h2 className="activities-list-modal__title">Actividades</h2>
       </header>
       <main>
-        {/* TODO: Crear la tabla de actividades */}
+        
+        <DataTable columns={columns} data={data} />
 
 
         
