@@ -9,15 +9,22 @@ import {
   EditButton,
 } from "../Buttons";
 import DataTable from "react-data-table-component";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { getCategories } from "../../../services/categoryService";
-import { createActivity, deleteActivity } from "../../../services/activitiesService";
+import {
+  createActivity,
+  deleteActivity,
+  updateActivity,
+} from "../../../services/activitiesService";
 
 const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
+  const emptyFormValues = {id:"" ,name: "", description: "", category: "" };
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState([]);
   const [hiddenElement, setHiddenElement] = useState(true);
   const [created, setCreated] = useState(false);
+  const [typeForm, setTypeForm] = useState("create");
+  const [formValues, setFormValues] = useState(emptyFormValues);
   const {
     register,
     handleSubmit,
@@ -33,13 +40,10 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
       name: "Acciones",
       cell: (row) => (
         <div>
-          <EditButton
-            title="Editar Actividad"
-            onClick={() => confirm("¿Desea editar esta actividad?")}
-          />
+          <EditButton title="Editar Actividad" onClick={() => updateRow(row)} />
           <DeleteButton
             title="Eliminar Actividad"
-            onClick={() =>deleteRow(row)}
+            onClick={() => deleteRow(row)}
           />
         </div>
       ),
@@ -69,23 +73,52 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
     setOpenModal(false);
     if (onClose) onClose();
   };
+  
+  const updateRow = async (row) => {
+    if (!confirm(`¿Desea editar la actividad ${row.name}?`)) return;
 
-  const onSubmit = async (data) => {
+    setTypeForm("update");
+    setFormValues({
+      id: row.idActivity,
+      name: row.name,
+      description: row.description,
+      category: row.idCategory,
+    });
+
+    if (hiddenElement) {
+      setHiddenElement(!hiddenElement);
+    }
+  };
+
+  const onSubmit = async (formData) => {
     try {
       const payload = {
-        nombre: data.name,
-        descripcion: data.description,
-        id_categoria: data.category,
+        nombre: formData.name,
+        descripcion: formData.description,
+        id_categoria: formData.category,
       };
-
-      const newActivity = await createActivity(payload);
-
-      setData((prevData) => [...prevData, newActivity]);
+      let newActivity = {};
+      if (typeForm === "create") {
+        newActivity = await createActivity(payload);
+        setData((prevData) => [...prevData, newActivity]);
+      } else if (typeForm === "update") {
+        newActivity = await updateActivity(formValues.id, payload);
+        if (newActivity) {
+          const updatedData = data.map((item) =>
+            item.idActivity === newActivity.idActivity ? newActivity : item
+          );
+          setData(updatedData);
+        }
+      }
 
       if (newActivity) setCreated(true);
 
       reset();
+      setFormValues(emptyFormValues);
       setHiddenElement(true);
+      setTimeout(() => {
+        setCreated(false);
+      }, 3000);
     } catch (error) {
       console.error("Error al agregar la actividad:", error);
     }
@@ -94,19 +127,27 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
   const handleOpenForm = () => {
     if (hiddenElement) setHiddenElement(!hiddenElement);
     if (created) setCreated(false);
+    setTypeForm("create");
+    setFormValues(emptyFormValues);
   };
 
   const deleteRow = async (row) => {
-    if (!confirm(`¿Desea eliminar la actividad ${row.name}?\n\n¡PRECAUCIÓN!\nEsta acción no se puede deshacer.`)) return;
+    if (
+      !confirm(
+        `¿Desea eliminar la actividad ${row.name}?\n\n¡PRECAUCIÓN!\nEsta acción no se puede deshacer.`
+      )
+    )
+      return;
 
     const deleteRes = await deleteActivity(row.idActivity);
     if (!deleteRes) {
-
-    const updatedData = data.filter((item) => item.idActivity !== row.idActivity);
-    setData(updatedData);
-    alert(`La actividad ${row.name} fue eliminada con éxito.`);
+      const updatedData = data.filter(
+        (item) => item.idActivity !== row.idActivity
+      );
+      setData(updatedData);
+      alert(`La actividad ${row.name} fue eliminada con éxito.`);
     }
-  }
+  };
 
   return (
     <Modal
@@ -150,6 +191,7 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
               type="text"
               placeholder="Nombre de la actividad"
               name="name"
+              defaultValue={formValues.name}
               {...register("name", { required: "El nombre es obligatorio" })}
             />
             {errors.name && (
@@ -164,6 +206,7 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
               className="activities-list-modal__input"
               placeholder="Descripción de la actividad"
               name="description"
+              defaultValue={formValues.description}
               rows={3}
               {...register("description", {
                 required: "La descripción es obligatoria",
@@ -180,6 +223,14 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
             <select
               className="activities-list-modal__input"
               defaultValue=""
+              value={formValues.category}
+              onInput={(e) => {
+                setFormValues((prev) => ({
+                  ...prev,
+                  category: e.target.value,
+                }));
+              }}
+              name="category"
               {...register("category", {
                 required: "Seleccione una categoría",
               })}
@@ -201,11 +252,14 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
           </div>
 
           <div className="activities-list-modal__form-buttons">
-            <PrimaryButton type="submit">Agregar actividad</PrimaryButton>
+            <PrimaryButton type="submit">
+              {typeForm === "update" ? "Editar Actividad" : "Agregar actividad"}
+            </PrimaryButton>
             <SecondaryButton
               type="button"
               onClick={() => {
-                reset();
+                setFormValues(emptyFormValues);
+                reset()
                 setHiddenElement(true);
               }}
             >
@@ -214,7 +268,10 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
           </div>
         </form>
         <div className={`success-message ${created ? "" : "hidden-element"}`}>
-          <p>&#x2611; Actividad creada con éxito</p>
+          <p>
+            &#x2611; Actividad {typeForm === "update" ? "editada" : "creada"}{" "}
+            con éxito
+          </p>
         </div>
       </main>
     </Modal>
