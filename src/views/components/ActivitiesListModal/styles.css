@@ -40,7 +40,7 @@
 
 .activities-list-modal__table-container{
   max-height: 50vh;
-  min-width: 500px;
+  min-width: 600px;
   overflow: auto;
 }
 

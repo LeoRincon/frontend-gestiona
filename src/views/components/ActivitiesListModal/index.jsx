@@ -1,11 +1,17 @@
 import "./styles.css";
 import Modal from "../Modal";
 import { useEffect, useState } from "react";
-import { AuxiliaryButton, PrimaryButton, SecondaryButton } from "../Buttons";
+import {
+  AuxiliaryButton,
+  PrimaryButton,
+  SecondaryButton,
+  DeleteButton,
+  EditButton,
+} from "../Buttons";
 import DataTable from "react-data-table-component";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { getCategories } from "../../../services/categoryService";
-import { createActivity } from "../../../services/activitiesService";
+import { createActivity, deleteActivity } from "../../../services/activitiesService";
 
 const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -23,6 +29,21 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
     { name: "Nombre", selector: (row) => row.name, wrap: true },
     { name: "Descripción", selector: (row) => row.description, wrap: true },
     { name: "Categoria", selector: (row) => row.category },
+    {
+      name: "Acciones",
+      cell: (row) => (
+        <div>
+          <EditButton
+            title="Editar Actividad"
+            onClick={() => confirm("¿Desea editar esta actividad?")}
+          />
+          <DeleteButton
+            title="Eliminar Actividad"
+            onClick={() =>deleteRow(row)}
+          />
+        </div>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -74,6 +95,18 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
     if (hiddenElement) setHiddenElement(!hiddenElement);
     if (created) setCreated(false);
   };
+
+  const deleteRow = async (row) => {
+    if (!confirm(`¿Desea eliminar la actividad ${row.name}?\n\n¡PRECAUCIÓN!\nEsta acción no se puede deshacer.`)) return;
+
+    const deleteRes = await deleteActivity(row.idActivity);
+    if (!deleteRes) {
+
+    const updatedData = data.filter((item) => item.idActivity !== row.idActivity);
+    setData(updatedData);
+    alert(`La actividad ${row.name} fue eliminada con éxito.`);
+    }
+  }
 
   return (
     <Modal
