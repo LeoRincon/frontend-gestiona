@@ -257,4 +257,53 @@ export async function deleteActivity(idActivity) {
   }
 }
 
+export async function updateActivity(idActivity, data) {
+  if (!data) throw new Error("Updated activity data is required");
+  if (typeof data !== "object")
+    throw new Error("Updated activity data must be an object");
+  if (!idActivity) throw new Error("Updated activity id is required");
+  if (typeof idActivity !== "string")
+    throw new Error("Updated activity id must be a string");
+
+  const url = `${activityUrl}/${idActivity}`;
+
+  const updatedData = {
+    id: idActivity,
+    ...data
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) throw new Error("Error updating activity");
+
+    const updatedActivityData = await response.json();
+    const {
+      id: idActivity,
+      nombre: name,
+      descripcion: description,
+      id_categoria: idCategory,
+    } = updatedActivityData.activity;
+
+    const category = await getCatgoryById(idCategory)
+
+    const updatedActivity = {
+      idActivity,
+      name,
+      description,
+      idCategory,
+      category: category?.name || null,
+      categoryDescription: category?.description || null,
+    };
+
+    return updatedActivity;
+  } catch (error) {
+    console.error("Failed to update the activity", error.message);
+  }
+}
+
 
