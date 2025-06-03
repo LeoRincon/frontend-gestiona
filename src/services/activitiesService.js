@@ -233,5 +233,28 @@ export async function createActivity(data) {
   }
 }
 
+export async function deleteActivity(idActivity) {
+  if (!idActivity) throw new Error("Id activity is required");
+  if (typeof idActivity !== "string")
+    throw new Error("Activity id must be a string");
+
+  const url = `${activityUrl}/${idActivity}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) throw new Error("Error deleting activity");
+
+    const responseData = await response.json();
+    const { id: deletedId } = responseData;
+
+    return deletedId;
+  } catch (error) {
+    console.error("Failed to delete the activity", error);
+  }
+}
 
 
