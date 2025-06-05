@@ -142,7 +142,7 @@ function ActivitiesView() {
   useEffect(() => {
     const season = seasons.find((s) => s.nombre === seasonSelected.nombre);
     const getActivitiesManagementData = async () => {
-      if (!season) throw new Error("Season is invalid");
+      // if (!season) throw new Error("Season is invalid");
       setShow(true);
       try {
         const activitiesManagementData = await getActivitiesManagement(
@@ -261,6 +261,7 @@ function ActivitiesView() {
             }}
             iconWidth={buttonSize}
             iconHeight={buttonSize}
+            aria="plus"
           />
         )}
       </section>

@@ -116,7 +116,7 @@ const ActivitiesModal = forwardRef(
                   </option>
                 ))}
               </select>
-              <AuxiliaryButton onClick={()=>setOpenModal(!openModal)}>Modificar </AuxiliaryButton>
+              <AuxiliaryButton onClick={()=>setOpenModal(!openModal)} aria="modificar" >Modificar </AuxiliaryButton>
             </div>
             {/* TODO: gestionar los insumos gastados */}
             <label

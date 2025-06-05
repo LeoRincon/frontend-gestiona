@@ -173,6 +173,7 @@ const ActivitiesListModal = ({ isOpen = false, onClose, activities = [] }) => {
             className={"btn-new-activity"}
             type={"button"}
             onClick={handleOpenForm}
+            aria="nueva_actividad"
           >
             Nueva Actividad
           </PrimaryButton>

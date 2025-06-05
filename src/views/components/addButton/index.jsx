@@ -8,9 +8,10 @@ function AddButton({
   onClick,
   iconWidth = 50,
   iconHeight = 50,
+  aria
 }) {
   return (
-    <button className="btnAdd" onClick={onClick}>
+    <button className="btnAdd" onClick={onClick} aria-label={aria}>
       <AddIcon width={iconWidth} height={iconHeight} fill={iconColor} />
     </button>
   );

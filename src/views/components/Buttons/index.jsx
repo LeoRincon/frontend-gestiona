@@ -10,17 +10,17 @@ import EditIcon from "../icons/EditIcon";
 import DeleteIcon from "../icons/DeleteIcon";
 import LogoutIcon from "../icons/LogoutIcon";
 
-export function PrimaryButton({ onClick, type, children, className }) {
+export function PrimaryButton({ onClick, type, children, className, aria }) {
   return (
-    <button className={`primary-button__component ${className}`} onClick={onClick} type={type}>
+    <button className={`primary-button__component ${className}`} onClick={onClick} type={type} aria-label={aria}>
       {children}
     </button>
   );
 }
 
-export function AuxiliaryButton({ onClick, type="button", children, className}){
+export function AuxiliaryButton({ onClick, type="button", children, className, aria}){
   return(
-    <button className={`auxiliary-button ${className}`} onClick={onClick} type={type}>
+    <button className={`auxiliary-button ${className}`} onClick={onClick} type={type} aria-label={aria} >
       {children}
     </button>
   )
